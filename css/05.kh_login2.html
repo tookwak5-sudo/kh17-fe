@@ -42,7 +42,8 @@
                 /* 10px == 0.5em */
                 outline: none;
                 /* input은 영역 내부 요소기 때문에 margin적용이 안됨 */
-                /* margin: 0 auto; */
+                margin: 15px auto;
+                display: block;
             }
             button{
                 font-family: sans-serif;
@@ -51,6 +52,8 @@
                 padding: 0.5em; 
                 background-color: #1e272e;
                 color: white;
+                display: block;
+                margin: 20px auto;
             }
             hr{
                 width: 430px;
@@ -68,12 +71,12 @@
     <form autocomplete="off">
         <input type="text" name="memberId" required 
                 placeholder="아이디 (*이메일 형식 입력불가)">
-        <br><br>
+        
         <input type="password" name="memberPassword" required
                 placeholder="비밀번호">
-        <br><br>
+       
         <button>로그인</button>
-        <br><br>
+     
         <div>
             <input type="checkbox"> 아이디저장
         </div>
