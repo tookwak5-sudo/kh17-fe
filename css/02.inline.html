@@ -17,13 +17,33 @@
     <meta charset="UTF-8"> <!-- utf-8로 만들어짐-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--                -->   <!-- 화면을 장치에 맞춰라 --> <!-- 내가 설정한(여기선 1.0) 크기 설정을 유지하세요-->
-    <title>디자인 예제</title>
-    
     <!-- favicon 설정 -->
     <link rel="icon" href="/kh로고.jpg" type="image/jpeg">
+    <title>디자인 예제</title>
+    
 
 </head>
 <body>
+    <!--
+        inline 스타일
+        - HTML에 직접 디자인 코드를 삽입하여 구현하는 것
+        - STYLE 속성 사용 
+          - color 
+            - rgb 빛의 삼원색, RGBA 투명설정 0~1사이의 값을 설정, HEXS RGB를 두글자씩 묶어 16진수로 표현
+            - HSL 색상을 고를 때 명도, 채도, 색조 고려 / 우린 배색된 거를 사용
+           - font-size
+            - 단위가 다양하기 때문에(px, pt ....) 단위를 입력해줘야한다 e.g., 100px
+        - 전체적인 디자인 구현보다는 기존의 디자인을 수정하거ㅈ나 가볍게 추가할 때 사용한다.
+         [장점] 그 어떤 방식의 디자인보다도 우선순위가 높다. (디자인 변경이 좋다)
+         [단점] 재사용(모듈화) 불가
+    -->
+    <h1 style="color: #c0392b;">Hello CSS~!</h1>
+    <h1 style="color: #e67e22; font-size: 42px;">Hello CSS~!</h1>
+    <h1 style="border: 1px solid black;">Hello CSS~!</h1>
+    <h1 style="border: 5px dashed black;">Hello CSS~!</h1>
+    <h1 style="background-color: #f1c40f; color: #ecf0f1;">Hello CSS~!</h1>
+    <h1 style="text-decoration: line-through; color:brown;">Hello CSS~!</h1>
+    
     
 </body>
 </html>
