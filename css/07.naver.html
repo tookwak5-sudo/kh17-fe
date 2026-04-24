@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="/kh로고.jpg" type="image/jpeg">
+
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+            /* 완전 무식디자인 */
+            *{
+                /* 이제부터 폭과 높이 는 테두리가 기준이야 */
+                box-sizing: border-box;
+            }
+
+            body{
+                text-align: center;
+            }
+
+            input[name=memberId], input[name=memberPassword] {
+                font-family: sans-serif;
+                font-size: 16px;
+                width: 430px;
+                padding: 0.9em; 
+            
+                border-radius: 5px;
+                /* 10px == 0.5em */
+                outline: none;
+                /* input은 영역 내부 요소기 때문에 margin적용이 안됨 */
+                margin: 0px auto;
+                display: block;
+            }
+            button{
+                font-family: sans-serif;
+                font-size: 14px;
+                width: 430px;
+                padding: 0.5em; 
+                border-radius: 100px;
+
+                background-color: #4b7bec;
+                color: white;
+                display: block;
+                margin: 16px auto;
+            }
+            hr{
+                width: 430px;
+            }
+            div{ /*상하 0 좌우 자동 후 왼쪽으로 붙여라*/
+                width: 430px;
+                margin: 0 auto;
+                text-align: left;
+            }
+            .k{
+                width: 430px;
+                margin: 0 auto;
+                text-align: center;
+                font-size: 15px;
+                color: #1e272e;
+            }
+    </style>
+
+</head>
+<body>
+    
+    <img src="/naver.png" alt="표지 사진" width="300">     
+
+    <form autocomplete="off">
+        <input type="text" name="memberId" required 
+                placeholder="휴대폰번호, 사용자 이름 또는 이메일 주소">
+        
+        <input type="password" name="memberPassword" required
+                placeholder="비밀번호">
+       
+        <button>로그인</button>
+     
+        <div class="k">
+            비밀번호를 잊으셨나요?
+        </div>
+        
+    </form>
+</body>
+</html>
