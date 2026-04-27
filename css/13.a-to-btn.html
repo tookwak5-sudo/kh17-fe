@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="./images/kh로고.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="./commons.css" type="text/css">
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+        *{/* 전체에게 설정한다 */
+            /* 이제부터 폭과 높이는 테두리가 기준 */
+             box-sizing: border-box;
+        }
+    </style>
+</head>
+<!-- #display 속성별 효과 정리
+    - `display:block;` 을 설정하면 태그 배치가 세로로 이루어진다
+    - `display:inline;` 을 설정하면 태그 배치가 가로로 이뤄진다
+    - `display:block;` 을 폭(width) 설정이 가능 -> 한 줄에 여러개 배치가 안됨
+    - `display:inline;` 은 폭 설정이 안됨 (내용물의 크기만큼 자동설정), 한 줄에 여러개 배치 가능
+        => 절충안
+    - `display:inline-block;` 은 배치는 inline으로, 폭 설정은 block처럼 가능
+     => 나란히 놓으면 배치 형태가 약간 씩 달라짐
+    - `display:flex;`는 유연한 배치를 제공하여 줄 또는 칸을 자유롭게 나눠쓸 수 있게 하는 고급 기능
+    - `display:grid;`는 화면을 행렬로 배치할 대 사용할 수 있는 더 진화된 기능(학습하지 않음) 
+-->
+<body>
+    <div class="container w-400 mt-50"></div>
+        <div class="cell center">
+            <h1>A태그를 버튼처럼 디자인하기</h1>
+        </div>
+        <div class="cell">
+            <a href="https://www.google.com" class="btn btn-negative w-100">구글로 이동</a>
+        </div>
+</body>
+</html>

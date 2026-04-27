@@ -117,6 +117,20 @@
 .me-10 {margin-right: 10px;}
 .me-0 {margin-right: 0px;}
 
+/* 글자 색상 유틸리티 클래스 */
+.red {color: #eb4d4b;}
+.orange {color: #f0932b;}
+.yellow {color: #f9ca24;}
+.green {color: #6ab04c;}
+.blue {color: #3c40c6}
+.purple {color: #be2edd;}
+.white {color: #ffffff;}
+.black {color: #130f40;}
+.gray {color: #a5b1c2;}
+.silver {color: #BDC3C7;}
+.gold {color: #D4AF37;}
+.pink {color: #FDA7DF;}
+
 /* 컴포넌트(Component ) 디자인 */
 
 /* 입력창(field) 디자인 */
@@ -157,6 +171,11 @@
     border-radius: 0.1em;
     cursor: pointer;
 }
+a.btn{
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+}
 .btn:hover { /* 조건부 디자인 : 마우스가 올라갔을 때 */
     filter: brightness(0.95); 
     /* background-color: black; */
@@ -175,3 +194,4 @@
     border-color: #d63031;
     color: white;
 }
+
