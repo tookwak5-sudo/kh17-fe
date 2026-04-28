@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="./images/kh로고.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="./commons.css" type="text/css">
+    <!-- 아이콘-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+       .pagination{
+            font-size: 20px;
+            color: violet;
+       }
+    </style>
+
+</head>
+<body>
+        <div class="container w-600">
+            <div class="cell center mt-50">
+                <h1>강좌목록</h1>
+            </div>
+             <div class="cell right">
+                <a href="#" class="btn btn-netural">신규등록하기</a>
+            </div>
+            <div class="cell center">
+                <form autocomplete="off">
+                    <select name="column" class="field">
+                        <option value="lecture_title">강좌명</option>
+                        <option value="lecture_category">카테고리</option>
+                        <option value="lecture_type">강좌유형</option>
+                    </select>
+                    <input type="text" name="keyword" required
+                            class="field" placeholder="검색어 입력">
+                    <button type="submit" class="btn btn-positive">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span>검색</span>
+                    </button>
+                </form>
+            </div>
+           
+            <div class="cell">
+                1-10 / 42
+            </div>
+            <div class="cell">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>강좌번호</th>
+                            <th>분류</th>
+                            <th>강좌명</th>
+                            <th>수강료</th>
+                            <th>수업시간</th>
+                            <th>유형</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>자유</td>
+                            <td>자바기초</td>
+                            <td>400,000</td>
+                            <td>60</td>
+                            <td>온라인</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>자유</td>
+                            <td>파이썬기초</td>
+                            <td>500,000</td>
+                            <td>60</td>
+                            <td>오프라인</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>시험</td>
+                            <td>정보처리</td>
+                            <td>200,000</td>
+                            <td>90</td>
+                            <td>온라인</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>자유</td>
+                            <td>자바심화</td>
+                            <td>500,000</td>
+                            <td>90</td>
+                            <td>혼합</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>자유</td>
+                            <td>tcp/id</td>
+                            <td>300,000</td>
+                            <td>90</td>
+                            <td>오프라인</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="cell">
+                <div class="pagination on">
+                    <a href="#">
+                       <i class="fa-solid fa-chevron-left"></i>
+                    </a>
+                    <a href="#" class="on">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <a href="#">5</a>
+                    <a href="#">6</a>
+                    <a href="#">7</a>
+                    <a href="#">8</a>
+                    <a href="#">9</a>
+                    <a href="#">10</a>
+                    <a href="#">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </a>
+               </div>
+            </div>
+           
+        </div>
+        
+</body>
+</html>

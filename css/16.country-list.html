@@ -12,10 +12,6 @@
 
     <!-- 디자인을 작성하기 위한 영역-->
     <style>
-        *{/* 전체에게 설정한다 */
-            /* 이제부터 폭과 높이는 테두리가 기준 */
-             box-sizing: border-box;
-        }
         /* 
             테이블 디자인
             - 테이블은 다양한 태그가 조합된 구조를 가진다
@@ -43,6 +39,34 @@
 
         .table > tbody {
             text-align: center;
+        }
+
+        /* 
+            페이지네이션 디자인
+            - .pagination이라고 추가하면 자동 적용되도록 구현
+            - a태그를 개조해서 폭 설정이 가능하도록 구현
+        */
+        
+        .pagination{
+            text-align: center;
+        }
+
+        .pagination > a {
+            color: #2d3436;
+            text-decoration: none;
+            /* border: 1px solid transparent; */
+            display: inline-block;
+            font-size: 16px;
+            min-width: 2em;
+            padding: 0.25em;
+            text-align: center;
+        }
+        .pagination > a.on,
+        .pagination > a:hover {
+            /* border: 1px solid #b2bec3; */
+            box-shadow: 0 0 0 1px #b2bec3;
+            font-weight: bold;
+            color: #e17055;
         }
     </style>
 
@@ -129,7 +153,25 @@
                 </table>
             </div>
             <div class="cell">
-                Pagenation
+                <div class="pagination">
+                    <a href="#">
+                        <i class="fa-solid fa-chevron-left"></i>
+                         
+                    </a>
+                    <a href="#" class="on">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <a href="#">5</a>
+                    <a href="#">6</a>
+                    <a href="#">7</a>
+                    <a href="#">8</a>
+                    <a href="#">9</a>
+                    <a href="#">10</a>
+                    <a href="#">
+                       <i class="fa-solid fa-chevron-right"></i>
+                    </a>
+                </div>
             </div>
         </div>
 </body>

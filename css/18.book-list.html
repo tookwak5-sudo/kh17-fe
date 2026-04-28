@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="./images/kh로고.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="./commons.css" type="text/css">
+
+    <!-- 아이콘-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+        /* 테이블 확장 스타일 - 마우스 감지 색상 변경 테이블 */
+        .table.table-hover > tbody > tr:hover{
+            background-color: #dfe6e9;
+        }
+        /* 
+            테이블 확장 스타일 - 줄무늬 테이블 
+            - nth-child라는 조건은 "N번째 자식"이라는 뜻
+        */
+
+        .table.table-stripe > thead > tr, 
+        .table.table-stripe > tbody > tr:nth-child(2n)
+        {
+            background-color: #dfe6e9;
+        }
+         .pagination{
+            font-size: 24px;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container w-800">
+        <div class="cell center">
+            <h1>도서 목록</h1>
+        </div>
+        
+        <div class="cell center mt-40">
+            <form autocomplete="off">
+                <select name="column" class="field">
+                    <option value="book_title">제목</option>
+                    <option value="book_author">지은이</option>
+                    <option value="book_publisher">출판사</option>
+                    <option value="book_genre">장르</option>
+                    <option value="book_publicationDate">출간일</option>
+                </select>
+                <input type="text" name="keyword" required
+                    class="field" placeholder="검색어 입력">
+                <button type="submit" class="btn btn-positive">
+                    <i class ="fa solid fa-magnifying-glass"></i>
+                    검색
+                </button>
+            </form>
+        </div>
+         <div class="cell right">
+            <a href="#" class="btn btn-netural">신규등록</a>
+        </div>
+        <div class="cell">
+            총 ?개의 도서가 검색되었습니다.
+        </div>
+        <div class="cell"> 
+                <table class="table table-stripe">
+                <thead>
+                    <tr>
+                        <th>도서번호</th>
+                        <th width="300">제목</th>
+                        <th>지은이</th>
+                        <th>출판사</th>
+                        <th>장르</th>
+                        <th>출간일</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>?</td>
+                        <td>테스트북1</td>
+                        <td>테스트작가1</td>
+                        <td>테스트출판사1</td>
+                        <td>소설</td>
+                        <td>2026-01-05</td>
+                    </tr>
+                    <tr>
+                        <td>?</td>
+                        <td>테스트북2</td>
+                        <td>테스트작가2</td>
+                        <td>테스트출판사2</td>
+                        <td>소설</td>
+                        <td>2026-01-03</td>
+                    </tr>
+                    <tr>
+                        <td>?</td>
+                        <td>테스트북3</td>
+                        <td>테스트작가3</td>
+                        <td>테스트출판사3</td>
+                        <td>소설</td>
+                        <td>2026-01-05</td>
+                    </tr>
+                    <tr>
+                        <td>?</td>
+                        <td>테스트북4</td>
+                        <td>테스트작가4</td>
+                        <td>테스트출판사4</td>
+                        <td>소설</td>
+                        <td>2026-01-05</td>
+                    </tr>
+                    <tr>
+                        <td>?</td>
+                        <td>테스트북5</td>
+                        <td>테스트작가5</td>
+                        <td>테스트출판사5</td>
+                        <td>소설</td>
+                        <td>2026-01-05</td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="cell">
+            <div class="pagination on">
+                <a href="#">&lt;</a>
+                <a href="#" class="on">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <a href="#">7</a>
+                <a href="#">8</a>
+                <a href="#">9</a>
+                <a href="#">10</a>
+                <a href="#">다음</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
