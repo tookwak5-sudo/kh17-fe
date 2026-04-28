@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="./images/kh로고.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="./commons.css" type="text/css">
+    <!-- 아이콘-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+        .first-char {
+            font-size: 100px;
+            float: left;
+        }
+    </style>
+
+</head>
+<body>
+    
+    <div class="container w-600">
+        <div class="cell center">
+            <h1>float 속성 다루기</h1>
+        </div>
+        <div class="cell">
+            <span class="first-char">L</span>orem ipsum dolor sit amet, consectetur adipiscing elit. Nunc ut hendrerit justo. Vivamus tristique, sapien nec vehicula molestie, tortor tortor pulvinar nibh, ut luctus mi est volutpat urna. Cras blandit enim in nulla tempus rutrum. Vestibulum ac ipsum rutrum metus bibendum vehicula. Nulla facilisi. Vivamus tristique sed est eu vestibulum. Curabitur in ipsum euismod, aliquam ex ut, ultrices diam. Curabitur condimentum, mauris a ullamcorper commodo, arcu metus vehicula libero, in bibendum ligula neque eu elit. Fusce porttitor rhoncus posuere. Integer accumsan consectetur nisi vitae consequat.
+            <span class="first-char">C</span>urabitur ut justo vestibulum, suscipit orci ac, semper sem. Fusce non rhoncus ante. Suspendisse potenti. Donec elit augue, tempor quis convallis eget, fringilla non erat. Quisque facilisis metus vitae magna convallis, vel mollis diam fringilla. Vivamus elementum vitae sem eu fermentum. Praesent in finibus mi. Phasellus ultrices, mi eu scelerisque posuere, nisi nibh ultrices lectus, sit amet sodales libero felis at orci. Etiam dolor urna, consectetur in lorem vitae, egestas posuere tortor. Phasellus nibh felis, pellentesque nec faucibus nec, ornare congue quam. Duis aliquet ligula at orci egestas aliquam. Aliquam sed tincidunt ipsum. Integer arcu massa, porta eget sem non, lacinia semper justo. Proin pretium suscipit mi, eget vulputate nulla feugiat vel. Quisque vitae egestas ante, id faucibus lacus.
+        </div>
+
+        <div class="cell mt-50">
+            inline-block은 반씩 나눠서 배치할 수 없다
+        </div>
+
+        <div class="cell">
+            <button class="btn" style="width:49.63">좌측</button>
+            <button class="btn" style="width:49.63">우측</button>
+        </div>
+
+        <div class="cell mt-50">
+                float를 써서 배치하면 여백이 안생긴다
+        </div>
+        <div>
+            <button class="btn w-50" style="float:left;">좌측</button>
+            <button class="btn w-50" style="float:left;">우측</button>
+        </div>
+        <div class="cell">
+            <div class="w-75" style="float:left;">좌측</div>
+            <div class="w-35" style="float:left;">우측</div>
+        </div>
+
+        <!-- 
+            *중요* 
+            - float는 여백이 없고 배치방향 설정이 쉽지만,
+            - 우리가 여태까지 설계한 레이아웃을 무시한다
+            - float는 제한된 공간에서 자기들끼리만 놀게 배치해야한다.(격리)
+            - float 속성을 정의할 별도의 공간이 필요하다
+                → (clear 속성이 사용된 영역이 필요)
+        -->
+        <div style="clear:both;"></div>
+
+        <div class="cell mt-50">
+            일반글자
+        </div>
+
+        <!-- 
+            최종목표 :
+            - float 좋아? 근데 위험!
+            - float-area라는 클래스를 만들어서 float끼리 놀게하자
+            - 이 영역이 끝나면 자동으로 clear까지 되도록 처리
+         -->
+    </div>
+
+</body>
+</html>
