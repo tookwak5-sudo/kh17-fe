@@ -274,3 +274,35 @@ a.btn{
     color: #e17055;
 }
 
+/* 
+링크 디자인 
+- 변화를 부드럽게 보여주도록 처리
+- transition-property : 변화를 부드럽게 처리할 항목
+- transition-duration : 변화가 완료되는 지속시간
+- transition-timing-function : 변화의 처리방식
+    - linear : 일정한 변화
+    - ease-out : 끝을 느리게 (자동차 브레이크)
+*/
+.link {
+display: inline-block;
+color: #2d3436;
+text-decoration: none;
+transition-property: transform, color;
+transition-duration: 0.1s;
+transition-timing-function: ease-out;
+/* transition-timing-function: linear; */
+}
+.link:hover {
+/* text-decoration: underline;   */
+color: #0984e3;
+/* 
+    transform을 이용한 물리적 처리
+    - translate()로 이동
+    - rotate()로 회전
+    - skew()로 기울이기
+    -scale()로 확대/축소
+*/
+
+transform: scale(1.01);
+/* transform: rotate(45deg); */
+}
