@@ -11,10 +11,32 @@
 
     <!-- 디자인을 작성하기 위한 영역-->
     <style>
+        div {
+            box-shadow: 0 0 0 1px red;
+        }
+
         .first-char {
             font-size: 100px;
             float: left;
         }
+
+        /* 
+            float 전용 격리 영역 생성
+            - .float-area 안에 있는 모든 항목은 float:left이다.
+            - 새로운 영역을 만들기 힘드니 가상영역을 활용
+                - :.before 는 시작 지점을 의미
+                - :.after 는 종료 지점을 의미
+        */
+        .float-area > * {
+            float: left;
+        }
+        .float-area::after {
+            /* 이 영역은 실제로 존재하지 않는다 */
+            content:""; /*칸을 생성하고 */
+            display: block; /*한 줄을 다 차지하게 만들고 */
+            clear: both; /* 사용한 float들을 청소 */
+        }
+
     </style>
 
 </head>
@@ -46,8 +68,8 @@
             <button class="btn w-50" style="float:left;">우측</button>
         </div>
         <div class="cell">
-            <div class="w-75" style="float:left;">좌측</div>
-            <div class="w-35" style="float:left;">우측</div>
+            <div class="w-50" style="float:left;">좌측</div>
+            <div class="w-50" style="float:left;">우측</div>
         </div>
 
         <!-- 
@@ -70,6 +92,12 @@
             - float-area라는 클래스를 만들어서 float끼리 놀게하자
             - 이 영역이 끝나면 자동으로 clear까지 되도록 처리
          -->
+        <div class="cell mt-50">
+            <div class="float-area">
+                <div class="w-50">1번</div>
+                <div class="w-50">2번</div>
+            </div>
+        </div>
     </div>
 
 </body>

@@ -82,12 +82,12 @@
 .w-25 {width: 25% !important;}
 .w-20 {width: 20% !important;}
 
-    /*
-        여백(margin) 유틸리티 클래스
-        - 네 개의 방향(top, bottom, left, right)를 각각 처리
-        - left랑 right는 차별적인 단어 이슈 + 세로형 문제로 각각 start, end로 대체
-        - margin-left 는 ms, margin-right 는 mn으로 표시
-        */
+/*
+여백(margin) 유틸리티 클래스
+- 네 개의 방향(top, bottom, left, right)를 각각 처리
+- left랑 right는 차별적인 단어 이슈 + 세로형 문제로 각각 start, end로 대체
+- margin-left 는 ms, margin-right 는 mn으로 표시
+*/
 
 .mt-50 {margin-top: 50px !important;}
 .mt-40 {margin-top: 40px !important;}
@@ -204,7 +204,7 @@ a.btn{
  /* 
     테이블 디자인
     - 테이블은 다양한 태그가 조합된 구조를 가진다
-    - 최상위 태그인 ㅡtable>에 클래스를 부여하고 나머지는 탐색
+    - 최상위 태그인 <table>에 클래스를 부여하고 나머지는 탐색
     - 연계 선택자 : 하위, 후순 선택자
 
     후손 선택자
@@ -306,3 +306,20 @@ color: #0984e3;
 transform: scale(1.01);
 /* transform: rotate(45deg); */
 }
+
+   /* 
+            float 전용 격리 영역 생성
+            - .float-area 안에 있는 모든 항목은 float:left이다.
+            - 새로운 영역을 만들기 힘드니 가상영역을 활용
+                - :.before 는 시작 지점을 의미
+                - :.after 는 종료 지점을 의미
+        */
+        .float-area > * {
+            float: left;
+        }
+        .float-area::after {
+            /* 이 영역은 실제로 존재하지 않는다 */
+            content:""; /*칸을 생성하고 */
+            display: block; /*한 줄을 다 차지하게 만들고 */
+            clear: both; /* 사용한 float들을 청소 */
+        }
