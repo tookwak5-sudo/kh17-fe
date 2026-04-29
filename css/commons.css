@@ -295,6 +295,8 @@ transition-timing-function: ease-out;
 .link:hover {
 /* text-decoration: underline;   */
 color: #0984e3;
+
+
 /* 
     transform을 이용한 물리적 처리
     - translate()로 이동
@@ -307,19 +309,19 @@ transform: scale(1.01);
 /* transform: rotate(45deg); */
 }
 
-   /* 
-            float 전용 격리 영역 생성
-            - .float-area 안에 있는 모든 항목은 float:left이다.
-            - 새로운 영역을 만들기 힘드니 가상영역을 활용
-                - :.before 는 시작 지점을 의미
-                - :.after 는 종료 지점을 의미
-        */
-        .float-area > * {
-            float: left;
-        }
-        .float-area::after {
-            /* 이 영역은 실제로 존재하지 않는다 */
-            content:""; /*칸을 생성하고 */
-            display: block; /*한 줄을 다 차지하게 만들고 */
-            clear: both; /* 사용한 float들을 청소 */
-        }
+/* 
+float 전용 격리 영역 생성
+- .float-area 안에 있는 모든 항목은 float:left이다.
+- 새로운 영역을 만들기 힘드니 가상영역을 활용
+    - :.before 는 시작 지점을 의미
+    - :.after 는 종료 지점을 의미
+*/
+.float-area > * {
+float: left;
+}
+.float-area::after {
+/* 이 영역은 실제로 존재하지 않는다 */
+content:""; /*칸을 생성하고 */
+display: block; /*한 줄을 다 차지하게 만들고 */
+clear: both; /* 사용한 float들을 청소 */
+}
