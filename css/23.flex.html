@@ -15,7 +15,28 @@
         div {
             box-shadow: 0 0 1px 1px gray;
         }
-
+        /* 
+            flex 디자인
+            - 기본 영역은 .flex-area로 설정
+            - 내부에 .flex-fill이 있다면 flex-grow 설정
+            - 정중앙 배치만 할 경우 .flext-center를 영역에 추가 설정
+            - 세로배치를 원한다면 .flex-vertical을 영역에 추가 설정
+        */
+        .flex-area{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap; /* 줄바꿈 금지 */
+        }
+        .flex-area > .flex-fill {
+            flex-grow: 1;
+        }
+        .flex-area.flex-center {
+            justify-content: center;
+            align-items: center;
+        }
+        .flex-area.flex-vertical {
+            flex-direction: column;
+        }
     </style>
 
 </head>
@@ -50,7 +71,7 @@
             4. 방향전환이 자유로움 (flex-direction)
         -->
         <div class="cell">
-            <div style="display: flex; flex-direction: column-reverse;">
+            <div style="display: flex; flex-direction: column;">
                 <div class="w-100">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Nisl tincidunt eget nullam non. Quis hendrerit dolor magna eget est lorem ipsum dolor sit. Volutpat odio facilisis mauris sit amet massa. Commodo odio aenean sed adipiscing diam donec adipiscing tristique. Mi eget mauris pharetra et. Non tellus orci ac auctor augue. Elit at imperdiet dui accumsan sit. Ornare arcu dui vivamus arcu felis. Egestas integer eget aliquet nibh praesent. In hac habitasse platea dictumst quisque sagittis purus. Pulvinar elementum integer enim neque volutpat ac.
                                     Senectus et netus et malesuada. Nunc pulvinar sapien et ligula ullamcorper malesuada proin. Neque convallis a cras semper auctor. Libero id faucibus nisl tincidunt eget. Leo a diam sollicitudin tempor id. A lacus vestibulum sed arcu non odio euismod lacinia. In tellus integer feugiat scelerisque. Feugiat in fermentum posuere urna nec tincidunt praesent. Porttitor rhoncus dolor purus non enim praesent elementum facilisis. Nisi scelerisque eu ultrices vitae auctor eu augue ut lectus. Ipsum faucibus vitae aliquet nec ullamcorper sit amet risus. Et malesuada fames ac turpis egestas sed. Sit amet nisl suscipit adipiscing bibendum est ultricies. Arcu ac tortor dignissim convallis aenean et tortor at. Pretium viverra suspendisse potenti nullam ac tortor vitae purus. Eros donec ac odio tempor orci dapibus ultrices. Elementum nibh tellus molestie nunc. Et magnis dis parturient montes nascetur. Est placerat in egestas erat imperdiet.</div>
                 <div class="w-100">2단</div>
@@ -58,7 +79,43 @@
                 <div class="w-100">4단</div>
             </div>
         </div>
+            <!-- 클래스는 float처럼 flext-area라고 영역 지정 -->
+             <div class="cell">
+                <div class="flex-area">
+                    <div class="w-100">1단</div>
+                    <div class="w-100">2단</div>
+                    <div class="w-100">3단</div>
+                </div>
+             </div>
+            
+            <!-- 
+                flex 내부 항목에 flex-grow를 적으면 잔여 공간을 비율로 나눠 가진다 
+                *(주의) 1:1이라고 해서 50%가 되는게 아니라 남은 공간을 나눠가지는 것이다
+                *한쪽만 줘서 남은 공간을 다 차지하도록 구현하면 "나머지"를 설정할 수 있다
+            -->
 
+             <div class="cell">
+                <div class="flex-area">
+                    <div>1단</div>
+                    <div style="flex-grow: 1;">2단</div>
+                    <div class="flex-fill">2단</div>
+                </div>
+             </div>
+
+            <!-- 
+                flex는 내용물의 정렬상태를 매우 디테일하게 설정할 수 있다(총 9가지 위치)
+                - justify-content 속성으로 좌,우,중상,양쪽 정렬 등을 설계할 수 있다
+                - align-items 속성으로 상,중,하 정렬을 설정할 수 있다
+            -->
+            <div class="cell">
+                <div class="flex-area" 
+                     style="height: 200px; justify-content: center; align-items:center;">
+                    <div>
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+                    로딩중...
+                    </div>
+                </div>
+            </div>
     </div>
 </body>
 </html>

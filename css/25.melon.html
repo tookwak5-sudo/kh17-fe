@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>멜론(melon)</title>
+    <link rel="icon" href="./images/kh로고.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="./commons.css" type="text/css">
+
+    <!-- 아이콘-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+      div{
+        box-shadow: 0 0 1px 1px blue;
+      }
+      .outer{
+        width: 100%;
+        height: 178px;
+        padding: 16px 0px;
+      }
+      .outer > .inner
+      , .outer > .inner > .flex-area 
+      {  
+        height: 100%;
+        box-shadow: 0 0 3px 2px gray;
+      }
+      /* flext-shrink는 공간이 모자른 경우 어느 비율로 영역에서 가져갈지를 결정하는 속성(<-> flex-grow) */
+      .outer .date-area {
+        width: 135px;
+        flex-shrink: 0;
+      }
+      .outer .image-area {
+        width: 245px;
+        flex-shrink: 0;
+      }
+      .outer .content-area {
+        padding-left: 15px;
+        flex-shrink: 1;
+        min-width: 0; 
+        /* flex로 인해서 생기는 늘어나는 성질(최소폭을 확보하려는) 성질을 제거 */
+      }
+      /* 
+        제목은 한 줄만 나오게 처리 (나머지는 말줄임표) 
+        <디자인이 적용되기 위한 전제조건>
+        1. 폭이 정해져 있을 것 (flex의 경우는 min-width: 0;으로 설정(제거))
+        2. overflow 속성을 숨김(hidden)으로 바꿀 것
+        3. text-overflow 속성을 생략(ellipsis)으로 바꿀 것
+      */
+      .outer .content-area .title h3 {
+        white-space: nowrap; /*줄바꿈 금지*/
+        overflow: hidden; /* 넘어가면 숨김처리 */
+        text-overflow: ellipsis; /* 글자가 넘어간 부분을 말줄임표로 표시 */
+      }
+      /* 
+        내용은 2줄만 나오게 처리 (나머지는 말줄임표) 
+        - 원래 CSS의 신기능은 브라우저 개발사에서 실험적으로 도입한 뒤 반응이 좋으면 표준이 되는 방식이다
+        - 브라우저 업체별로 실험적 기능을 제공하기 위한 접두사가 존재한다
+            `-webkit-`은 크롬, 사파리, 엣지, 안드로이드 등을 의미(크로니움 엔진)
+            `-moz-`는 파이어폭스를 의미 (Gecko 엔진)
+            `-ms-`는 구형 Edge, Internet Explorer를 의미 (현재 사용하지 않음)
+            `-o-`는 오페라를 의미
+      */
+      .outer .content-area .detail {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+
+      }
+    </style>
+
+</head>
+<body>
+    <div class="container w-1100 mt-50 mb-50">
+        <div class="cell center">
+            <h1>melon 매거진 화면</h1>
+        </div>
+
+        <div class="cell">
+        <div class="flex-area flex-vertical">
+            <div class="outer">
+                <div class="inner">
+                    <div class="flex-area">
+                        <div class="date-area flex-area flex-center">
+                            <div class="center">
+                                <div style="font-size: 20px; font-weight: bold;">28</div>
+                                <div style="font-size: 12px;" class="gray">2026-04</div>
+                            </div>
+                        </div>
+
+                        <div class="image-area">
+                            <img src="http://dummyimage.com/240x135" width="100%" height="100%">
+                        </div>
+
+                        <div class="content-area flex-fill">
+
+                            <div class="title">
+                                <h3 class="ellipsis">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod t
+                                    empor incididunt ut labore et dolore magna aliqua. Nisl tincidunt eget nullam non. Quis hendrerit dolor magna eget est lorem ipsum dolor sit. Volutpat odio facilisis mauris sit amet massa. Commodo odio aenean sed adipiscing diam donec adipiscing tristique. Mi eget mauris pharetra et. Non tellus orci ac auctor augue. Elit at imperdiet dui accumsan sit. Ornare arcu dui vivamus arcu felis. Egestas integer eget aliquet nibh praesent. In hac habitasse platea dictumst quisque sagittis purus. Pulvinar elementum integer enim neque volutpat ac.Senectus et netus et malesuada. Nunc pulvinar sapien et ligula ullamcorper malesuada proin. Neque convallis a cras semper auctor. Libero id faucibus nisl tincidunt eget. Leo a diam sollicitudin tempor id. A lacus vestibulum sed arcu non odio euismod lacinia. In tellus integer feugiat scelerisque. Feugiat in fermentum posuere urna nec tincidunt praesent. Porttitor rhoncus dolor purus non enim praesent elementum facilisis. Nisi scelerisque eu ultrices vitae auctor eu augue ut lectus. Ipsum faucibus vitae aliquet nec ullamcorper sit amet risus. Et malesuada fames ac turpis egestas sed. Sit amet nisl suscipit adipiscing bibendum est ultricies. Arcu ac tortor dignissim convallis aenean et tortor at. Pretium viverra suspendisse potenti nullam ac tortor vitae purus. Eros donec ac odio tempor orci dapibus ultrices. Elementum nibh tellus molestie nunc. Et magnis dis parturient montes nascetur. Est placerat in egestas erat imperdiet. Consequat interdum varius sit amet mattis vulputate enim.Sit amet nulla facilisi morbi tempus. Nulla facilisi cras fermentum odio eu. Etiam erat velit scelerisque in dictum non consectetur a erat. Enim nulla aliquet porttitor lacus luctus accumsan tortor posuere. Ut sem nulla pharetra diam. Fames ac turpis egestas maecenas. Bibendum neque egestas congue quisque egestas diam. Laoreet id donec ultrices tincidunt arcu non sodales neque. Eget felis eget nunc lobortis mattis aliquam faucibus purus. Faucibus interdum posuere lorem ipsum dolor sit.</h3>
+                            </div>
+
+                            <div class="detail mt-20">
+                                <span>empor incididunt ut labore et dolore magna aliqua. Nisl tincidunt eget nullam non. Quis hendrerit dolor magna eget est lorem ipsum dolor sit. Volutpat odio facilisis mauris sit amet massa. Commodo odio aenean sed adipiscing diam donec adipiscing tristique. Mi eget mauris pharetra et. Non tellus orci ac auctor augue. Elit at imperdiet dui accumsan sit. Ornare arcu dui vivamus arcu felis. Egestas integer eget aliquet nibh praesent. In hac habitasse platea dictumst quisque sagittis purus. Pulvinar elementum integer enim neque volutpat ac.Senectus et netus et malesuada. Nunc pulvinar sapien et ligula ullamcorper malesuada proin. Neque convallis a cras semper auctor. Libero id faucibus nisl tincidunt eget. Leo a diam sollicitudin tempor id. A lacus vestibulum sed arcu non odio euismod lacinia. In tellus integer feugiat scelerisque. Feugiat in fermentum posuere urna nec tincidunt praesent. Porttitor rhoncus dolor purus non enim praesent elementum facilisis. Nisi scelerisque eu ultrices vitae auctor eu augue ut lectus. Ipsum faucibus vitae aliquet nec ullamcorper sit amet risus. Et malesuada fames ac turpis egestas sed. Sit amet nisl suscipit adipiscing bibendum est ultricies. Arcu ac tortor dignissim convallis aenean et tortor at. Pretium viverra suspendisse potenti nullam ac tortor vitae purus. Eros donec ac odio tempor orci dapibus ultrices. Elementum nibh tellus molestie nunc. Et magnis dis parturient montes nascetur. Est placerat in egestas erat imperdiet. Consequat interdum varius sit amet mattis vulputate enim.Sit amet nulla facilisi morbi tempus. Nulla facilisi cras fermentum odio eu. Etiam erat velit scelerisque in dictum non consectetur a erat. Enim nulla aliquet porttitor lacus luctus accumsan tortor posuere. Ut sem nulla pharetra diam. Fames ac turpis egestas maecenas. Bibendum neque egestas congue quisque egestas diam. Laoreet id donec ultrices tincidunt arcu non sodales neque. Eget felis eget nunc lobortis mattis aliquam faucibus purus. Faucibus interdum posuere lorem ipsum dolor sit.</span>
+                            </div>
+
+                            <div class="mt-10">
+                                <span>
+                                <i class="fa-solid fa-heart red"></i> &
+                                </span>
+                                <span>|</span>
+                                <span>댓글</span>
+                                <span>|</span>
+                                <span>조회수</span>
+                            </div>
+                            
+
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+           
+        </div>
+        </div>
+    </div>
+</body>
+</html>
