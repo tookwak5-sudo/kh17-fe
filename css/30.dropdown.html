@@ -12,47 +12,74 @@
 
     <!-- 디자인을 작성하기 위한 영역-->
     <style>
-    div {
-        box-shadow: 0 0 0 1px blue;
-    }
-    .menu {
-       position: relative;
-       width: 120px;
-       z-index: 999;
+        /* 모든 ul 태그의 기본 스타일을 제거 */
+    .menu,
+    .menu ul 
+    {
+      list-style: none;
+      margin: 0;
+      padding: 0;
     }    
-    .menu > .menu-content{
-        /* display: none; */
-        position: absolute;
-        left: 0;
-        width: 100%;
-        top: 100%;
-        background-color: white;
-        opacity: 0;
-        transition-property: opacity;
-        transition-duration: 0.2s;
-        transition-timing-function: ease-out;
-        transform: translateY(-100%);
-        z-index: 998;
+    /* 하위메뉴를 숨긴다 */
+    .menu ul {
+        display: none;
     }
-    .menu:hover > .menu-content{
-        /* display: block; */
-        opacity: 1;
-        transform: translateY(0%)
+    /* li에 마우스가 올라가면 하위 ul을 표시 */
+    .menu li:hover > ul {
+        display: block;
     }
     </style>
 
 </head>
 <body>
-    <div class="menu">
-        <label>메뉴</label>
-        <div class="menu-content">
-            <div>항목 1</div>
-            <div>항목 2</div>
-            <div>항목 3</div>
-            <div>항목 4</div>
-        </div>
-    </div>
+    <!-- 
+        드롭다운을 <ul>을 써서 구현 
+        메뉴는 계층형 구조를 가진다 (= 트리구조).
+    -->
+    <ul class="menu">
+        <li>
+            <a>보여질 글자</a>
+            <ul>
+                <li><a>항목1</a></li>
+                <li><a>항목2</a></li>
+                <li><a>항목3</a></li>
+                <li><a>항목4</a></li>
+                <li><a>항목5</a></li>
+            </ul>
+        </li>
+        <li>
+            <a>보여질 글자</a>
+            <ul>
+                <li><a>항목1</a></li>
+                <li><a>항목2</a></li>
+                <li><a>항목3</a></li>
+                <li><a>항목4</a></li>
+                <li><a>항목5</a></li>
+            </ul>
+        </li>
+        <li>
+            <a>보여질 글자</a>
+            <ul>
+                <li><a>항목1</a></li>
+                <li><a>항목2</a></li>
+                <li><a>항목3</a></li>
+                <li><a>항목4</a></li>
+                <li><a>항목5</a></li>
+            </ul>
+        </li>
+        <li>
+            <a>보여질 글자</a>
+            <ul>
+                <li><a>항목1</a></li>
+                <li><a>항목2</a></li>
+                <li><a>항목3</a></li>
+                <li><a>항목4</a></li>
+                <li><a>항목5</a></li>
+            </ul>
+        </li>
+    </ul>
+
     <hr>
-    아래쪽에 있는 어떤 다른 컨텐츠
+    메뉴에 영향을 받지 말아야 하는 컨텐츠들
 </body>
 </html>
