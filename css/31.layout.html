@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KH정보교육원 스프링개발자 수업자료</title>
-    <link rel="icon" href="./images/kh로고.jpg" type="image/jpeg">
-    <link rel="stylesheet" href="./commons.css" type="text/css">
+    <title>디자인 수업</title>
+    <link rel="icon" href="/kh.jpg" type="image/jpeg">
 
-    <!-- 아이콘-->
+    <!-- 아이콘 -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 
-    <!-- 디자인을 작성하기 위한 영역-->
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="./commons.css">
     <style>
-        /* div {box-shadow: 0 0 0 1px grey;} */
-        
-           .image-shadow {
+        /* div { box-shadow: 0 0 0 1px gray ;} */
+
+        .image-shadow {
             box-shadow: 0 0 2px 1px gray;
         }
         .image-circle {
@@ -55,76 +55,93 @@
         }
         
     </style>
-
 </head>
 <body>
-    <!-- 메인 컨테이너1 + 내부영역 4 -->
+    <!-- 메인 컨테이너1 + 내부영역4 -->
     <div class="container w-1200">
         <div class="flex-area flex-vertical">
             <!-- 헤더 영역 -->
             <div class="flex-area">
                 <div class="w-25 flex-area flex-center">
-                    <img src="https://dummyimage.com/200x50">
+                    <img src="https://www.dummyimage.com/200x50">
                 </div>
                 <div class="w-50 flex-area flex-center">
                     <h1>KH정보교육원 스프링개발자 수업자료</h1>
                 </div>
                 <div class="w-25 flex-area flex-center">
                     <div class="center">
-                        <h2>24시간 상담</h2>
-                        <div>1599-0000</div>
+                        <h2 class="mt-0 mb-0">24시간상담</h2>
+                        <div>1588-0000</div>                        
                     </div>
                 </div>
             </div>
 
-             <!-- 메뉴 -->
-                 <div>
-                    <ul class="menu">
-                        <li>
-                            <a href="#">
-                                <i class="fa-solid fa-house"></i>
-                                <span>홈</span>
-                            </a>
-                        </li>
-                         <li>
-                            <a href="#">
-                               <i class="fa-solid fa-database"></i>
-                                <span>데이터</span>
-                                <!-- 하위메뉴 -->
-                                 <ul>
-                                    <li><i class="fa-regular fa-flag"></i>국가정보</li>
-                                    <li>강좌정보</li>
-                                    <li><i class="fa-solid fa-book"></i>도서정보</li>
-                                 </ul>
-                            </a>
-                        </li>
-                         <li>
-                            <a href="#">
-                               <i class="fa-solid fa-clipboard"></i>
-                                <span>게시판</span>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                         <li>
-                            <a href="#">
-                                <i class="fa-soild fa-house"></i>
-                                <span> <i class="fa-solid fa-arrow-right-to-bracket"></i>로그인</span>
-                                <!-- 하위 메뉴 -->
-                                 <ul>
-                                    <li>
-                                    <a href="#">
-                                       회원가입
-                                    </a>
-                                    </li>
-                                 </ul>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+            <!-- 메뉴 -->
+            <div>
+                <ul class="menu">
+                    <li>
+                        <a href="#">
+                            <i class="fa-solid fa-house"></i>
+                            <span>홈</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa-solid fa-database"></i>
+                            <span>데이터</span>
+                        </a>
+                        <!-- 하위 메뉴 -->
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <i class="fa-solid fa-flag"></i>
+                                    <span>국가정보</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa-solid fa-chalkboard-user"></i>
+                                    <span>강좌정보</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="fa-solid fa-book"></i>
+                                    <span>도서정보</span>
+                                </a>
+                            </li>
+                        </ul>
+                        
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa-solid fa-comments"></i>
+                            <span>게시판</span>
+                        </a>
+                    </li>
+                    
+                    <li class="divider"></li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa-solid fa-right-to-bracket"></i>
+                            <span>로그인</span>
+                        </a>
+                        <!-- 하위메뉴 -->
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <i class="fa-solid fa-user-plus"></i>
+                                    <span>회원가입</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
 
-                <!-- 사이드바 및 컨텐츠 -->
-                 <div style="min-height: 450px;" class="flex-area">
+            <!-- 사이드바 및 컨텐츠 -->
+            <div style="min-height: 450px;" class="flex-area">
                 <div class="w-200">
                     <div class="container w-100">
                         <!-- 비회원 상태 -->
@@ -168,15 +185,15 @@
                 </div>
             </div>
 
-             <!-- footer -->
-            <div style="border-top: 1px solid gray" class="flex-area">
+            <!-- 푸터 -->
+            <div style="border-top: 1px solid gray;" class="flex-area">
                 <div class="w-50">
                     <div class="container w-100">
                         <div class="cell">
                             <h2>KH정보교육원</h2>
                         </div>
                         <div class="cell">
-                            oo시 oo구 oo동 000-000번지
+                            OO시 OO구 OO동 000-000번지
                         </div>
                         <div class="cell">
                             대표자 - 피카츄
@@ -193,19 +210,19 @@
                         </div>
                         <div class="cell">
                             <span>강남지점</span>
-                                <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                            <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                         </div>
                         <div class="cell">
                             <span>종로지점</span>
-                                <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                            <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                         </div>
                         <div class="cell">
                             <span>당산지점</span>
-                                <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                            <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                         </div>
                         <div class="cell">
                             <span>부산지점</span>
-                                <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                            <a href="#"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
                         </div>
                     </div>
                 </div>
@@ -226,6 +243,7 @@
                                 <span>개인정보 처리방침</span>
                             </a>
                         </div>
+
                         <div class="cell">
                             <h2>파트너쉽</h2>
                         </div>
@@ -239,6 +257,7 @@
                     </div>
                 </div>
             </div>
+        </div>
     </div>
 </body>
 </html>
