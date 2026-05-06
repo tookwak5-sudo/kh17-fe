@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- 스크립트 태그 안에 자바스크립트를 작성하면 자바스크립트가 실행이 된다 -->
+    <script>
+        //자바 스크립트
+        //- 브라우저에서 화면의 동적 처리를 위해 실행하는 스크립트 언어
+        //- 스크립트는 (인터프리터 방식으로 실행 =생방송) ↔ (컴파일 방식 : 녹화 방송)
+        //- 돌발 상황에 매우 유연하게 대처하는 특징을 가짐
+
+        //출력
+        // system.out.println()과 동일한 명령
+        console.log("자바스크립트 실행완료");
+        console.log("자바스크립트 실행완료")
+        console.log('자바스크립트 실행완료')
+
+        //변수
+        // int a = 10;
+        var a = 10;
+        console.log(a);
+
+        //string b = "hello";
+        var b = "hello";
+        console.log(b);
+
+        //double c = 3.14;
+        var c = 3.14;
+        console.log(c);
+
+        // String d = a + b;
+        var d = a + b;
+        console.log(d);
+
+        // String e = a * b; // 자바에서는 실행이 안됨
+        var e = a * b; //자바스크립트에서는? NaN (Not a Number, 숫자가 아니다)
+        console.log(e);
+
+        //아무리 자바스크립트라도 말도 안되는 건 불가능
+        // console.log(pizza); //없는 변수를 지어내서 쓸 수는 없음
+
+        // int f;
+        // System.out.println(f); // 자바에서는 NG (값을 예측할 수 없음)
+        var f;
+        console.log(f);//undefined
+
+        var g = null; //자바에도 없는 값 (참조 대상이 없음)
+        console.log(g);
+
+        var h = true; // 논리도 있음
+        var i = 10 < 20; //숫자로 대소비교 가능
+        console.log(h, i); //연속 출력
+
+        //자바 입장에서 보면 어이가 없는 코드들..
+        console.log(0 == false); //유연한 비교(부정적인 값)
+        console.log(0 == ""); //유연한 비교(부정적인 값)
+        console.log(0 === false); //엄격한 비교(나중에 추가된 연산자, 형태까지 비교)
+        console.log(undefined == null); //유연한 비교
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
