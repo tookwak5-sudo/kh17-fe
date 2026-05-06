@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="../css/images/kh로고.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+
+    <!-- 아이콘-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+      div { box-shadow: 0 0 0 1px #cccccc}
+      
+      .btn {
+        padding: 5px 1.5em;
+      }
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+       function number7(){
+            var display= document.querySelector(".display");
+            display.value +="7";
+       }
+       function number8(){
+        var display= document.querySelector(".display");
+            display.value +="8";
+       }
+       function number9(){
+        var display= document.querySelector(".display");
+            display.value +="9";
+       }
+       function number4(){
+        var display= document.querySelector(".display");
+            display.value +="4";
+       }
+       function number5(){
+        var display= document.querySelector(".display");
+            display.value +="5";
+       }
+       function number6(){
+        var display= document.querySelector(".display");
+            display.value +="6";
+       }
+       function number1(){
+        var display= document.querySelector(".display");
+            display.value +="1";
+       }
+       function number2(){
+        var display= document.querySelector(".display");
+            display.value +="2";
+       }
+       function number3(){
+        var display= document.querySelector(".display");
+            display.value +="3";
+       }
+       function numberStar(){
+        var display= document.querySelector(".display");
+            display.value +="*";
+       }
+       function number0(){
+        var display= document.querySelector(".display");
+            display.value +="0";
+       }
+       function numberSharp(){
+        var display= document.querySelector(".display");
+            display.value +="#";
+       }
+       function numberDelete(){
+            //마지막 한 글자를 지운다 = 입력글자를 꺼내와서 끝부분을 제거한뒤 재설정한다
+            // 잘라내는 명령 - subString (시작점, 끝점)
+            // 글자수 구하기 - length
+            var display= document.querySelector(".display");
+            var origin = display.value;
+            var cut = origin.substring(0, origin.length - 1);
+            display.value = cut;
+       }
+       function numberClear(){
+        var display= document.querySelector(".display");
+            display.value ="";
+       }
+       
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>휴대전화 키패드 문제</h1>
+        </div>
+    
+        <div class="cell center">
+            <input class="field w-100 display" type="text" inputmode="number" placeholder="전화번호 입력" >
+        </div>
+
+        <div class="flex-area flex-center">
+            <div class="ms-5">
+                <button type="button" class="btn btn-netural" onclick="number1('1')">1</button>
+                <button type="button" class="btn btn-netural" onclick="number2('2')">2</button>
+                <button type="button" class="btn btn-netural" onclick="number3('3')">3</button>
+            </div>
+        </div>
+         <div class="flex-area flex-center">
+            <div class="ms-5">
+                <button type="button" class="btn btn-netural" onclick="number4('4')">4</button>
+                <button type="button" class="btn btn-netural" onclick="number5('5')">5</button>
+                <button type="button" class="btn btn-netural" onclick="number6('6')">6</button>
+            </div>
+        </div>
+        <div class="flex-area flex-center">
+            <div class="ms-5 w-10">
+                <button type="button" class="btn btn-netural" onclick="number7('7')">7</button>
+                <button type="button" class="btn btn-netural" onclick="number8('8')">8</button>
+                <button type="button" class="btn btn-netural" onclick="number9('9')">9</button>
+            </div>
+        </div>
+        <div class="flex-area flex-center">
+            <div class="ms-5 w-10">
+                <button type="button" class="btn btn-netural" onclick="numberStar('*')">*</button>
+                <button type="button" class="btn btn-netural" onclick="number0('0')">0</button>
+                <button type="button" class="btn btn-netural" onclick="numberSharp('#')">#</button>
+            </div>
+        </div>
+
+        <div class="flex-area flex-center">
+            <div class="ms-5">
+                <button type="button" class="btn btn-netural" onclick="numberDelete()">한글자 지우기</button>
+                <button type="button" class="btn btn-netural" onclick="numberClear()">전체 지우기</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
