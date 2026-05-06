@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="../css/images/kh로고.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+
+    <!-- 아이콘-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+      div { box-shadow: 0 0 0 1px #cccccc}
+
+      .target{
+            font-size: 50px;    
+            font-weight: bold;
+            /* font-style: italic; */
+            transition: color 0.1s ease-out;
+       }
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        // style을 변경할 때는 신중해야 한다 (기존 inline 스타일이 사라질 수 있기 때문)
+        function changeRed(){
+            var target = document.querySelector(".target");
+            //target.style = "color:red";
+            target.style.color = "red"; // 권장하는 방법 (원하는 항목만)
+        }
+        function changeGreen(){
+            var target = document.querySelector(".target");
+            //target.style = "color:green";
+            target.style.color = "green";
+        }
+        function changeBlue(){
+            var target = document.querySelector(".target");
+            //target.style = "color:blue";
+            target.style.color = "blue";
+        }
+        function changeBlack(){
+            var target = document.querySelector(".target");
+            // target.style = "color:black";
+            target.style.color = "black";
+        }
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>색상 변경문제</h1>
+        </div>
+
+        <div class="cell center">
+            <button type="button" class="btn btn-netural" onclick="changeRed()">빨강</button>
+            <button type="button" class="btn btn-netural" onclick="changeGreen()">초록</button>
+            <button type="button" class="btn btn-netural" onclick="changeBlue()">파랑</button>
+            <button type="button" class="btn btn-netural" onclick="changeBlack()">검정</button>
+        </div>
+
+        <div class="cell center target">
+           Hello Javascript!
+        </div>
+        
+    </div>
+</body>
+</html>
