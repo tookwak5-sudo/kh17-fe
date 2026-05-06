@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="../css/images/kh로고.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+
+    <!-- 아이콘-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+      div { box-shadow: 0 0 0 1px #cccccc}
+      
+      .display {
+        min-height: 24px;
+        padding: 0.5em;
+        min-height: 2.5em;
+        word-break: break-all;
+      }
+      .outer {
+        width: 33.3333%;
+        padding: 5px;
+      }
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+       //버전2 : 함수 3개로 구현 (숫자 버튼, 한글자 지우기, 전체 지우기)
+       function numberButton(number){
+            var display = document.querySelector(".display");
+            display.textContent += number;
+       } 
+       function numberDelete(){
+            //마지막 한 글자를 지운다 = 입력글자를 꺼내와서 끝부분을 제거한뒤 재설정한다
+            // 잘라내는 명령 - subString (시작점, 끝점)
+            // 글자수 구하기 - length
+            var display= document.querySelector(".display");
+            var origin = display.textContent;
+            var cut = origin.substring(0, origin.length - 1);
+            display.textContent = cut;
+       }
+       function numberClear(){
+        var display= document.querySelector(".display");
+            display.textContent = "";
+       }
+       
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>휴대전화 키패드 문제</h1>
+        </div>
+    
+        <div class="cell center">
+            <!-- <input class="field w-100 display" type="text" inputmode="number" placeholder="전화번호 입력" > -->
+            <div class="display"></div>
+        </div>
+
+        <div class="cell flex-area" style="flex-wrap: wrap;">
+            <div class="outer">
+                <button type="button" class="btn btn-netural w-100" onclick="numberButton('7')">
+                    <i class="fa-solid fa-7"></i>
+                </button>
+            </div>  
+            <div class="outer">
+                <button type="button" class="btn btn-netural w-100" onclick="numberButton('8')">
+                    <i class="fa-solid fa-8"></i>
+                </button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-netural w-100" onclick="numberButton('9')">
+                    <i class="fa-solid fa-9"></i>
+                </button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-netural w-100" onclick="numberButton('4')">
+                    <i class="fa-solid fa-4"></i>
+                </button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-netural w-100" onclick="numberButton('5')">
+                    <i class="fa-solid fa-5"></i>
+                </button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-netural w-100" onclick="numberButton('6')">
+                    <i class="fa-solid fa-6"></i>
+                </button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-netural w-100" onclick="numberButton('1')">
+                    <i class="fa-solid fa-1"></i>
+                </button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-netural w-100" onclick="numberButton('2')">
+                    <i class="fa-solid fa-2"></i>
+                </button>
+            </div>
+            <div class="outer">
+                <button type="button" class="btn btn-netural w-100" onclick="numberButton('3')">
+                    <i class="fa-solid fa-3"></i>
+                </button>
+            </div>
+             <div class="outer">
+                <button type="button" class="btn btn-netural w-100" onclick="numberButton('*')">
+                    <i class="fa-solid fa-star"></i>
+                </button>
+            </div>
+             <div class="outer">
+                <button type="button" class="btn btn-netural w-100" onclick="numberButton('0')">
+                    <i class="fa-solid fa-0"></i>
+                </button>
+            </div>
+             <div class="outer">
+                <button type="button" class="btn btn-netural w-100" onclick="numberButton('#')">
+                    <i class="fa-solid fa-hashtag"></i>
+                </button>
+            </div>
+            <div class="cell">
+                <div class="flex-area">
+                    <div class="w-50">
+                        <button type="button class= btn btn-negative w-100" onclick="numberDelete()">
+                            <i class="fa-solid fa-delete-left"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
