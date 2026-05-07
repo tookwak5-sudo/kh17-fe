@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="../css/images/kh로고.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+
+    <!-- 아이콘-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+      div { box-shadow: 0 0 0 1px #cccccc}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        function claculateCount() {
+            //[1] 입력창을 선택한다
+            var textarea = document.querySelector("[name=q1]");
+            //[2] 글자수를 계산한다
+            var size = textarea.value.length;
+
+            //[3] 글자수를 표시한다
+            //var count = document.querySelector(".count");
+            //var count = textarea의 뒤에 있는 span; // doㅡ탐색 html은 tree구조
+            //var count = document.querySelector("[name=q1] + .count") // css를 활용한 방법
+            var div = textarea.nextElementSibling; //textarea의 바로 뒤에 있는 태그
+            var span = div.children[0]; //div 내부에 있는 첫번째 태그를 받아옴
+            span.textContent = size;
+        }
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>자기 소개서</h1>
+        </div>
+        <div>
+            <span>(Q) 가장 최근에 관심있게 본 IT 소식은 무엇입니까?</span>
+        </div>
+        <div class="cell center">
+            <textarea name="q1" class="field w-100" rows="10" oninput="claculateCount()"></textarea>
+            <div class="right">
+                <span>0</span> / 1000글자
+            </div>
+        </div>
+    </div>
+</body>
+</html>

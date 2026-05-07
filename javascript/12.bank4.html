@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="/kh.jpg" type="image/jpeg">
+
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div { box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        //입력창에 이미 입력된 값은 어떠한 경우에도 문자열이기 때문에 계산 과정에서 숫자 변환이 필요
+        function addMoney(amount){
+            var target = document.querySelector(".target");
+            //target.value가 비어있는 경우를 고려하여 코드를 작성
+            //if(target.value == "") {
+            //if(target.value == '') {
+            //if(!target.value) {
+            if(target.value.length == 0) {//앞으로 사용할 방식
+                target.value = amount;
+            }
+            else {
+                var newAmount = parseInt(target.value) + amount;
+                target.value = newAmount;
+            }
+
+            displayAmount();
+        }
+        function deleteOne() {
+            var target = document.querySelector(".target");
+            var origin = target.value;
+            target.value = origin.substring(0, origin.length-1);
+
+            displayAmount();
+        }
+        function deleteAll() {
+            var target = document.querySelector(".target");
+            target.value = "";
+
+            displayAmount();
+        }
+
+        //.target의 입력값을 .display에 옮겨 표시하는 함수
+        function displayAmount() {
+            //(+추가) 입력값을 외부 화면에 출력
+            var target = document.querySelector(".target");
+            var display = document.querySelector(".display");
+
+            if(target.value.length == 0) {//비어있으면
+                display.textContent = "금액을 입력하세요";
+            }
+            else {
+                var money = parseInt(target.value);
+                display.textContent = "이체 금액은 총 " + money.toLocaleString()+"원 입니다";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>이체 금액 입력</h1>
+        </div>
+
+        <div class="cell mt-40">
+            <input class="field w-100 target right" placeholder="이체할 금액을 입력하세요">
+        </div>
+
+        <div class="cell">
+            <button type="button" class="btn btn-neutral" onclick="addMoney(10000000);">천만</button>
+            <button type="button" class="btn btn-neutral" onclick="addMoney(1000000);">백만</button>
+            <button type="button" class="btn btn-neutral" onclick="addMoney(100000);">십만</button>
+            <button type="button" class="btn btn-neutral" onclick="addMoney(10000);">만</button>
+            <button type="button" class="btn btn-neutral" onclick="addMoney(1000);">천</button>
+            <button type="button" class="btn btn-neutral" onclick="addMoney(100);">백</button>
+            <button type="button" class="btn btn-neutral" onclick="addMoney(10);">십</button>
+            <button type="button" class="btn btn-neutral" onclick="addMoney(1);">일</button>
+            <button type="button" class="btn btn-negative" onclick="deleteOne();">
+                <i class="fa-solid fa-delete-left"></i>
+            </button>
+            <button type="button" class="btn btn-negative" onclick="deleteAll();">
+                <i class="fa-solid fa-eraser"></i>
+            </button>
+        </div>
+
+        <div class="cell mt-50 display" style="font-size: 24px;">
+            금액을 입력하세요
+        </div>
+    </div>
+</body>
+</html>

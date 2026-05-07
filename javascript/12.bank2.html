@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="../css/images/kh로고.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+
+    <!-- 아이콘-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+      div { box-shadow: 0 0 0 1px #cccccc}
+
+      .target {
+        min-height: 24px;
+        padding: 0.5em;
+        min-height: 2.5em;
+        word-break: break-all;
+      }
+
+      
+    
+      
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        function addMoney(amount){
+            var target = document.querySelector(".target"); // css 선택자
+            var newAmount = parseInt(target.value) + amount;
+            console.log(target.value, parseInt(target.value), amount);
+            target.value = newAmount;
+
+            // (+추가) 입력값(newAmount)을 외부화면에 출력
+            var display = document.querySelector(".display");
+            // display.value // input text textarea 3개 밖에 못쓴다
+            display.textContent = newAmount.toLocaleString();
+        }
+        function deleteOne(){
+            var target = document.querySelector(".target");
+            var origin = target.value;
+            target.value = origin.substring(0, origin.length -1);
+
+            if(target.value.length == 0) { //입력창 입력값이 없으면
+                target.value = "0";
+            }
+
+            // (+추가) newAmount를 외부화면에 출력
+            var display = document.querySelector(".display");
+            var money = parseInt(target.value);
+            display.textContent = money.toLocaleString();
+        }
+        function deleteAll(){
+            var target = document.querySelector(".target");
+            target.value = "0";
+
+            var display = document.querySelector(".display");
+            display.textContent = 0;
+        }
+        
+       
+        
+    </script>
+</head>
+<body>
+    <div class="container w-700 mt-50 mb-50">
+        <div class="cell center" style="border: 1">
+            <h1>이체 금액 입력</h1>
+        </div>
+        
+        <div class="cell left center blue">
+            <input class="field w-100 target right" placeholder="이체할 금액을 입력하세요" value="0">
+        </div>
+        <div class="cell flex area">
+            <button type="button" class="btn btn-netural w-10" onclick="addMoney(1000000000)">십억</button>
+            <button type="button" class="btn btn-netural w-10" onclick="addMoney(100000000)">억</button>
+            <button type="button" class="btn btn-netural w-10" onclick="addMoney(10000000)">천만</button>
+            <button type="button" class="btn btn-netural w-10" onclick="addMoney(1000000)">백만</button>
+            <button type="button" class="btn btn-netural w-10" onclick="addMoney(100000)">십만</button>
+            <button type="button" class="btn btn-netural w-10" onclick="addMoney(10000)">만</button>
+            <button type="button" class="btn btn-netural w-10" onclick="addMoney(1000)">천</button>
+            <button type="button" class="btn btn-netural w-10" onclick="addMoney(100)">백</button>
+            <button type="button" class="btn btn-netural w-10" onclick="addMoney(10)">십</button>
+            <button type="button" class="btn btn-netural w-10" onclick="addMoney(1)">일</button>
+            <button type="button" class="btn btn-negative w-10" onclick="deleteOne()">
+                            <i class="fa-solid fa-delete-left"></i>
+            </button>
+            <button type="button" class="btn btn-negative w-10" onclick="deleteAll()">
+                <i class="fa-solid fa-eraser"></i>
+            </button>
+        </div>
+
+       <div class="cell mt-50" style="font-size: 24px">
+            이체하시려는 금액은 총 <span class="display">0</span>원 입니다.
+        </div>
+    
+    </div>
+</body>
+</html>

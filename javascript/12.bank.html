@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="../css/images/kh로고.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+
+    <!-- 아이콘-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+      /* div { box-shadow: 0 0 0 1px #cccccc} */
+
+      .display, .subDisplay {
+        min-height: 24px;
+        padding: 0.5em;
+        min-height: 2.5em;
+        word-break: break-all;
+      }
+     
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        totalAmount = 0;
+        function updateDisplay(){
+            var display = document.querySelector(".display");
+            var subDisplay = document.querySelector(".subDisplay");
+
+            display.textContent = totalAmount;
+
+            if(totalAmount >= 0){
+                subDisplay.textContent = "이체하시려는 금액은 총 " + totalAmount.toLocaleString() + "원 입니다."
+            }
+            else{
+                subDisplay.textContext= "";
+            }
+        }
+        function moneyButton(money){
+            totalAmount += money;
+            updateDisplay();
+        }
+        function moneyDelete(){
+            var display = document.querySelector(".display");
+            //일의 자리 숫자를 지운다 /10 
+            if(totalAmount > 0){
+                totalAmount = Math.floor(totalAmount / 10);
+               updateDisplay();
+            }
+        }
+        function moneyClear(){
+            totalAmount=0;
+            updateDisplay();
+        }
+       
+        
+    </script>
+</head>
+<body>
+    <div class="container w-700 mt-50 mb-50">
+        <div class="cell center" style="border: 1">
+            <h1>이체금액 입력기</h1>
+        </div>
+        
+        <div class="cell left center blue">
+            <div class="display"></div>
+        </div>
+        <div class="cell flex area">
+            <button type="button" class="btn btn-netural w-10" onclick="moneyButton(1000000000)">십억</button>
+            <button type="button" class="btn btn-netural w-10" onclick="moneyButton(100000000)">억</button>
+            <button type="button" class="btn btn-netural w-10" onclick="moneyButton(10000000)">천만</button>
+            <button type="button" class="btn btn-netural w-10" onclick="moneyButton(1000000)">백만</button>
+            <button type="button" class="btn btn-netural w-10" onclick="moneyButton(100000)">십만</button>
+            <button type="button" class="btn btn-netural w-10" onclick="moneyButton(10000)">만</button>
+            <button type="button" class="btn btn-netural w-10" onclick="moneyButton(1000)">천</button>
+            <button type="button" class="btn btn-netural w-10" onclick="moneyButton(100)">백</button>
+            <button type="button" class="btn btn-netural w-10" onclick="moneyButton(10)">십</button>
+            <button type="button" class="btn btn-netural w-10" onclick="moneyButton(1)">일</button>
+            <button type="button" class="btn btn-negative w-10" onclick="moneyDelete()">
+                            <i class="fa-solid fa-delete-left"></i>
+            </button>
+            <button type="button" class="btn btn-netural w-10" onclick="moneyClear()">
+                <i class="fa-solid fa-eraser"></i>
+            </button>
+        </div>
+
+       <div class="cell center">
+            <div class="subDisplay blue left"></div>
+        </div>
+    
+    </div>
+</body>
+</html>
