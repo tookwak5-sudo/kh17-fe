@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="../css/images/kh로고.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+
+    <!-- 아이콘-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+      div { box-shadow: 0 0 0 1px #cccccc}
+      
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+       //아이디 검사 및 피드백 설정 - 클래스로
+       function checkMemberId(){
+            var tag = document.querySelector("[name=memberId]"); //입력창 태그 선택
+            var regex = /^[a-z](?=.*?[0-9]+)[a-z0-9]{4,19}$/;
+            var valid = regex.test(tag.value);
+
+            var feedback = tag.nextElementSibling;
+            if(valid){ // 요구 형식을 준수하였다면
+                feedback.classList.remove("blue", "red");
+                feedback.classList.add("blue");
+                feedback.textContent = "멋진 아이디입니다.";
+            }
+            else{ // 요구 형식에 부합하지 않으면
+                feedback.classList.remove("blue", "red");
+                feedback.classList.add("red");
+                feedback.textContent = "영문 대문자, 소문자, 숫자, 특수문자를 반드시 1개 이상 포함한 8~16글자로 작성하세요";
+            }
+       }
+
+       function checkMemberPassword(){
+        //입력값 불러오기 및 검사
+        var tag = document.querySelector("[name=memberPassword]"); //태그선택
+        var regex = /^(?=.*?[A-Z]+)(?=.*?[a-z]+)(?=.*?[0-9]+)(?=.*?[\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\]\{\}\'\"\`\~\<\>\.\,\/\?\\\|]+)[A-Za-z0-9\!\@\#\$\%\^\&\*\(\)\-\_\=\+\[\]\{\}\'\"\`\~\<\>\.\,\/\?\\\|]{8,16}$/;
+        var valid = regex.test(tag.value);
+        
+        var feedback = tag.nextElementSibling;
+        feedback.classList.remove("blue", "red");
+        if(valid){
+            feedback.classList.add("blue");
+            feedback.textContent = "올바른 형식의 비밀번호입니다.";
+        }
+        else{
+            feedback.classList.add("red");
+            feedback.textContent = "대문자, 소문자, 숫자, 특수문자를 반드시 포함하여 8~16글자로 작성하시오";
+        }
+       }
+
+       
+    </script>
+</head>
+<body>
+    <form autocomplete="off">
+
+        <div class="container w-600 mt-50 mb-50">
+            <div class="cell center">
+                <h1>회원가입</h1>
+            </div>
+
+            <!-- 아이디 입력창과 피드백 -->
+            <div class="cell">
+                <label>아이디 <i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" name="memberId" class="field w-100" oninput="checkMemberId();">
+                <!-- 피드백 영역은 찾기 쉽게 입력창의 바로 뒤에 두자! -->
+                 <div></div>
+            </div>
+
+            <!-- 비밀번호 입력창과 피드백 -->
+            <div class="cell">
+                <label>비밀번호 <i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" name="memberPassword" class="field w-100" oninput="checkMemberPassword();">
+                <!-- 피드백 영역은 찾기 쉽게 입력창의 바로 뒤에 두자! -->
+                 <div></div>
+            </div>
+
+        </div>
+    </form>
+</body>
+</html>
