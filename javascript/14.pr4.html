@@ -22,7 +22,8 @@
             //[1] 입력창을 선택한다
             var textarea = document.querySelector("[name=q1]");
             //[2] 글자수를 계산한다
-            var size = textarea.value.length;
+            // var size = textarea.value.length;
+            var size = getBytelength(textarea.value);
 
             //[3] 글자수를 표시한다
             //var count = document.querySelector(".count");
@@ -32,21 +33,19 @@
             var span = div.children[0]; //div 내부에 있는 첫번째 태그를 받아옴
             span.textContent = size;
 
-            //[4] 글자 수가 1000을 넘게 되면 색상 변경을 시도
-            //[방법 1]
-            // if(size > 10){
-            //     span.style.color = "red";
-            // }
-            // else{
-            //     span.style.color = ""; // 원래 색상으로 돌아가게하는 법
-            // }
 
-            // [방법 2]
-            if(size > 10) {
+            //[4] 글자 수가 1000을 넘게 되면 넘어간 만큼 잘라내자
+            if(size > 1000) {
                 span.classList.add("red");
+                
             }
-            else {
+            else{
                 span.classList.remove("red");
+            }
+
+            //심화 : UTF-8 기준 바이트 수 계산 함수
+            function getBytelength(str){
+                return new TextEncoder().encode(str).length;
             }
         }
 
@@ -63,7 +62,7 @@
         <div class="cell center">
             <textarea name="q1" class="field w-100" rows="10" oninput="claculateCount()"></textarea>
             <div class="right">
-                <span>0</span> / 1000글자
+                <span>0</span> / 1000 byte
             </div>
         </div>
     </div>

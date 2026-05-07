@@ -32,21 +32,12 @@
             var span = div.children[0]; //div 내부에 있는 첫번째 태그를 받아옴
             span.textContent = size;
 
-            //[4] 글자 수가 1000을 넘게 되면 색상 변경을 시도
-            //[방법 1]
-            // if(size > 10){
-            //     span.style.color = "red";
-            // }
-            // else{
-            //     span.style.color = ""; // 원래 색상으로 돌아가게하는 법
-            // }
 
-            // [방법 2]
-            if(size > 10) {
-                span.classList.add("red");
-            }
-            else {
-                span.classList.remove("red");
+            //[4] 글자 수가 1000을 넘게 되면 넘어간 만큼 잘라내자
+            if(size > 1000) {
+                var newContent = textarea.value.substring(0, 1000);
+                textarea.value = newContent;
+                span.textContent = "1000";
             }
         }
 
