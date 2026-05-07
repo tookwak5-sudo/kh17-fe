@@ -23,7 +23,7 @@
             var textarea = document.querySelector("[name=q1]");
             //[2] 글자수를 계산한다
             // var size = textarea.value.length;
-            var size = getBytelength(textarea.value);
+            var size = getByteLength(textarea.value);
 
             //[3] 글자수를 표시한다
             //var count = document.querySelector(".count");
@@ -44,7 +44,7 @@
             }
 
             //심화 : UTF-8 기준 바이트 수 계산 함수
-            function getBytelength(str){
+            function getByteLength(str){
                 return new TextEncoder().encode(str).length;
             }
         }

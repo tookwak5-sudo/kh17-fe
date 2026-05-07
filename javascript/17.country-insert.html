@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>피드백 디자인 실습</title>
+    <link rel="icon" href="../css/images/kh로고.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+
+    <!-- 아이콘-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+      /* div { box-shadow: 0 0 0 1px #cccccc} */
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        function checkCountryRegion(){
+            var tag = document.querySelector("[name=countryRegion]"); //태그 선택     
+            var check = tag.value;
+            var valid = check !="";
+            tag.classList.remove("success", "fail");
+            tag.classList.add(valid ? "success" : "fail");
+        }
+        function checkCountryName(){
+            var tag = document.querySelector("[name=countryName]"); //태그 선택
+            var regex = /^[가-힣]+$/;
+            var valid = regex.test(tag.value);
+            tag.classList.remove("success", "fail");
+            tag.classList.add(valid ? "success" : "fail");
+        }
+        function checkCountryCapital(){
+            var tag = document.querySelector("[name=countryCapital]"); //태그 선택
+            var regex = /^[가-힣]+$/;
+            var valid = regex.test(tag.value);
+            tag.classList.remove("success", "fail");
+            tag.classList.add(valid ? "success" : "fail");
+        }
+        function checkCountryPopulation(){
+            var tag = document.querySelector("[name=countryPopulation]"); //태그 선택
+            var regex = /^[0-9]+$/;
+            var valid = regex.test(tag.value);
+            tag.classList.remove("success", "fail");
+            tag.classList.add(valid ? "success" : "fail");
+        }
+    </script>
+</head>
+<body>
+    <form autocomplete="off">
+        <div class="container w-400 mt-50">
+            <div class="cell center">
+                <h1>국가 정보 등록</h1>
+            </div>
+            <div class="cell">
+                <label>대륙명<i class="fa-solid fa-asterisk red"></i></label>
+                <select class="field w-100" name="countryRegion" required oninput="checkCountryRegion()"> 
+                    <option value="">선택하세요</option>
+                    <option>아시아</option>
+                    <option>아프리카</option>
+                    <option>북아메리카</option>
+                    <option>남아메리카</option>
+                    <option>유럽</option>
+                    <option>오세아니아</option>
+                </select>
+                <div class="success-feedback"></div>
+                <div class="fail-feedback">대륙명을 선택해주세요!</div>
+            </div>
+            <div class="cell">
+                <label>국가명<i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" name="countryName"
+                    class="field w-100" required
+                    placeholder="e.g., 대한민국" oninput="checkCountryName()">
+                <div class="success-feedback">올바른 국가명입니다!</div>
+                <div class="fail-feedback">한글로만 작성해 주세요!</div>
+            </div>
+            <div class="cell">
+                <label>수도명<i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" name="countryCapital"
+                    class="field w-100" required
+                    placeholder="e.g., 서울" oninput="checkCountryCapital()">
+                <div class="success-feedback">올바른 수도명입니다!</div>
+                <div class="fail-feedback">한글로만 작성해 주세요!</div>
+            </div>
+            <div class="cell">
+                <label>인구수<i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" inputmode="numeric"
+                name="countryPopulation"
+                class="field w-100" required
+                placeholder="e.g., 55000000" oninput="checkCountryPopulation()">
+                <div class="success-feedback">올바른 인구수입니다</div>
+                <div class="fail-feedback">숫자로만 작성해주세요!</div>
+            </div>
+            <div class="cell mt-40 right">
+                <button class="btn btn-positive w-100">
+                    등록하기
+                </button>
+            </div>
+            <div class="cell mt-40 right">
+                <button class="btn btn-neutral">
+                    목록으로
+                </button>
+                <button class="btn btn-positive">
+                    등록하기
+                </button>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

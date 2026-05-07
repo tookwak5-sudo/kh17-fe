@@ -552,7 +552,6 @@ display : block;
 display : block;
 }
 .field {
-    
     background-size: 1em;
     background-repeat: no-repeat;
     background-position-x: right 0.5em;
@@ -560,6 +559,9 @@ display : block;
     padding-right: 2em;
 }
 
+.select.field {
+    background-position-x: right 1em;
+}
 
 .field.success {
 background-image: url("https://cdn.jsdelivr.net/gh/tookwak5-sudo/cdn/valid.png");
