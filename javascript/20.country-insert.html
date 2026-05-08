@@ -24,6 +24,7 @@
             var valid = regex.test(tag.value);
             tag.classList.remove("success", "fail");
             tag.classList.add(valid ? "success" : "fail");
+            return valid; //결과를 반환하게 해야 다른곳에서 사용이 가능
         }
         function checkCountryName(){
             var tag = document.querySelector("[name=countryName]"); //태그 선택
@@ -31,6 +32,7 @@
             var valid = regex.test(tag.value);
             tag.classList.remove("success", "fail");
             tag.classList.add(valid ? "success" : "fail");
+            return valid;
         }
         function checkCountryCapital(){
             var tag = document.querySelector("[name=countryCapital]"); //태그 선택
@@ -40,13 +42,21 @@
             var valid = 0 < bytes && bytes <= 36;
             tag.classList.remove("success", "fail");
             tag.classList.add(valid ? "success" : "fail");
+            return valid;
         }
 
         function getByteLength(str){
             return new TextEncoder().encode(str).length;
         }
 
-        //숫자 범위 검사
+        //숫자 입력 필드는 숫자만 입력 되도록 처리하는 것이 좋을 수도 있다
+        function filterCountryPopulation() {
+            var tag = document.querySelector("[name=countryPopulation]");
+            var regex = /[^0-9]+/g; //g(lobal)를 붙이면 개수 제한 없이 다 적용됨
+            var replacement = tag.value.replace(regex, "");
+            tag.value = replacement;
+        }
+
         function checkCountryPopulation(){
             var tag = document.querySelector("[name=countryPopulation]"); //태그 선택
             // var valid = parseInt(tag.value || 0) > 0; //tag.value가 비어있으면 0으로 대체
@@ -58,11 +68,31 @@
 
             tag.classList.remove("success", "fail");
             tag.classList.add(valid ? "success" : "fail");
+            return valid;
         }
+
+        //폼 최종 전송 가능 여부 판정
+        function checkForm() {
+            //만약에 내가 검사하기 싫으니까
+            var valid1 = checkCountryRegion();
+            var valid2 = checkCountryName();
+            var valid3 = checkCountryCapital();
+            var valid4 = checkCountryPopulation();
+
+            var valid = valid1 && valid2 && valid3 && valid4;
+            
+            if(valid == false){
+                return false
+            }
+            
+            return true;
+        }
+
     </script>
 </head>
 <body>
-   <form method="post" enctype="multipart/form-data" autocomplete="off">
+   <form method="post" enctype="multipart/form-data" autocomplete="off" 
+            onsubmit="return checkForm();">
     <div class="container w-600 mt-50 mb-50">
         <div class="cell center">
              <h1>국가 정보 등록</h1>
@@ -70,7 +100,7 @@
 
         <div class="cell">
             <label>대륙명<i class="fa-solid fa-asterisk red"></i></label>
-            <select class="field w-100" name="countryRegion" required oninput="checkCountryRegion()"> 
+            <select class="field w-100" name="countryRegion" oninput="checkCountryRegion()"> 
                 <option value="">선택하세요</option>
                 <option>아시아</option>
                 <option>아프리카</option>
@@ -99,9 +129,17 @@
 
         <div class="cell">
             <label>인구<i class="fa-solid fa-asterisk red"></i></label>
-            <input type="text" inputmode="numeric" name="countryPopulation" class="field w-100" onblur="checkCountryPopulation()">
+            <input type="text" inputmode="numeric" name="countryPopulation" 
+                class="field w-100" 
+                oninput="filterCountryPopulation();"
+                onblur="checkCountryPopulation();">
             <div class="fail-feedback">0보다 큰 숫자만 가능합니다</div>
         </div>
+
+        <div class="cell">
+            <button type="submit" class="btn btn-positive w-100">신규 등록</button>
+        </div>
+
     </div>
 
    </form>

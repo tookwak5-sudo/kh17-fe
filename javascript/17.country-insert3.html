@@ -36,7 +36,8 @@
             var tag = document.querySelector("[name=countryCapital]"); //태그 선택
             // var regex = /^[가-힣]{1,12}$/;
             // var valid = regex.test(tag.value);
-            var valid = getByteLength(tag.value) <= 36;
+            var bytes = getByteLength(tag.value);
+            var valid = 0 < bytes && bytes <= 36;
             tag.classList.remove("success", "fail");
             tag.classList.add(valid ? "success" : "fail");
         }
