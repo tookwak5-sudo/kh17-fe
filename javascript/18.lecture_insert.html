@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="../css/images/kh로고.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+
+    <!-- 아이콘-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+      div { box-shadow: 0 0 0 1px #cccccc}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        function checkLectureTitle(){
+            //과정 
+            // 1. 태그선택  // 복습할 때는 byte로도 해보기
+            var tag = document.querySelector("[name=lectureTitle]");
+            //2. 값 추출
+            var valid = tag.value.length > 0;
+            //3. 유효성 검사
+            tag.classList.remove("success", "fail");
+            //4. 결과 기록
+            tag.classList.add(valid ? "success" : "fail");
+        }
+        function checkLectureCategory(){
+            var tag = document.querySelector("[name=lectureCategory]");
+            var regex = /^(이론|실습|시험)$/;
+            var valid = regex.test(tag.value);
+            tag.classList.remove("success","fail");
+            tag.classList.add(valid ? "success" : "fail");
+        }   
+
+        function filterLectureDuration(){
+            var tag =document.querySelector("[name=lectureDuration]");
+            var originValue = tag.value;
+            var replaceValue = originValue.replace(/[^0-9]/g, "");
+            //tag.value = replaceValue; // 00001이 해결되지 않음
+            tag.value =parseInt(replaceValue || 0); //replaceValue가 빈칸이면 0으로 대체
+        }
+        function checkLectureDuration(){
+            var tag = document.querySelector("[name=lectureDuration]");
+            var duration = parseInt(tag.value); // NaN 나올 수 없음
+            var valid = duration <= 300 && duration % 30 == 0; //좋은 습관 범위를 줄이고 검사를 시작!
+            tag.classList.remove("success", "fail");
+            tag.classList.add(valid ? "success" : "fail");
+        }
+
+        function filterLecturePrice(){
+            var tag =document.querySelector("[name=lecturePrice]");
+            var originValue = tag.value;
+            var replaceValue = originValue.replace(/[^0-9]/g, "");
+            //tag.value = replaceValue; // 00001이 해결되지 않음
+            tag.value =parseInt(replaceValue || 0); //replaceValue가 빈칸이면 0으로 대체
+        }
+        function checkLecturePrice(){
+            var tag = document.querySelector("[name=lecturePrice]");
+            var price = parseInt(tag.value);
+            var valid = price >= 0 && price <= 100000000;
+            tag.classList.remove("success", "fail");
+            tag.classList.add(valid ? "success" : "fail");
+        }
+        
+       function checkLectureType() {
+            var tag = document.querySelector("[name=lectureType]");
+            var regex = /^(온라인|오프라인|혼합)$/;
+            var valid = regex.test(tag.value);
+            tag.classList.remove("success", "fail");
+            tag.classList.add(valid ? "success" : "fail");
+        }
+
+        function checkAttach(){}
+        function checkForm(){}
+    </script>
+</head>
+<body>
+     <form action="" method="post" enctype="multipart/form-data"  autocomplete="off">
+        <div class="container w-500 mt-50 mb-50">
+            <div class="cell center">
+                <h1>강좌 정보 등록</h1>
+            </div>
+            <div class="cell">
+                <label>강좌명 <i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" name="lectureTitle" placeholder="e.g., 정보처리 산업기사 필기"
+                        class="field w-100" onblur="checkLectureTitle()">
+                <div class="success-feedback">올바른 형식입니다</div>
+                <div class="fail-feedback">필수 항목입니다</div>
+            </div>
+            <div class="cell">
+                <label>카테고리 <i class="fa-solid fa-asterisk red"></i></label>
+                <select class="field w-100" name="lectureCategory" oninput="checkLectureCategory();">
+                    <option value="">선택하세요</option>
+                    <option>이론</option>
+                    <option>실습</option>
+                    <option>시험</option>
+                </select>
+                <div class="fail-feedback">필수 항목입니다</div>
+            </div>
+            <div class="cell">
+                <label>강의시간 <i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" inputmode="numeric" name="lectureDuration" class="field w-100" 
+                        oninput="filterLectureDuration()"
+                        onblur="checkLectureDuration()">
+                <div class="success-feedback">강의시간이 설정되었습니다</div>
+                <div class="fail-feedback">30시간 단위로 최대 300시간 이내에서 설정 가능합니다</div>
+            </div>
+            <div class="cell">
+                <label>수강료 <i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" inputmode="numeric" name="lecturePrice" class="field w-100"
+                        oninput="filterLecturePrice()"
+                        onblur="checkLecturePrice()">
+                <div class="success-feedback">수강료가 설정되었습니다</div>
+                <div class="fail-feedback">수강료는 0 이상으로 설정해야 합니다</div>
+            </div>
+            <div class="cell">
+                <label>강의형태 <i class="fa-solid fa-asterisk red"></i></label>
+                <select class="field w-100" name="lectureType" oninput="checkLectureType()">
+                    <option value="">선택하세요</option>
+                    <option>온라인</option>
+                    <option>오프라인</option>
+                    <option>혼합</option>
+                </select>
+                <div class="fail-feedback">필수 항목입니다</div>
+            </div>
+            <div class="cell">
+                <label>미리보기</label>
+                <input type="file" name="attach" accept=".png, .jpg" multiple
+                class="field w-100">
+            </div>
+            <div class="cell mt-40">
+                <button class="btn btn-neutral w-100">목록으로</button>
+                <button type="submit" class="btn btn-positive w-100">
+                    <i class="fa-solid fa-plus"></i>강좌생성</button>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
