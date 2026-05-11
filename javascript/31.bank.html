@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="/kh.jpg" type="image/jpeg">
+
+    <!-- 아이콘 -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역 -->
+    <link rel="stylesheet" type="text/css" href="../css/commons.css">
+    <style>
+        div { box-shadow: 0 0 0 1px #cccccc;}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+       
+       window.addEventListener("load", function(){       
+            //금액 버튼 이벤트 설정
+            var moneyButtons = document.querySelectorAll(".btn-money");
+            for(var i=0; i < moneyButtons.length; i++){
+                moneyButtons[i].addEventListener("click", function(){
+                    //this는 클릭된 금액 버튼 (data-money에 추가할 금액이 문자열로 적혀있음)
+                    var money = parseInt(this.dataset.money);//추가해야할 금액의 숫자값
+
+                    var target = document.querySelector(".target");
+                    var current = parseInt(target.value || 0);//없으면 0으로 대체
+
+                    var result = current + money;//현재값 + 입력값
+                    target.value = result;;    
+                });
+            }
+
+            //한 글자 지우기 버튼 이벤트 설정
+            var deleteButton = document.querySelector(".btn-delete");
+            deleteButton.addEventListener("click", function(){
+                var target = document.querySelector(".target");
+                var origin = target.value;
+                target.value = origin.substring(0, origin.length-1);
+            });
+            //전체 지우기 버튼 이벤트 설정
+            var clearButton = document.querySelector(".btn-clear");
+            clearButton.addEventListener("click", function(){
+                var target = document.querySelector(".target");
+                target.value = "";
+            });
+
+       })     
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>이체 금액 입력</h1>
+        </div>
+
+        <div class="cell mt-40">
+            <input class="field w-100 target right" placeholder="이체할 금액을 입력하세요">
+        </div>
+
+        <div class="cell">
+            <button type="button" class="btn btn-neutral btn-money" data-money="100000000">일억</button>
+            <button type="button" class="btn btn-neutral btn-money" data-money="10000000">천만</button>
+            <button type="button" class="btn btn-neutral btn-money" data-money="1000000">백만</button>
+            <button type="button" class="btn btn-neutral btn-money" data-money="100000">십만</button>
+            <button type="button" class="btn btn-neutral btn-money" data-money="10000">만</button>
+            <button type="button" class="btn btn-neutral btn-money" data-money="1000">천</button>
+            <button type="button" class="btn btn-neutral btn-money" data-money="100">백</button>
+            <button type="button" class="btn btn-neutral btn-money" data-money="10">십</button>
+            <button type="button" class="btn btn-neutral btn-money" data-money="1">일</button>
+            <button type="button" class="btn btn-negative">
+                <i class="fa-solid fa-delete-left"></i>
+            </button>
+            <button type="button" class="btn btn-negative">
+                <i class="fa-solid fa-eraser"></i>
+            </button>
+        </div>
+
+        <div class="cell mt-50 display" style="font-size: 24px;">
+            금액을 입력하세요
+        </div>
+    </div>
+</body>
+</html>
