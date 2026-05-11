@@ -22,30 +22,36 @@
     <!-- 자바스크립트 작성 영역 -->
     <script>
         window.addEventListener("load", function(){
-            var size = 16;
+            // 주어진 폰트 크기 내에서만 변화가 이루어지도록 구현
+            var sizeList = [8,9,10,11,12,14,16,18,20,22,24,26,28,36,48,72,96,128,172,256];
+            var index = 6;
 
-            var btnSmall = document.querySelector(".btn-small");
-            btnSmall.addEventListener("click", function(){
-                if(size == 10) return;
+            var btnMinus = document.querySelector(".btn-minus");
+            btnMinus.addEventListener("click", function(){
+                //this는 minus버튼
+                if(index == 0) return;
+                
+                index --;
 
                 var target = document.querySelector(".target");
-                size -=1;
-                target.style.fontSize = size + "px";
+                target.style.fontSize = sizeList[index] + "px";
 
                 var span = document.querySelector(".current");
-                span.textContent = "현재크기 : "+size+"px";
+                span.textContent = sizeList[index];
             });
 
-            var btnLarge = document.querySelector(".btn-large");
-            btnLarge.addEventListener("click", function(){
-                if(size == 24) return;
+            var btnPlus = document.querySelector(".btn-plus");
+            btnPlus.addEventListener("click", function(){
+                //this는 plus버튼
+                if(index == sizeList.length - 1) return;
+
+               index++;
 
                 var target = document.querySelector(".target");
-                size +=1;
-                target.style.fontSize = size + "px";
+                 target.style.fontSize = sizeWList[index] + "px";
 
                 var span = document.querySelector(".current");
-                span.textContent = "현재크기 : "+size+"px";
+                span.textContent = sizeList[index];
             });
         });
     </script>
@@ -56,9 +62,13 @@
             <h1>글자 크기 변경</h1>
         </div>
         <div class="cell center">
-            <button type="button" class="btn btn-small"><i class="fa-solid fa-minus"></i></button>
-            <span class="current">현재크기 : 16px</span>
-            <button type="button" class="btn btn-large"><i class="fa-solid fa-plus"></i></button>
+            <button type="button" class="btn btn-minus">
+                <i class="fa-solid fa-minus"></i>
+            </button>
+            <span class="current ms-20 me-20">16</span>
+            <button type="button" class="btn btn-plus">
+                <i class="fa-solid fa-plus"></i>
+            </button>
         </div>
         <hr class="mt-30 md-50">
         <div class="cell">
