@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트 수업</title>
+    <link rel="icon" href="../css/images/kh로고.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+
+    <!-- 아이콘-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+        div { box-shadow: 0 0 0 1px #cccccc}
+
+        img {
+            transition-property: width, height;
+            transition-duration: 0.1s;
+            transition-timing-function: ease-out;
+        }
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        window.addEventListener("load", function(){
+            var btnSmall = document.querySelector(".btn-small");
+             btnSmall.addEventListener("click", function(){
+                var img = document.querySelector("img");
+                img.width = 150;
+            });
+
+            var btnNormal = document.querySelector(".btn-normal");
+            btnNormal.addEventListener("click", function(){
+                var img = document.querySelector("img");
+                img.width = 300;
+            });
+
+            var btnLarge = document.querySelector(".btn-large");
+            btnLarge.addEventListener("click", function(){
+                var img = document.querySelector("img");
+                img.width = 450;
+            });
+            
+        });
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>이미지 크기조절(자바스크립트 모듈화)</h1>
+        </div>
+        
+        <div class="cell center">
+            <button type="button" class="btn btn-small">작게</button> 
+            <button type="button" class="btn btn-normal">보통</button> 
+            <button type="button" class="btn btn-large">크게</button>
+        </div>
+        
+        <div class="cell center">
+            <img src="https://picsum.photos/500" width="300">
+        </div>
+    </div>
+</body>
+</html>
