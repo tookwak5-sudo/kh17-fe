@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트 수업</title>
+    <link rel="icon" href="../css/images/kh로고.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+
+    <!-- 아이콘-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+      div { box-shadow: 0 0 0 1px #cccccc}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        //전체 선택: check-all에 input 이벤트가 생기면 .check-item에 상태를 전파한다
+        function checkAll() {
+            //전체 선택 체크박스를 가져온다
+            var all = document.querySelector(".check-all");
+            // console.log(all.checked); //문자열 or 논리 어떤게 나오지? 논리: 문자열이지만 예외적으로 짧게 쓸 수 있게 해준다 따라서 같은 토글키들(selected, required 등 )도 역시 논리로 반환
+
+            //체크항목을 불러와서 상태를 전파한다
+            var checkboxes = document.querySelectorAll(".check-item");
+            for(var i=0; i < checkboxes.length; i++){
+                checkboxes[i].checked = all.checked;
+            }
+        }
+
+        //개별 항목 검사: 개별항목들이 모두 선택되어 있으면 전체선택을 선택하고 아니면 해제한다
+        //- 모두 체크되어 있늕지 어떻게 알지?
+        // 1. 전체 체크박스를 불러와서 체크된 항목을 카운트;
+        // 2. :checked 선택자를 활용
+
+        //1. count를 활용한 방법
+        function checkItem1() {
+            //전체 체크 아이템들을 불러온다
+            var checkboxes = document.querySelectorAll(".check-item");
+            var count = 0;
+            for(var i =0; i<checkboxes.length; i++){
+                if(checkboxes[i].checked){
+                    count++;
+                }
+            }   
+            console.log(count);
+            var allChecked = count == checkboxes.length;
+
+            //allchecked에 따라 전체선택 체크박스를 처리
+            var all = document.querySelector(".check-all");
+            all.checked = allChecked;
+        }
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>이용약관 동의</h1>
+            <p>정상적인 사이트 이용을 위해 다음 이용약관에 동의해주세요</p>
+        </div>
+        
+        <div class="cell mt-50">
+            <!-- label 안에 체크박스와 글자를 넣으면 아이디없이 글자와 체크박스가 연결됩니다 -->
+            <label>
+                <input type="checkbox" class="check-all" oninput="checkAll();"> 
+                <span>전체 이용약관에 동의합니다</span>
+            </label>
+        </div>
+
+        <hr>
+        
+        <div class="cell">
+            <label>
+                <input type="checkbox" class="check-item" oninput="checkItem1()">
+                <span>(필수) 개인정보 취급방침에 동의합니다</span>
+            </label>
+        </div>
+
+        <div class="cell">
+            <label>
+                <input type="checkbox" class="check-item" oninput="checkItem1()">
+                <span>(필수) 홈페이지 이용규정을 준수하겠습니다</span>
+            </label>
+        </div>
+
+    </div>
+</body>
+</html>
