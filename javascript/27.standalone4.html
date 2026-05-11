@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트 수업</title>
+    <link rel="icon" href="../css/images/kh로고.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+
+    <!-- 아이콘-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+      div { box-shadow: 0 0 0 1px #cccccc}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        //자바스크립트 만으로 버튼을 클릭하여 글자색상을 빨강으로 바꾸고 싶다
+        function changeColor() {
+            var target = document.querySelector(".target");
+            target.style.color = "red";
+        }
+
+        //화면이 완성되고 나서 실행되어야 하는 코드를 가지는 함수
+        function app() {
+            //버튼 선택 (코드의 작성 순서 때문에 제대로 선택이 안됨)
+            var btn = document.querySelector(".btn");
+            // console.log(btn); // -> null
+    
+            // callback함수 : 단순히 실행할 함수를 알려주는 거이기 때문에 괄호를 안씀
+            //<button onclick = "changeColor();"> 와 같은 코드
+            // btn.onclick = function() { changeColor; }; 아래 코드오 ㅏ같은 코드
+            btn.onclick = changeColor; //onclick="changeColor();"와 같은 코드 (콜백 설정) 
+        }
+
+        //<body onload="app()"을 대체하기 위한 코드
+        // console.log(window);
+        // window.onload = function() { app(); };
+        window.onload = app;
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>독립형 자바스크립트</h1>
+        </div>
+
+        <div class="cell">
+            <button type="button" class="btn btn-positive w-100">색상변경</button>
+        </div>
+        <div class="cell">
+            <h2 class="target">Hello JavaScript!</h2>
+        </div>
+    </div>
+</body>
+</html>

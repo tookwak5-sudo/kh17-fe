@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트 수업</title>
+    <link rel="icon" href="../css/images/kh로고.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+
+    <!-- 아이콘-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+      div { box-shadow: 0 0 0 1px #cccccc}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        // 기존의 방식 : 함수를 만들고 태그를 제어하게 만든 뒤 onclick과 같은 속성으로 호출
+        function changeColor() {
+            var target = document.querySelector(".target");
+            target.style.color = "red";
+            
+        }
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>독립형 자바스크립트</h1>
+        </div>
+
+        <div class="cell">
+            <button type="button" class="btn btn-positive w-100" onclick="changeColor()">색상변경</button>
+        </div>
+        <div class="cell">
+            <h2 class="target">Hello JavaScript!</h2>
+        </div>
+    </div>
+</body>
+</html>
