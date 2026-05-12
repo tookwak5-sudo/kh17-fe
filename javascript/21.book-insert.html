@@ -31,7 +31,7 @@
             var tag = document.querySelector("[name=bookAuthor]");
             // var regex = /^[^!@#$]*$/
             // var valid = regex.test(tag.value);  
-            var regex = /^[^!@#$]+$/
+            var regex = /^[^!@#$]+$/;
             var valid = tag.value.length == 0 || regex.test(tag.value);  //없거나 형식에 맞거나
             tag.classList.remove("success", "fail");
             tag.classList.add(valid ? "success" : "fail");
