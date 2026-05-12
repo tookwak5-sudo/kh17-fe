@@ -26,9 +26,10 @@
                     var size = this.value.length;
                     
                     //넘어가는 부분을 잘라내고 싶다면
-                    if(size > 1000) {
-                        this.value = this.value(0, 1000);
-                        span.textContent = "1000";
+                   
+                      if(size > 1000) {
+                        this.value = this.value.substring(0, 1000);
+                        size = 1000;
                     }
 
                     //출력 대상은 무조건 상대경로로 찾아야한다.
