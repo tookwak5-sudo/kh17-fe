@@ -12,93 +12,46 @@
 
     <!-- 디자인을 작성하기 위한 영역-->
     <style>
-      div { box-shadow: 0 0 0 1px #cccccc}
-      .display {
-        width: 16.6666%;
-        height: 60px;
-        padding: 1em;
-        box-sizing: border-box;
-      }
-      .outer {
-        width: 25%;
-        padding: 15px;
-        aspect-ratio: 2 / 1;
-      }
-      .outer > .btn-number {
-        width: 100%;
-        /* height: 100% 대신 구체적인 수치를 입력하세요 */
-        height: 60px; 
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      
-      .btn-shuffle {
-        background-color: white;
-      }
+        div { box-shadow: 0 0 0 1px #cccccc}
+        
+        .display-group {
+            font-size: 36px;
+            font-weight: bold;
+            display: flex;
+        }
+        .display-group > .display {
+            width: 16.6666%;
+            padding: 0.5em;
+            text-align: center;
+        }
     </style>
 
     <!-- 자바스크립트 작성 영역 -->
     <script>
+      
         window.addEventListener("load", function(){
-            var number = "";
-            var numberButtons = document.querySelectorAll(".btn-number");
-            
-            //숫자 버튼들에 대한 이벤트 처리
-            for(var i =0; i < numberButtons.length; i++){ //모든 버튼을 반복해서
-                numberButtons[i].addEventListener("click", function(){ //버튼에 클릭이벤트를 설정
-                if(number.length == 6) return;
-                    var num = this.dataset.number;
-                    number += num;
-                    display();
-                });
-            }
+            //1차 목표 : 문자열에 저장된 비밀번호가 display에 나눠져서 표시되도록 처리
+            var password = "135421";
 
-            //숫자 섞기
-            var shuffleButton = document.querySelector(".btn-shuffle");
-            shuffleButton.addEventListener("click", function(){
-                var numbers = [1,2,3,4,5,6,7,8,9,0,"","","","","",""];
-                numbers.sort(()=>Math.random()-0.5);
+            //password의 값을 display에 하나씩 출력
+            var displayList = document.querySelectorAll(".display");
 
-                var buttons = document.querySelectorAll(".btn-number");
-                for(var i = 0; i < buttons.length; i++){
-                    buttons[i].textContent = numbers[i];
-                    buttons[i].dataset.number = numbers[i];
-                    buttons[i].classList.remove("btn-netural", "btn-positive");
-                    buttons[i].classList.add(numbers[i] === "" ? "btn-netural" : "btn-positive");
-                }
-            });
-
-            //한 글자 지우기
-            var deleteButton = document.querySelector(".btn-delete");
-            deleteButton.addEventListener("click", function(){
-                number = number.substring(0, number.length - 1);
-                display();
-            });
-            //전체 지우기
-            var clearButton = document.querySelector(".btn-clear");
-            clearButton.addEventListener("click", function(){
-                number = "";
-                display();
-            })
-
-            function display() {
-                var displays = document.querySelectorAll(".display");
-                for(var i = 0; i < displays.length; i++){
-                    displays[i].textContent = number[i];
-                }
+            for(var i=0; i < displayList.length; i++) {
+                displayList[i].textContent = password[i];
             }
         });
+
     </script>
 </head>
 <body>
     <div class="container w-600 mt-50 mb-50">
         <div class="cell center">
-            <h1>암호화 키패드</h1>
+            <h1>비밀번호 입력</h1>
         </div>
-        <!-- 6개 숫자 입력 칸 -->
+
+        <!-- 설정될 비밀번호를 표시할 영역 버튼보다는 입력창을 먼저 만들어내는 것이 쉬움-->
         <div class="cell center">
-            <div class="flex-area displays">
+            <div class="display-group">
                     <div class="display"></div>
                     <div class="display"></div>
                     <div class="display"></div>
@@ -119,7 +72,7 @@
                         <i class="fa-solid fa-2"></i>
                     </button>
                 </div>
-                 <div class="outer">
+                <div class="outer">
                     <button type="button" class="btn btn-positive W-100 btn-number" data-number="3">
                         <i class="fa-solid fa-3"></i>
                     </button>

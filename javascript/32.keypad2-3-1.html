@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트 수업</title>
+    <link rel="icon" href="../css/images/kh로고.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+
+    <!-- 아이콘-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+        div { box-shadow: 0 0 0 1px #cccccc}
+        
+        .display-group {
+            font-size: 36px;
+            font-weight: bold;
+            display: flex;
+            height: 2.5em;
+        }
+        .display-group > .display {
+            width: 16.6666%;
+            padding: 0.5em;
+            text-align: center;
+        }
+
+        .button-group {
+            display : flex;
+            flex-wrap: wrap; /* 줄바꿈 허용*/
+        }
+        .button-group > button {
+            width: 25%;
+        }
+        .button-group > .inner {
+            width: 25%;
+            padding: 5px;
+        }
+        .button-group button {
+            width: 100%;
+            height: 3em;
+        }
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+      
+        window.addEventListener("load", function(){
+            var password = "";
+            
+            function display(){
+                //password의 값을 display에 하나씩 출력
+                var displayList = document.querySelectorAll(".display");
+                for(var i = 0; i < displayList.length; i++){
+                    displayList[i].textContent = password[i];
+                }
+            }
+            //3차 목표 : 숫자버트는을 만들어서 누르면 비밀번호가 추가되도록 처리(btn-button을 누르면 함수가 실행되도록)
+            var numberButtons = document.querySelectorAll(".btn-number");
+           
+            for(var i = 0; i < numberButtons.length; i++){
+                numberButtons[i].addEventListener("click", function(){
+                  if(password.length >= 6) return;
+                    //this == 클릭한 버튼
+                    password += this.textContent; //비밀번호에 현재 클릭한 버튼의 글자를 더해라
+                    display();
+                })
+            }
+        });
+
+
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>비밀번호 입력</h1>
+        </div>
+
+        <!-- 설정될 비밀번호를 표시할 영역 버튼보다는 입력창을 먼저 만들어내는 것이 쉬움-->
+        <div class="cell center">
+            <div class="display-group">
+                    <div class="display"></div>
+                    <div class="display"></div>
+                    <div class="display"></div>
+                    <div class="display"></div>
+                    <div class="display"></div>
+                    <div class="display"></div>
+            </div>
+        </div>
+        
+        <!-- 버튼 영역 -->
+         <div class="cell">
+            <div class="button-group">
+                <div class="inner"><button type="button" class="btn btn-positive btn-number">1</button></div>
+                <div class="inner"><button type="button" class="btn btn-positive btn-number">2</button></div>
+                <div class="inner"><button type="button" class="btn btn-positive btn-number">3</button></div>
+                <div class="inner"><button type="button" class="btn btn-positive btn-number">4</button></div>
+                <div class="inner"><button type="button" class="btn btn-positive btn-number">5</button></div>
+                <div class="inner"><button type="button" class="btn btn-positive btn-number">6</button></div>
+                <div class="inner"><button type="button" class="btn btn-positive btn-number">7</button></div>
+                <div class="inner"><button type="button" class="btn btn-positive btn-number">8</button></div>
+                <div class="inner"><button type="button" class="btn btn-positive btn-number">9</button></div>
+                <div class="inner"><button type="button" class="btn btn-positive btn-number">0</button></div>
+                <div class="inner"><button type="button" class="btn btn-netural btn-number"></button></div>
+                <div class="inner"><button type="button" class="btn btn-netural btn-number"></button></div>
+                <div class="inner"><button type="button" class="btn btn-netural btn-number"></button></div>
+                <div class="inner"><button type="button" class="btn btn-netural btn-number"></button></div>
+                <div class="inner"><button type="button" class="btn btn-netural btn-number"></button></div>
+                <div class="inner"><button type="button" class="btn btn-netural btn-number"></button></div>
+            </div>
+         </div>
+    </div>
+</body>
+</html>
