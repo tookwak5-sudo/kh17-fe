@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>디자인 수업</title>
+    <title>JQuery 수업</title>
     <link rel="icon" href="../css/images/kh로고.jpg" type="image/jpeg">
     <link rel="stylesheet" href="../css/commons.css" type="text/css">
 
@@ -12,7 +12,7 @@
 
     <!-- 디자인을 작성하기 위한 영역-->
     <style>
-      /* div { box-shadow: 0 0 0 1px #cccccc} */
+      div { box-shadow: 0 0 0 1px #cccccc}
       .target{
             word-break: break-all;
             transition: font-size 0.05s ease-out;
@@ -26,23 +26,27 @@
        }
     </style>
 
+    <!-- jQuery CDN -->
+    <script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
     <!-- 자바스크립트 작성 영역 -->
     <script>
-        function changeToSmall(){
-            var target = document.querySelector(".target");
-            // target.style = "font-size: 12px" //다른 inline 스타일 삭제됨
-            target.classList.remove("smal", "big");
-            target.classList.add("small");
-        }
-        function changeToNormal(){
-            var target = document.querySelector(".target");
-            target.classList.remove("small", "big");
-        }
-        function changeToBig(){
-            var target = document.querySelector(".target");
-            target.classList.remove("small", "big");
-            target.classList.add("big");
-        }
+        $(function(){ //jquery 시작점
+            //상태 데이터
+            var size = 16;
+            
+            //-버튼
+            $(".btn-minus").on("click", function(){
+                size--;
+                $("target").css("font-size", size+"px");
+            });
+            //+버튼
+            $(".btn-plus").on("click", function(){
+                size++;
+                $("target").css("font-size", size+"px");
+            });
+            console.log(size);
+        });
     </script>
 </head>
 <body>
@@ -51,11 +55,10 @@
             <h1>글자 크기 변경</h1>
         </div>
         <div class="cell center">
-            <button type="button" class="btn btn-netural" onclick="changeToSmall('12px');">작게(12px)</button>
-            <button type="button" class="btn btn-netural" onclick="changeToNormal('16px');">보통(16px)</button>
-            <button type="button" class="btn btn-netural" onclick="changeToBig('20px');">크게(20px)</button>
+            <button type="button" class="btn btn-netural btn-size btn-minus"><i class="fa-solid fa-minus"></i></button>
+            
+            <button type="button" class="btn btn-netural btn-size btn-plus"><i class="fa-solid fa-plus"></i></button>
         </div>
-        <hr class="mt-30 md-50">
         <div class="cell">
             <div class="target">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
