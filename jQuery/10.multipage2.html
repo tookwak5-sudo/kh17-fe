@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JQuery 수업</title>
+    <link rel="icon" href="../css/images/kh로고.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+
+    <!-- 아이콘-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+      div { box-shadow: 0 0 0 1px #cccccc}
+      .inner {
+        height: 300px;
+      }
+    </style>
+
+    <!-- jQuery CDN -->
+    <script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        $(function(){
+            //[1] 1페이지 빼고 다 숨기기   
+            $(".page").hide().first().show(); 
+
+            //[2] 다음버튼을 누르면 현재 페이지를 숨기고 다음 페이지를 보여주기
+            $(".btn-next").on("click", function(){ 
+                // $(this).parent().parent().parent().parent().hide().next(".page").show();
+                // $(this).parents(".page").hide().next(".page");
+                $(this).closest(".page").hide().next().show(); //가장 가까운 페이지
+            });
+
+            //[3] 이전버튼을 누르면 현재 페이지를 숨기고 이전 페이지를 보여주기
+            $(".btn-prev").on("click", function(){
+                // $(this).parents(".page").hide().prev(".page").show();
+                $(this).closest(".page").hide().prev().show();
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>멀티페이지</h1>
+        </div>
+        
+        <div class="cell page">
+            
+            <div class="container">
+                <div class="cell center">
+                    <h1>1페이지</h1>
+                </div>
+
+                <div class="cell flex-area">
+                    <div class="w-100 right">
+                        <!-- <button type="button" class="btn btn-netural btn-prev">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>이전</span>
+                        </button> -->
+                         <button type="button" class="btn btn-netural btn-next">
+                            <span>다음</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="cell page">
+            <h1>2페이지</h1>
+            <div class="cell flex-area">
+                <div class="w-100 left">
+                    <button type="button" class="btn btn-netural btn-prev">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>이전</span>
+                    </button>
+                </div>
+                <div class="w-100 right">
+                        <button type="button" class="btn btn-netural btn-next">
+                        <span>다음</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+          <div class="cell page">
+            <h1>3페이지</h1>
+            <div class="cell flex-area">
+                <div class="w-100 left">
+                    <button type="button" class="btn btn-netural btn-prev">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>이전</span>
+                    </button>
+                </div>
+                <div class="w-100 right">
+                        <button type="button" class="btn btn-netural btn-next">
+                        <span>다음</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+          <div class="cell page">
+            <h1>4페이지</h1>
+            <div class="cell flex-area">
+                <div class="w-100 left">
+                    <button type="button" class="btn btn-netural btn-prev">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>이전</span>
+                    </button>
+                </div>
+                <div class="w-100 right">
+                    <button type="button" class="btn btn-netural btn-next">
+                    <span>다음</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="cell page">
+            <h1>5페이지</h1>
+            <div class="cell flex-area">
+                <div class="w-100 left">
+                    <!-- <button type="button" class="btn btn-netural btn-next">
+                    <span>다음</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                    </button> -->
+                    <button type="button" class="btn btn-netural btn-prev">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        <span>이전</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
