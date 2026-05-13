@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>디자인 수업</title>
-    <link rel="icon" href="/kh.jpg" type="image/jpeg">
+    <title>JQuery수업</title>
+    <link rel="icon" href="../css/images/kh로고.jpg" type="image/jpeg">
 
     <!-- 아이콘 -->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
@@ -13,46 +13,52 @@
     <link rel="stylesheet" type="text/css" href="../css/commons.css">
     <style>
         div { box-shadow: 0 0 0 1px #cccccc;}
+        .target{
+            word-break: break-all;
+            transition: font-size 2s ease-out;
+            font-size: 24px;
+        }
     </style>
-
+    <!-- jQuery CDN -->
+    <script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
     <!-- 자바스크립트 작성 영역 -->
     <script>
-       
-       window.addEventListener("load", function(){       
-            //금액 버튼 이벤트 설정
-            var moneyButtons = document.querySelectorAll(".btn-money");
-            for(var i=0; i < moneyButtons.length; i++){
-                moneyButtons[i].addEventListener("click", function(){
-                    //this는 클릭된 금액 버튼 (data-money에 추가할 금액이 문자열로 적혀있음)
-                    var money = parseInt(this.dataset.money);//추가해야할 금액의 숫자값
+        $(function(){
 
-                    var target = document.querySelector(".target");
-                    var current = parseInt(target.value || 0);//없으면 0으로 대체
+            //금액버튼
+            $(".btn-money").on("click", function(){
+                //this는 target
+                //var moneyButtons = document.querySelectorAll(".btn-money");
+                var money = parseInt($(this).data("money"));
 
-                    var result = current + money;//현재값 + 입력값
-                    target.value = result;;    
-                });
-            }
+                var current = parseInt($(".target").val() || 0);
 
-            //한 글자 지우기 버튼 이벤트 설정
-            var deleteButton = document.querySelector(".btn-delete");
-            deleteButton.addEventListener("click", function(){
-                var target = document.querySelector(".target");
-                var origin = target.value;
-                target.value = origin.substring(0, origin.length-1);
-            });
-            //전체 지우기 버튼 이벤트 설정
-            var clearButton = document.querySelector(".btn-clear");
-            clearButton.addEventListener("click", function(){
-                var target = document.querySelector(".target");
-                target.value = "";
+                var result = current + money;
+                $(".target").val(result);
             });
 
-       })     
+            //한칸 지우기
+            $(".btn-delete").on("click", function(){
+                // var origin = document.querySelector(".taregt").value;//js
+                // var cut = origin.substring(0, origin.length-1);//js
+                // document.querySelector(".target").value = cut;//js
+                
+                var origin = $(".target").val();
+                var cut =  origin.substring(0, origin.length-1);
+                $(".target").val(cut);
+            }); 
+            
+            //전체 지우기
+            $(".btn-clear").on("click", function(){
+                //document.querySelector(".target").value = ""; //js
+                $(".target").val("");
+            });
+        });
     </script>
 </head>
 <body>
-    <div class="container w-800 mt-50 mb-50">
+     <div class="container w-800 mt-50 mb-50">
         <div class="cell center">
             <h1>이체 금액 입력</h1>
         </div>
@@ -78,7 +84,6 @@
                 <i class="fa-solid fa-eraser"></i>
             </button>
         </div>
-
     </div>
 </body>
 </html>
