@@ -20,7 +20,39 @@
     
     <!-- 자바스크립트 작성 영역 -->
     <script>
-        
+        $(function(){
+            // 목표: 제어할 버튼(btn-control)을 클릭하면 제어당할 텍스트(.target)를 빨강으로 변경
+            $(".btn-control").on("click", function(){
+                
+
+                // DOM 탐색 명령 (DOM = Document Object Model, 문서 객체 모델)
+                //.parent() : 상위 태그 선택 (+ 선택자 추가 가능)
+                //.prev() : 같은 범위 내 앞 태그 선택 (+선택자 추가 가능)
+                //.next() : 같은 범위 내 뒤 태그 선택 (+선택자 추가 가능)
+                //.children : 하위 태그 선택 (+선택자 추가 가능)
+
+                // $(".target").css("color", "blue"); 잘못된 대상이 선택됨
+                // $(this).parent().prev().children().css("color", "blue"); //대상이 불분명(태그를 확인하러 가야함)
+                //$(this).parent(".cell").prev(".cell").children(".target").css("color", "red"); //오해의 소지가 없음 대상 명확
+
+                //각종 태그 제어 명령들
+                // $(this).parent(".cell").prev(".cell").children(".target").addClass("right"); //클래스 추가 , classList.add()
+                //$(this).parent(".cell").prev(".cell").children(".target").toggleClass("right"); //클래스 토글
+                // $(this).parent(".cell").prev(".cell").children(".target").empty(); //비우기 (대상 내부)
+                // $(this).parent(".cell").prev(".cell").children(".target").remove(); // 지우기 (대상)
+
+                // 숨기기
+                // $(this).parent(".cell").prev(".cell").children(".target").css("opacity", "0");
+                // $(this).parent(".cell").prev(".cell").children(".target").css("visibility", "hidden");
+                // $(this).parent(".cell").prev(".cell").children(".target").css("display", "none"); //가장 일반적으로 생각하는 숨김
+                // $(this).parent(".cell").prev(".cell").children(".target").hide(); // display=none 처리 수행 (↔ show())
+                // $(this).parent(".cell").prev(".cell").children(".target").toggle(); // hide ↔ show
+                // $(this).parent(".cell").prev(".cell").children(".target").slideUp(); // 슬라이딩 애니메이션 숨김처리  (↔ slideDown)
+                // $(this).parent(".cell").prev(".cell").children(".target").slideToggle();// 슬라이딩 숨김보임처리 애니메이션
+                // $(this).parent(".cell").prev(".cell").children(".target").fadeOut(); //페이드 아웃 애니메이션
+                $(this).parent(".cell").prev(".cell").children(".target").fadeToggle(); // 페이드 인아웃 애니메이션
+            });
+        });
     </script>
 </head>
 <body>
@@ -28,7 +60,28 @@
         <div class="cell center">
             <h1>DOM 제어</h1>
         </div>
-    
+        <!-- 이렇게 하면 아무 버튼이나 누르면 모든 글자의 색깔이 지정한 색상으로 변하게 된다 -->
+       <label>
+            <div class="cell center mt-50">
+                <h2 class="target">제어당할 텍스트</h2>
+            </div>
+        
+            <div class="cell center">
+                <button type="button" class="btn btn-positive btn-control">제어할 버튼</button>
+            </div>
+         </label>
+        <div class="cell center mt-50">
+             <h2 class="target">제어당할 텍스트</h2>
+        </div>
+        <div class="cell center">
+            <button type="button" class="btn btn-positive btn-control">제어할 버튼</button>
+        </div>
+        <div class="cell center mt-50">
+             <h2 class="target">제어당할 텍스트</h2>
+        </div>
+        <div class="cell center">
+            <button type="button" class="btn btn-positive btn-control">제어할 버튼</button>
+        </div>
         
     </div>
 </body>
