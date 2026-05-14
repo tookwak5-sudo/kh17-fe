@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트 수업</title>
+    <link rel="icon" href="../css/images/kh로고.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+
+    <!-- 아이콘-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+        div { box-shadow: 0 0 0 1px #cccccc}
+        
+        .display-group {
+            font-size: 36px;
+            font-weight: bold;
+            display: flex;
+        }
+        .display-group > .display {
+            width: 16.6666%;
+            padding: 0.5em;
+            text-align: center;
+        }
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+      
+        window.addEventListener("load", function(){
+           //1차 목표 : 문자열에 저장된 비밀번호가 display에 나눠져서 표시되도록 처리
+           var password = "123456";
+
+           //password의 값을 display에 하나씩 출력
+           var displayList = document.querySelectorAll(".display");
+
+           displayList[0].textContent = password[0];
+           displayList[1].textContent = password[1];
+           displayList[2].textContent = password[2];
+           displayList[3].textContent = password[3];
+           displayList[4].textContent = password[4];
+           displayList[5].textContent = password[5];
+        });
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>비밀번호 입력</h1>
+        </div>
+
+        <!-- 설정될 비밀번호를 표시할 영역 버튼보다는 입력창을 먼저 만들어내는 것이 쉬움-->
+        <div class="cell center">
+            <div class="display-group">
+                    <div class="display"></div>
+                    <div class="display"></div>
+                    <div class="display"></div>
+                    <div class="display"></div>
+                    <div class="display"></div>
+                    <div class="display"></div>
+            </div>
+        </div>
+        <!-- 4x4화면배치 -->
+            <div class="flex-area" style="flex-wrap: wrap;">
+                <div class="outer">
+                    <button type="button" class="btn btn-positive W-100 btn-number" data-number="1">
+                        <i class="fa-solid fa-1"></i>
+                    </button>
+                </div> 
+                <div class="outer">
+                    <button type="button" class="btn btn-positive W-100 btn-number" data-number="2">
+                        <i class="fa-solid fa-2"></i>
+                    </button>
+                </div>
+                <div class="outer">
+                    <button type="button" class="btn btn-positive W-100 btn-number" data-number="3">
+                        <i class="fa-solid fa-3"></i>
+                    </button>
+                </div>
+                 <div class="outer">
+                    <button type="button" class="btn btn-positive W-100 btn-number" data-number="4">
+                        <i class="fa-solid fa-4"></i>
+                    </button>
+                </div>
+                <div class="outer">
+                    <button type="button" class="btn btn-positive W-100 btn-number" data-number="5">
+                        <i class="fa-solid fa-5"></i>
+                    </button>
+                </div>
+                <div class="outer">
+                    <button type="button" class="btn btn-positive W-100 btn-number" data-number="6">
+                        <i class="fa-solid fa-6"></i>
+                    </button>
+                </div>
+                <div class="outer">  
+                    <button type="button" class="btn btn-positive W-100 btn-number" data-number="7">
+                        <i class="fa-solid fa-7"></i>
+                    </button>                    
+                </div>
+                <div class="outer">         
+                    <button type="button" class="btn btn-positive W-100 btn-number" data-number="8">
+                        <i class="fa-solid fa-8"></i>
+                    </button> 
+                </div>   
+                <div class="outer">
+                    <button type="button" class="btn btn-positive W-100 btn-number" data-number="9">
+                        <i class="fa-solid fa-9"></i>
+                    </button>
+                </div>
+                 <div class="outer">         
+                    <button type="button" class="btn btn-positive W-100 btn-number" data-number="0">
+                        <i class="fa-solid fa-0"></i>
+                    </button>
+                </div>  
+                <div class="outer">
+                    <button type="button" class="btn btn-netural W-100 btn-number">
+                    </button>
+                </div>
+                <div class="outer">
+                    <button type="button" class="btn btn-netural W-100 btn-number">
+                    </button>
+                </div>
+                <div class="outer">
+                    <button type="button" class="btn btn-netural W-100 btn-number">
+                    </button>
+                </div>
+                <div class="outer">
+                    <button type="button" class="btn btn-netural W-100 btn-number">
+                    </button>
+                </div>
+                <div class="outer">
+                    <button type="button" class="btn btn-netural W-100 btn-number">
+
+                    </button>
+                </div>
+                 <div class="outer">
+                    <button type="button" class="btn btn-netural W-100 btn-number">
+                    </button>
+                </div>
+            </div>   
+            <div class="cell">
+                    <div class="w-100">
+                        <button type="button" class="btn btn-shuffle w-100">
+                            <i class="fa-solid fa-arrow-rotate-right"></i>
+                            <span>버튼 재배치</span>
+                        </button>
+                    </div>
+                    <div class="w-100 mt-10">
+                        <button type="button" class="btn btn-negative w-100 btn-delete">
+                            <i class="fa-solid fa-delete-left"></i>
+                            <span>한 글자 지우기</span>
+                        </button>
+                    </div>
+                     <div class="w-100 mt-10">
+                        <button type="button" class="btn btn-negative w-100 btn-clear">
+                            <i class="fa-solid fa-eraser"></i>
+                            <span>처음부터</span>
+                        </button>
+                    </div>
+            </div>   
+    </div>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>디자인 수업</title>
+    <link rel="icon" href="../css/images/kh로고.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+
+    <!-- 아이콘-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+      div { box-shadow: 0 0 0 1px #cccccc}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        window.addEventListener("load", function(){
+            //목표 : 모든 .field-answer에 입력이 발생할 경우 글자수 계산 후 출력
+            var fields = document.querySelectorAll(".field-answer");
+            for(var i = 0; i < fields.length; i++){
+                fields[i].addEventListener("input", function(){
+                    //this는 입력이 발생한 textarea
+                    var size = this.value.length;
+                    
+                    //넘어가는 부분을 잘라내고 싶다면
+                   
+                      if(size > 1000) {
+                        this.value = this.value.substring(0, 1000);
+                        size = 1000;
+                    }
+
+                    //출력 대상은 무조건 상대경로로 찾아야한다.
+                    var span = this.nextElementSibling.children[0];
+                    span.textContent = size;
+                })
+            }     
+        });
+    
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>자기 소개서</h1>
+        </div>
+        
+        <div>
+            <span>(Q)1 당신의 성장과정에 대해서 설명해주세요</span>
+        </div>
+        <div class="cell center">
+            <textarea name="q1" class="field w-100 field-answer" rows="10"></textarea>
+            <div class="right">
+                <span>0</span> / 1000글자
+            </div>
+        </div>
+
+        <div>
+            <span>(Q2) 당신의 장단점을 적어주세요</span>
+        </div>
+        <div class="cell center">
+            <textarea name="q1" class="field w-100 field-answer" rows="10"></textarea>
+            <div class="right">
+                <span>0</span> / 1000글자
+            </div>
+        </div>
+        
+        <div>
+            <span>(Q3) 역경을 이겨낸 경험이 있다면 적어주세요</span>
+        </div>
+        <div class="cell center">
+            <textarea name="q1" class="field w-100 field-answer" rows="10"></textarea>
+            <div class="right">
+                <span>0</span> / 1000글자
+            </div>
+        </div>
+        
+        <div>
+            <span>(Q4) 지원동기</span>
+        </div>
+        <div class="cell center">
+            <textarea name="q1" class="field w-100 field-answer" rows="10"></textarea>
+            <div class="right">
+                <span>0</span> / 1000글자
+            </div>
+        </div>
+        
+        <div>
+            <span>(Q5) 10년 뒤의 회사의 모습을 상상해서 적어주세요</span>
+        </div>
+        <div class="cell center">
+            <textarea name="q1" class="field w-100 field-answer" rows="10"></textarea>
+            <div class="right">
+                <span>0</span> / 1000글자
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>

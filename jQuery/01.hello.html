@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>제이커리 수업</title>
+    <link rel="icon" href="../css/images/kh로고.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+
+    <!-- 아이콘-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+      div { box-shadow: 0 0 0 1px #cccccc}
+    </style>
+
+    <!-- jQuery CDN -->
+    <script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        // window.addEventListener("load", function(){
+        //     document.querySelector("input", function(){
+
+        //     });
+        // });
+
+        // jQuery의 장점[1] : 코드가 짧고 간결하고 명확하다
+        // jQuery의 장점[2] : 개수 제한이 없다(개수가 늘어나도 코드가 같다)
+
+        // jQuery의 특징
+        // jQuery는 무조건 $부터 시작($대신 jQuery라고 써도 됨) // 변수 이름을 지을 때 사용가능한 특수문자 2개 '_', '$'
+        // 문법 : $(대상) + 명령호출
+
+        //$(window).on("load", function(){}); //이건 태그만 받아오는 것이기 때문에 cdn을 받아오는 코드가 필요 (안씀)
+        //$(document).on("ready", function(){}); // 화면 로드 + jQuery 준비 (jQuery가 만든 이벤트) (태그와 코드 둘 다 불러온다)
+        //$(document).ready(function(){}); // 축약 명령
+        //$().ready(function(){});
+        //$(function(){}); // 최종적으로 슬 최종 형태
+        $(function(){
+
+            //$를 이용해서 class="btn"을 선택한 뒤 click이벤트 설정
+            //$(".btn").on("click", function(){}); (click, blur, submit, input)
+            //$(".btn").click(function(){}); // input이 축약명령에 없음 그래서 on을 사용 (click, blur, submit만 존재)
+
+            $(".btn").on("click", function(){
+
+                // $를 이용해서 class="target"을 선택한 뒤 css변경작업을 지시
+                // - css, value, textContent, attribute 등 다양한 병경 지시가 가능
+                $(".target").css("color", "red");
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>jQuery 샘플</h1>
+        </div>
+        
+        <div class="cell">
+            <button type="button" class="btn btn-positive w-100">클릭하시오</button>
+        </div>
+        <div class="cell">
+            <button type="button" class="btn btn-positive w-100">클릭하시오</button>
+        </div>
+        <div class="cell">
+            <button type="button" class="btn btn-positive w-100">클릭하시오</button>
+        </div>
+        <div class="cell">
+            <h2 class="target">Hello jQuery</h2>
+            <h2 class="target">Hello jQuery</h2>
+            <h2 class="target">Hello jQuery</h2>
+            <h2 class="target">Hello jQuery</h2>
+            <h2 class="target">Hello jQuery</h2>
+            <h2 class="target">Hello jQuery</h2>
+        </div>
+        
+    </div>
+</body>
+</html>

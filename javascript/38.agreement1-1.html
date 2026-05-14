@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>자바스크립트 수업</title>
+    <link rel="icon" href="../css/images/kh로고.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+
+    <!-- 아이콘-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+      div { box-shadow: 0 0 0 1px #cccccc}
+    </style>
+
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        window.addEventListener("load", function(){
+            
+             // 2. :checked 선택자를 활용한 방법
+            function checkAllBox(){
+                var checkboxes = document.querySelectorAll(".check-item");//전체 체크박스
+                for(var i=0; i < checkboxes.length; i++){
+                    checkboxes[i].addEventListener("click", function(){
+                        var checkedCheckboxes = document.querySelectorAll(".check-item:checked"); //체크된 전체 체크박스
+                        var allChecked = checkboxes.length == checkedCheckboxes.length; // 전체 체크여부
+    
+                         //allchecked에 따라 전체선택 체크박스를 처리
+                        var all = document.querySelector(".check-all");
+                        all.checked = allChecked;
+                    });
+                }
+                var requiredCheckboxes = document.querySelectorAll(".check-item-required"); // 필수 체크박스
+                for(var i=0; i < requiredCheckboxes.length; i++){
+                    requiredCheckboxes[i].addEventListener("click", function(){
+                        var checkedRequiredCheckboxes = document.querySelectorAll(".check-item-required:checked");//체크된 필수 체크박스
+                        var requiredChecked = requiredCheckboxes.length == checkedRequiredCheckboxes.length; // 필수 체크여부
+
+                        //requiredChecked에 따라 필수선택 체크박스를 처리
+                        var required = document.querySelector(".check-required");
+                        required.checked = requiredChecked;
+                    });
+                }
+            }
+            
+            //클린업
+            checkAllBox();
+            
+
+            var checkAll = document.querySelector(".check-all");
+            checkAll.addEventListener("click", function(){
+                var checkboxes = document.querySelectorAll(".check-item");
+                for(var i= 0; i < checkboxes.length; i++){
+                checkboxes[i].checked = this.checked;
+                }              
+            });
+
+            var checkRequired = document.querySelector(".check-required");
+            checkRequired.addEventListener("click", function(){
+                var checkboxes = document.querySelectorAll(".check-item-required");
+                for(var i= 0; i < checkboxes.length; i++){
+                    checkboxes[i].checked = this.checked;
+                }
+            });
+        });
+       
+    </script>
+</head>
+<body>
+    <div class="container w-600 mt-50 mb-50">
+        <div class="cell center">
+            <h1>이용약관 동의</h1>
+            <p>정상적인 사이트 이용을 위해 다음 이용약관에 동의해주세요</p>
+        </div>
+        
+        <div class="cell">
+            <!-- label 안에 체크박스와 글자를 넣으면 아이디없이 글자와 체크박스가 연결됩니다 -->
+            <label>
+                <input type="checkbox" class="check-all"> 
+                <span>전체 이용약관에 동의합니다</span>
+            </label>
+        </div>
+
+        <div class="cell">
+            <!-- label 안에 체크박스와 글자를 넣으면 아이디없이 글자와 체크박스가 연결됩니다 -->
+            <label>
+                <input type="checkbox" class="check-required"> 
+                <span>필수 이용약관에 동의합니다</span>
+            </label>
+        </div>
+        <hr>
+        
+        <div class="cell">
+            <label>
+                <input type="checkbox" class="check-item check-item-required">
+                <span>(필수) 개인정보 취급방침에 동의합니다</span>
+            </label>
+        </div>
+
+        <div class="cell">
+            <label>
+                <input type="checkbox" class="check-item check-item-required">
+                <span>(필수) 홈페이지 이용규정을 준수하겠습니다</span>
+            </label>
+        </div>
+
+         <div class="cell">
+            <label>
+                <input type="checkbox" class="check-item">
+                <span>(선택) 이벤트성 정보 수신에 동의합니다</span>
+            </label>
+        </div>
+
+        <div class="cell">
+            <label>
+                <input type="checkbox" class="check-item">
+                <span>(선택) 개인정보 제 3자 제공에 동의합니다</span>
+            </label>
+        </div>
+    </div>
+</body>
+</html>
