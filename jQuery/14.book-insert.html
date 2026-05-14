@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JQuery 수업</title>
+    <link rel="icon" href="../css/images/kh로고.jpg" type="image/jpeg">
+    <link rel="stylesheet" href="../css/commons.css" type="text/css">
+
+    <!-- 아이콘-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- 디자인을 작성하기 위한 영역-->
+    <style>
+      div { box-shadow: 0 0 0 1px #cccccc}
+    </style>
+
+    <!-- jQuery CDN -->
+    <script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <!-- 자바스크립트 작성 영역 -->
+    <script>
+        $(function(){
+             //상태객체
+            var state = {
+                bookTitleValid : false,
+                bookAuthorValid : true,
+                bookPublisherValid : true,
+                bookPublicationDateValid : true,
+                bookPriceValid : false,
+                bookPageCountValid : false,
+                bookGenreValid : false,
+
+                ok : function() {
+                    return Object.values(this)//이 객체의 모든 이름에 대한 값을 반환해라
+                    .filter(v => typeof v == "boolean") // boolean값만 추출해서
+                    .every(v => v === true); //모두 true인지 확인해서 반환해라;
+                }
+            };
+
+            //개별 입력창
+            $("[name=bookTitle]").on("blur", function(){
+                var valid = $(this).val().length > 0;
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.bookTitleValid = valid;
+            });
+
+            $("[name=bookAuthor]").on("blur", function(){
+                var regex = /^[^!@#$]+$/;
+                var valid = $(this).val().length == 0 || regex.test($(this).val());
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                state.bookAuthorValid = valid;
+            });
+
+            $("[name=bookPublisher]").on("blur", function(){
+                $(this).addClass("success");
+            });
+
+            $("[name=bookPublicationDate]").on("blur", function(){
+                var regex = /^([0-9]{4})-(((02)-(0[1-9]|1[0-9]|2[0-9]))|((0[469]|11)-(0[1-9]|1[0-9]|2[0-9]|30))|((0[13578]|1[02])-(0[1-9]|1[0-9]|2[0-9]|3[01])))$/;
+                // var valid = regex.test(this.value);
+                var valid = regex.test($(this).val());
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                bookPublicationDateValid = valid;
+            });
+
+            $("[name=bookPrice]").on("blur", function(){
+                var price = parseInt($(this).val());
+                var valid = price >= 0 && price <= 1000000000;
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                bookPriceValid = valid;
+            });
+
+            $("[name=bookPageCount]").on("blur", function(){
+                var pages = parseInt(this.value);
+                var valid = pages >= 0;
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                bookPageCountValid = valid;
+            });
+
+            $("[name=bookGenre]").on("input", function(){
+                var regex = /^(판타지|교양|소설|역사|과학|추리소설|자기계발|수험서)$/;
+                var valid = regex.test($(this).val());
+                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
+                bookGenreValid = valid;
+            });
+
+            //숫자처리
+             $("[name=bookPrice]").on("input", function(){
+                var originValue = $(this).val(); //숫자지만 실제로는 문자열로 처리를 하고 있기 때문에
+                var replaceValue = originValue.replace(/[^0-9]/g, ""); //replace에 g를 붙인 것과 = replaceAll이 동일
+                
+                $(this).val(parseInt(replaceValue || 0));
+             });
+             $("[name=bookPageCount]").on("input", function(){
+                var originValue = $(this).val();
+                var replaceValue = originValue.replace(/[^0-9]/g, "");
+                $(this).val(parseInt(replaceValue || 0));
+             });
+
+            //폼 검사
+             $(".form-check").on("submit", function(){
+                //화면처리(이벤트 트리거)
+                $(this).find("select[name]").trigger("input"); 
+                $("input[name], textarea[name]").trigger("blur");
+
+                return state.ok(); //stat.ok() 상태에 따라 전송해!
+             });
+        });
+    </script>
+</head>
+<body>
+    <form autocomplete="off" method="post" enctype="multipart/form-data" class="form-check">
+        
+        <div class="container w-500 mt-50 mb-50">
+            <div class="cell center">
+                <h1>신규 도서 등록</h1>
+            </div>
+
+            <!-- onblur -->
+            <div class="cell"> 
+                <label>도서명 <i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" name="bookTitle" class="field w-100">
+                <div class="success-feedback">도서명 설정이 완료되었습니다</div>
+                <div class="fail-feedback">필수 입력 항목입니다</div>
+            </div>
+
+            <div class="cell">
+                <label>지은이</label>
+                <input type="text" name="bookAuthor" class="field w-100">
+                <div class="fail-feedback">특수문자는 사용하실 수 없습니다</div>
+            </div>
+
+            <div class="cell">
+                <label>출판사</label>
+                <input type="text" name="bookPublisher" class="field w-100">
+            </div>
+
+            <div class="cell">
+                <label>출간일</label>
+                <input type="date" name="bookPublicationDate" class="field w-100">
+                <div class="fail-feedback">유효한 날짜 형식이 아닙니다</div>
+            </div>
+
+            <div class="cell">
+                <label>판매가 <i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" inputmode="numeric" name="bookPrice" class="field w-100">
+                <div class="success-feedback">판매가 설정이 완료되었습니다</div>
+                <div class="fail-feedback">0원 이상 10억원 이하로만 설정 가능합니다</div>
+            </div>
+
+            <div class="cell">
+                <label>페이지 <i class="fa-solid fa-asterisk red"></i></label>
+                <input type="text" inputmode="numeric" name="bookPageCount" class="field w-100">
+                <div class="success-feedback">페이지수 설정이 완료되었습니다</div>
+                <div class="fail-feedback">페이지수는 0보다 커야합니다</div>
+            </div>
+
+            <div class="cell">
+                <label>장르 <i class="fa-solid fa-asterisk red"></i></label>
+                <select name="bookGenre" class="field w-100">
+                    <option value="">선택</option>
+                    <option>판타지</option>
+                    <option>교양</option>
+                    <option>소설</option>
+                    <option>역사</option>
+                    <option>과학</option>
+                    <option>추리소설</option>
+                    <option>자기계발</option>
+                    <option>수험서</option>
+                </select>
+                <div class="fail-feedback">필수 항목입니다</div>
+            </div>
+
+            <div class="cell">
+                <label>표지</label>
+                <input type="file" name="attach" class="field w-100">
+            </div>
+
+            <div class="cell mt-40">
+                <button class="btn btn-positive w-100">
+                    등록
+                </button>
+            </div>
+
+        </div>
+
+    </form>
+</body>
+</html>

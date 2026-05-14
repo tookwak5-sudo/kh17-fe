@@ -74,7 +74,7 @@
                 //state와는 무관
                 var originValue = this.value;
                 var replaceValue = originValue.replace(/[^0-9]/g, "");
-                this.value =parseInt(replaceValue || 30);
+                this.value =parseInt(replaceValue || 0);
             });
             document.querySelector("[name=lecturePrice]").addEventListener("blur", function(){
                 var price = parseInt(this.value);
