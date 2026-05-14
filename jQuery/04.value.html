@@ -27,7 +27,7 @@
                 //var content = this.value; // JS
                 var content = $(this).val(); //JQuery
 
-                // document.querySelector(".copy1").vlue = content; //js
+                // document.querySelector(".copy1").value = content; //js
                 $(".copy1").val(content);//jQuery
 
                 // document.querySelector(".copy2").textContent = content; //js
@@ -46,16 +46,16 @@
         javascript로 그동안 제어하던 요소들
         1. style -> css() 
         2. classList -> ? 
-        3. textContent -> text()
-        4. value //input select textarea -> val()
+        3. textContent // div span h1 p -> text()
+        4. value //input select textarea -> val() 
+           
         5. innerHTML -> html() 
         6. 속성 -> attr() 또는 prop()
         7. DOM 탐색
             nextElementSibling -> next(), nextAll()
             previousElementSibling -> prev(), prevAll()
             paraentElement -> parent(), parents(), closest()
-            children -> children(), find()
-            
+            children -> children(), find()           
     -->
         <div class="cell center">
             <h1>val(), text(), html() 비교</h1>

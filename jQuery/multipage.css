@@ -1,0 +1,11 @@
+ /* gauge 디자인 */
+    .progressbar {
+    height: 5px;
+    }
+    .progressbar > .gauge {
+    width: 0%;
+    height: 100%;
+    transition: width 0.1s ease-out;
+    background: #EEAECA;
+    background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+    }
