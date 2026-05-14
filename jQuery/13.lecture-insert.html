@@ -79,22 +79,7 @@
                 var replaceValue = originValue.replace(/[^0-9]/g, "");
                 $(this).val(parseInt(replaceValue || 0));
             });
-            //폼 전송 처리
-           // document.querySelector(".form-check").addEventListener("submit", function(e){
-                // //입력창 상태 갱신처리
-                // var selectList = document.querySelectorAll("select[name]");
-                // for(var i = 0; i < selectList.length; i++){
-                //     selectList[i].dispatchEvent(new Event('input'));
-                // }
-                // var inputList = document.querySelectorAll("input[name]");
-                // // var inputList = document.querySelectorAll("input[name], textarea[name]");
-                // for(var i=0; i < inputList.length; i++){
-                //     inputList[i].dispatchEvent(new Event('blur'));
-                // }
-
-                // if(state.ok() == false){
-                //     e.preventDefault();
-            // }
+            
             $(".form-check").on("submit", function(){
                 $(this).find("select[name]").trigger("input");
                 $("input[name], textarea[name]").trigger("blur");
