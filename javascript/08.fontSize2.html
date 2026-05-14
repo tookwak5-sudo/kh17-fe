@@ -13,6 +13,7 @@
     <!-- 디자인을 작성하기 위한 영역-->
     <style>
       /* div { box-shadow: 0 0 0 1px #cccccc} */
+      
       .target{
             word-break: break-all;
             transition: font-size 0.05s ease-out;
@@ -31,16 +32,16 @@
         function changeToSmall(){
             var target = document.querySelector(".target");
             // target.style = "font-size: 12px" //다른 inline 스타일 삭제됨
-            target.classList.remove("smal", "big");
+            target.classList.remove("small", "big");
             target.classList.add("small");
         }
         function changeToNormal(){
             var target = document.querySelector(".target");
-            target.classList.remove("smal", "big");
+            target.classList.remove("small", "big");
         }
         function changeToBig(){
             var target = document.querySelector(".target");
-            target.classList.remove("smal", "big");
+            target.classList.remove("small", "big");
             target.classList.add("big");
         }
     </script>
@@ -55,8 +56,6 @@
             <button type="button" class="btn btn-netural" onclick="changeToNormal('16px');">보통(16px)</button>
             <button type="button" class="btn btn-netural" onclick="changeToBig('20px');">크게(20px)</button>
         </div>
-        <hr class="mt-30 md-50">
-        <div class="cell">
             <div class="target">
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                 <p>Aut at labore incididunt non porro ab. Ipsum illo inventore lorem. Voluptatem consequat veniam elit ipsa lorem. Occaecat incididunt aspernatur ab. Sunt aperiam quasi pariatur accusamus pariatur sequi voluptas eaque aut qui fugiat. Mollit esse fugiat fugit eiusmod sit est sed nulla inventore quasi voluptatem velit.</p>
@@ -64,7 +63,6 @@
                 <p>Eiusmod in rem id vitae lorem accusantium dolorem et adipiscing eos officia. Aliqua ratione ut duis ratione quis sit exercitation id reprehenderit doloremque non sint pariatur voluptatem. Quae ullamco reprehenderit sit fugiat ratione ut quisquam eaque laborum occaecat et dolor proident adipiscing at. Quia deserunt irure anim enim commodo aliquip ea eiusmod doloremque voluptatem proident quis. Amet aute sunt dolor adipiscing vitae vitae ea. Est duis pariatur ullamco amet sunt deserunt doloremque aliqua ex aut at sed eiusmod mollit laborum deserunt amet. Do qui eos sequi officia explicabo deserunt cupidatat aspernatur voluptas.</p>
                 <p>Eiusmod veritatis dolor eos anim qui vero officia sequi eos consequuntur. Architecto et ratione laudantium laudantium vero deserunt velit rem beatae nemo accusantium. Nesciunt elit neque quis nostrud. Eiusmod voluptate quia non eos labore magna ipsa doloremque. Aut ullamco voluptatem et voluptatem aperiam non aliquip commodo labore. Veniam veniam velit aliqua reprehenderit ad mollit lorem magna deserunt id eos. Dolores quisquam fugit fugiat magna culpa dolore consequat ipsam aliquip accusamus.</p>           
             </div>
-        </div>
     </div>
 </body>
 </html>
