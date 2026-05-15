@@ -47,11 +47,6 @@
     <!-- kako postapi cdn -->
     <script src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
-    <!-- calendar -->
-    <link rel="stylesheet" type="text/css" href="/jQuery/Lightpick-1.3.2/css/lightpick.css">    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-    <script src="/jQuery/Lightpick-1.3.2/lightpick.js"></script>  
-
     <!-- 자바스크립트 작성 영역 -->
     <script type="text/javascript">
         $(function(){
@@ -76,29 +71,33 @@
 
             //항목 검사
             $("[name=memberId]").on("blur", function(){
-                //this = 아이디 입력창
+                //this = 아이디 입력창이지만 ajax 등 함수가 많으니 가급적 사용을 자제하겠다(혼동우려)
                 var regex = /^[a-z][a-z0-9]{4,19}$/;
                 var memberId = $("[name=memberId]").val();
                 var valid = regex.test(memberId);
                 if(valid == false){ //형식 오류 먼저 제거
                     //필요한 처리 (실패표시) 
-                    $("[name=memberId]").removeClass("success fail").addClass("fail"); //클래스 다 지우고 fail을 추가한다
+                    $("[name=memberId]").removeClass("success fail")
+                        .addClass("fail").attr("data-error", "1"); //클래스 다 지우고 fail을 추가한다
                     state.memberIdValid = false;
                     return;
                 }
 
-                //형식 검사를 통과했다면 서버에 사용가능한지 물어보자 (ajax 요청) this가 매우 헷갈려짐(함수가 최소 2개이상 곂치기 때문에)
+                //형식 검사를 통과했다면 서버에 사용가능한지 물어보자 (ajax 요청) 
+                // this의 구분이 어려워짐(함수가 최소 2개이상 곂치기 때문에) 따라서 ajax에서는 this대신 태그이름(class, name, id 등)을 그대로 작성해주기
                 $.ajax({
                     url:"http://localhost:8080/rest/member/validId",
                     method:"post",
                     data: { memberId : memberId},
                     success : function(response){ //true : 사용가능, false: 사용중
-                        if(response == true) { //사용가능
-                            $("[name=memberId]").removeClass("success fail").addClass("success");
+                        if(response === true) { //사용가능
+                            $("[name=memberId]").removeClass("success fail")
+                            .addClass("success");
                             state.memberIdValid = true;
                         }
                         else { //사용중인 아이디
-                            $("[name=memberId]").removeClass("success fail").addClass("fail");
+                            $("[name=memberId]").removeClass("success fail")
+                            .addClass("fail").attr("data-error", "2"); //실패(에러2번)
                             state.memberIdValid = false;
                         }
                     }
@@ -123,17 +122,72 @@
                 $(".password-check").removeClass("success fail").addClass(state.memberPasswordCheckValid ? "success" : "fail");
                // state.memberPasswordCheckValid = valid;
             });
+
+            // 이메일 검사 (아이디하고 패턴동일 why? not null unique라서)
             $("[name=memberEmail]").on("blur", function(){
                 var regex = /^([a-z][a-z0-9]{4,19})@([A-Za-z0-9\-\.]{1,})(\.[a-z]{2,3})$/;
-                var valid = regex.test($(this).val());
-                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
-                state.memberEmailValid = valid; 
+                var memberEmail = $("[name=memberEmail]").val();
+                var valid = regex.test(memberEmail);
+                if(valid == false) { //이메일 형식 오류
+                    //필요한 처리 (실패표시)
+                    $("[name=memberEmail]").removeClass("success fail")
+                    .addClass("fail").attr("data-error", "1"); //실패 에러1번
+                    state.memberEmailValid = false;
+                    return;
+                }
+
+                //형식 검사를 통과했다면 서버에 사용가능한지 요청(ajax 요청)
+                $.ajax({
+                    url:"http://localhost:8080/rest/member/validEmail",
+                    method:"post", //post방식 쓰는이유: 파라미터 쓰기 귀찮아서
+                    data: { memberEmail : $("[name=memberEmail]").val() },
+                    success : function(response){
+                        if(response === true) { //사용가능(true)
+                            $("[name=memberEmail]").removeClass("success fail")
+                            .addClass("success");
+                            state.memberEmailValid = true;
+                            $(".btn-cert-send").fadeIn(); //인증메일 전송버튼 표시
+                        }
+                        else { //사용중인 이메일(false)
+                            $("[name=memberEmail]").removeClass("success fail")
+                            .addClass("fail").attr("data-error", "2");
+                            state.memberEmailValid = false;
+                        }
+                    }
+                });
+                
             });
+
+            // 닉네임 검사 (아이디하고 패턴동일 why? not null unique라서)
             $("[name=memberNickname]").on("blur", function(){
                 var regex= /^[가-힣A-Za-z0-9]{1,10}$/;
-                var valid = regex.test($(this).val());
-                $(this).removeClass("success fail").addClass(valid ? "success" : "fail");
-                state.memberNicknameValid = valid;
+                var memberNickname = $("[name=memberNickname]").val();
+                var valid = regex.test(memberNickname);
+                if(valid == false){
+                    $("[name=memberNickname]").removeClass("success fail")
+                    .addClass("fail").attr("data-error", "1"); //실패 에러1번
+                    state.memberNicknameValid = false;
+                    return;
+                }
+                $.ajax({
+                    url:"http://localhost:8080/rest/member/validNickname",
+                    method:"post",
+                    data: {memberNickname : memberNickname},
+                    success : function(response) { //true 사용가능 false 사용중
+                        // if(reponse) //자바스크립트는 이것을 긍정적인 값으로 해석(1, 'hello' 등도 가능 )
+                        if(response === true){ //나는 꼭 true여야만 함
+                            console.log(this);
+                            $("[name=memberNickname]").removeClass("success fail")
+                            .addClass("success");
+                            state.memberNicknameValid = true;
+                        }
+                        else {
+                            $("[name=memberNickname]").removeClass("success fail")
+                            .addClass("fail").attr("data-error", "2"); //실패 에러2번
+                            state.memberNicknameValid = false;
+                        }
+                    }
+                });
             });
            
 
@@ -191,16 +245,7 @@
                 return state.ok(); //stat.ok() 상태에 따라 전송해!
             });
 
-            // 따로 구현해본 거
-            // var picker = new Lightpick({
-            //     field: document.getElementById('datepicker'),
-            //     onSelect: function(date){
-            //         //document.getElementById('datepicker').innerHTML = date.format('YYYY-MM-DD');
-            //         $('#datepicker').val(date.format('YYYY-MM-DD'));
-            //     }
-            // });
-
-             // togglebox에 대한 제어 비밀번호 토글 jquery코드
+            // togglebox에 대한 제어 비밀번호 토글 jquery코드
             //togglebox에 대한 제어
             $(".togglebox").find("[type=checkbox]").on("input", function(){
                 //this는 체크된 체크박스
@@ -297,13 +342,14 @@
             <div class="container w-600 mt-50 mb-50">
                 <div class="cell">
                     <form action="" method="post" enctype="multipart/form-data" autocomplete="off" class="form-check">
+                        
                         <div class="cell">
                             <label>아이디<i class="fa-solid fa-asterisk red"></i></label>
                             <input type="text" name="memberId" class="field w-100">
                             <div class="success-feedback">사용가능한 아이디 입니다</div>
                             <div class="fail-feedback">
-                                아이디가 사용중이거나
-                                영문 소문자로 시작하고 숫자 포함 5~20글자로 작성하세요
+                                <div>영문 소문자로 시작하고 숫자 포함 5~20글자로 작성하세요</div>
+                                <div>아이디가 이미 사용중입니다</div>
                             </div>
                         </div>
                        
@@ -333,19 +379,35 @@
                             <div class="fail-feedback">비밀번호를 입력하시거나 비밀번호가 일치하지 않습니다</div>
                         </div>
 
-                        <div class="cell">
+                        <!-- 이메일 입력창과 피드백 -->
+                        <div class="cell mb-0">
                             <label>이메일<i class="fa-solid fa-asterisk red"></i></label>
+                        </div>
+                        <div class="cell mt-0 flex-area" style="flex-wrap:wrap"> 
                             <!-- 원래는 type inputmode모두 email이 맞는표현 -->
-                            <input type="text" inputmode="email" name="memberEmail" class="field w-100">
-                            <div class="success-feedback">사용가능한 이메일 입니다</div>
-                            <div class="fail-feedback">이미 사용중이거나 사용할 수 없는 이메일입니다</div>
+                            <input type="text" inputmode="email" name="memberEmail" class="field">
+                            <button type="button" class="btn btn-netural btn-cert-send ms-10"
+                                    style="display: none;">
+                                <i class="fa-solid fa-envelope"></i>
+                                <span>인증메일 보내기</span>
+                            </button>
+                            <div class="success-feedback w-100">사용가능한 이메일 입니다</div>
+                            <div class="fail-feedback w-100">
+                                <div>사용할 수 없는 형식의 이메일입니다</div>
+                                <div>이메일이 이미 사용중입니다</div>
+                            </div>
                         </div> 
+                       
 
+                        <!-- 닉네임 입력창과 피드백 -->
                         <div class="cell">
                             <label>닉네임<i class="fa-solid fa-asterisk red"></i></label>
                             <input type="text" name="memberNickname" class="field w-100">
                             <div class="success-feedback">닉네임 설정이 완료되었습니다</div>
-                            <div class="fail-feedback">사용중이거나 사용할 수 없은 닉네임입니다</div>
+                            <div class="fail-feedback">
+                                <div>닉네임은 한글 또는 영문, 숫자 10글자 이내로 작성하세요</div>
+                                <div>이미 사용중인 닉네임입니다</div>
+                            </div>
                         </div>
                    
                     </form>                      
