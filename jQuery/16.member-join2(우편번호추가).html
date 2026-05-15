@@ -206,6 +206,10 @@
                     // document.getElementById("sample6_address").value = addr;
                     // document.querySelector("[name=memberAddress1]").value =addr;
                     $("[name=memberAddress1]").val(addr);
+
+                    // 지우기 버튼을 표시한다
+                    $(".btn-address-clear").fadeIn();
+
                     // 커서를 상세주소 필드로 이동한다.
                     // document.getElementById("sample6_detailAddress").focus();
                     // document.querySelector("[name=memberAddress2]").focus();
@@ -213,6 +217,16 @@
                     }
                 }).open();
             });
+            
+            //주소 초기화 버튼
+            $(".btn-address-clear").on("click", function(){
+                //입력값 초기화 및 클래스 제거
+                $("[name=memberPost], [name=memberAddress1], [name=memberAddress2]").val("")
+                    .removeClass("success fail");
+                state.memberAddressValid = true;
+                $(this).fadeOut();
+            });
+
         });
     </script>
     
@@ -333,13 +347,17 @@
                         </div>
                         <div class="cell mt-0 flex-area">
                             <input type="text" name="memberPost" class="field field-numeric" 
-                                            size="6" maxlength="6" placeholder="우편번호">
+                                            size="6" maxlength="6" placeholder="우편번호" readonly>
                             <button type="button" class="btn btn-neutral ms-10 btn-address-search">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
+                            <button type="button" class="btn btn-negative ms-10 btn-address-clear"
+                                    style="display: none;">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
                         </div>
                         <div class="cell">
-                            <input type="text" name="memberAddress1" class="field w-100" placeholder="기본주소">
+                            <input type="text" name="memberAddress1" class="field w-100" placeholder="기본주소" readonly>
                         </div>
                         <div class="cell">
                             <input type="text" name="memberAddress2" class="field w-100" placeholder="상세주소">
