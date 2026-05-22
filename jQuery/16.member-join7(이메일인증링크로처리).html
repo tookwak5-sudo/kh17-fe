@@ -70,6 +70,8 @@
                 memberPasswordValid: false,
                 memberPasswordCheckValid: false, //전송은 안하지만 일치해야함
                 memberEmailValid: false, //형식을 통과하고 중복검사를 통과했는지
+              
+                //이 값은 더 이상 쓸모가 없다..
                 memberEmailCertValid : false, //인증을 통과했는지
                 memberNicknameValid: false,
 
@@ -348,13 +350,13 @@
                     method: "post",
                     data: { certEmail: memberEmail },
                     success: function () { //백엔드 반환형이 void이므로 response는 필요없다
+                        window.alert("이메일을 확인해주세요");
                         //성공 시 실행될 함수
-                       console.log("이메일발송완료");
-
+                        
                        //성공 시 내가 만든 인증확인 template을 불러옴
-                       var template = $("#cert-template").text();
-                       var content = $.parseHTML(template);
-                       $(".cert-area").html(content);
+                    //    var template = $("#cert-template").text();
+                    //    var content = $.parseHTML(template);
+                    //    $(".cert-area").html(content);
                     },
                     error: function () { //실패 시 실행될 함수
                         window.alert("이메일 발송에 실패했습니다. \n잠시 후 다시 시도해보세요")
