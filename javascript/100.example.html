@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />
+    <!-- fullcalendar cdn -->
+	<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.20/index.global.min.js'></script>
+	<!-- 음력 cdn	 -->
+	<script src="https://cdn.jsdelivr.net/npm/lunar-javascript/lunar.min.js"></script>
+	
+  </head>
+  <body>
+    <div id='calendar'></div>
+         <script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        dayCellContent: function(arg) {
+            // lunar-javascript 사용법
+            const d = Lunar.fromDate(arg.date);
+            return {
+                html: `<div class="date-cell">
+                         <span class="solar">${arg.dayNumberText}</span>
+                         <span class="lunar" style="display:block; font-size:0.7em; color:#888;">
+                           ${d.getMonth()}.${d.getDay()}
+                         </span>
+                       </div>`
+            };
+        },
+    });
+    calendar.render();
+});
+    </script>
+  </body>
+</html>
