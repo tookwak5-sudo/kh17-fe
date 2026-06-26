@@ -12,7 +12,8 @@
     <link rel ="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <link href ="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.8/flatly/bootstrap.min.css" rel="stylesheet">
     <style>
-           div { box-shadow: 0 0 1px 0 gray; }
+           /* div { box-shadow: 0 0 1px 0 gray; } */
+            form { padding: 0 !important}
     </style>
 
      <!-- jQuery CDN -->
@@ -25,14 +26,57 @@
              <div class="row">
                 <div class="col">
                     <div class="p-4 bg-black text-light rounded">
-                        <h1>제목 샘플</h1>
-                        <p>설명 샘플</p>
+                        <h1>Flex 배치</h1>
+                        <p>연속해서 배치해야 하는 경우 Flex 처리 방법</p>
                     </div>
                 </div>
              </div>
 
              <!-- 실제로 구현할 내용들 -->
+             <div class="row mt-4">
+                    <label class="col-sm-3 col-form-label ">이메일</label>
+                    <div class="col-sm-9 d-flex align-items-center">
+                            <input class="form-control">
+                            <i class="fa-solid fa-at mx-2"></i>
+                            <select class="form-select">
+                                <option>gmail.com</option>
+                                <option>naver.com</option>
+                                <option>hanmail.com</option>
+                            </select>
+                    </div>
+             </div>
 
+             <div class="row mt-4">
+                    <div class="col d-flex">
+                        <input type="text" class="form-control w-auto">
+                        <button type="button" class="btn btn-success ms-2">
+                            <span class="d-none d-sm-inline">검색</span>
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+             </div>
+
+             <div class="row mt-4">
+                    <div class="col d-flex">
+                        <input type="text" class="form-control">
+                        <button type="button" class="btn btn-success ms-2 text-nowrap">
+                            <span class="d-none d-sm-inline">검색</span>
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+             </div>
+
+             <div class="row mt-4">
+                    <div class="col">
+                        <div class="input-group">
+                            <input type="text" class="form-control  border-0 border-bottom border-primary">
+                            <button type="button" class="btn btn-outline-primary text-nowrap">
+                                <span class="d-none d-sm-inline">검색</span>
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                        </div>
+                    </div>
+             </div>
         </div>
 
     <!-- JS를 Lazy Loading 처리하여 화면을 조금이라도 빠르게 띄우도록 노력 (단, 기능은 다소 늦게 실행) -->
