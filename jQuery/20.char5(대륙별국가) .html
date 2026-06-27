@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JQuery 수업</title>
+  <link rel="icon" href="../css/images/kh로고.jpg" type="image/jpeg">
+  <link rel="stylesheet" href="../css/commons.css" type="text/css">
+
+  <!-- 아이콘-->
+  <link rel="stylesheet" type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+  <!-- 디자인을 작성하기 위한 영역-->
+  <style>
+    div {
+      box-shadow: 0 0 0 1px #cccccc
+    }
+  </style>
+
+  <!-- chartjs CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- jQuery CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
+
+  <!-- 자바스크립트 작성 영역 -->
+  <script>
+    //지연로딩코드
+    $(function () {
+      //시작하자마자 차트를 만들지 말고 서버에 물어본 뒤, 받은 데이터로 차트 생성
+      $.ajax({
+        url: "http://localhost:8080/rest/stat/country-region",
+        method: "post",
+        success: function (response) { //response에 titles와 values가 담겨있음
+          //const ctx = document.querySelector(".custom-chart"); //js 스타일
+          const ctx = $(".custom-chart")[0]; //jquery 스타일
+
+          //차트 생성 - new Chart(태그, )
+
+
+          //차트 생성 - NEW chart(태그, {옵션});
+          new Chart(ctx, {
+            //tye은 차트의 유형(bar/line/pie/doughnut)
+            type: response.type,
+            //data는 차트를 그리기 위한 값의 정보
+            data: {
+              //labels가 x축에 표시될 이름
+              labels: response.titles,
+              //datasets은 차트에 그릴 데이터 집합들 (복수계 가능)
+              datasets: [
+                {
+                  //label: '국가 수', //범례
+                  data: response.values,
+                  borderWidth: 1, //테두리 두께
+                  backgroundColor: [
+                    "rgba(183, 21, 64,0.5)",
+                    "rgba(250, 152, 58,0.5)",
+                    "rgba(246, 185, 59,0.5)",
+                    "rgba(5, 196, 107,0.5)",
+                    "rgba(60, 64, 198,0.5)",
+                    "rgba(24, 44, 97,0.5)",
+                    "rgba(131, 52, 113,0.5)",
+                  ],
+                  boarderColor: [
+                    "rgba(183, 21, 64,1.0)",
+                    "rgba(250, 152, 58,1.0)",
+                    "rgba(246, 185, 59,1.0)",
+                    "rgba(5, 196, 107,1.0)",
+                    "rgba(60, 64, 198,1.0)",
+                    "rgba(24, 44, 97,1.0)",
+                    "rgba(131, 52, 113,1.0)",
+                  ],
+                }
+              ]
+            },
+            //차트를 표시하기 위한 옵션
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true //y축을 무조건 0부터 시작
+                }
+              },
+              plugins: {
+                legend: { display: false } // 범례 제거
+              },
+            }
+          });
+        }
+      });
+     
+      $.ajax({
+        url: "http://localhost:8080/rest/stat/lecture-category",
+        method: "post",
+        success: function (response) { //response에 titles와 values가 담겨있음
+          //const ctx = document.querySelector(".custom-chart"); //js 스타일
+          const ctx = $(".custom-chart2")[0]; //jquery 스타일
+
+          //차트 생성 - new Chart(태그, )
+
+
+          //차트 생성 - NEW chart(태그, {옵션});
+          new Chart(ctx, {
+            //tye은 차트의 유형(bar/line/pie/doughnut)
+            type: response.type,
+            //data는 차트를 그리기 위한 값의 정보
+            data: {
+              //labels가 x축에 표시될 이름
+              labels: response.titles,
+              //datasets은 차트에 그릴 데이터 집합들 (복수계 가능)
+              datasets: [
+                {
+                  //label: '국가 수', //범례
+                  data: response.values,
+                  borderWidth: 1, //테두리 두께
+                  backgroundColor: [
+                    "rgba(183, 21, 64,0.5)",
+                    "rgba(250, 152, 58,0.5)",
+                    "rgba(246, 185, 59,0.5)",
+                    "rgba(5, 196, 107,0.5)",
+                    "rgba(60, 64, 198,0.5)",
+                    "rgba(24, 44, 97,0.5)",
+                    "rgba(131, 52, 113,0.5)",
+                  ],
+                  boarderColor: [
+                    "rgba(183, 21, 64,1.0)",
+                    "rgba(250, 152, 58,1.0)",
+                    "rgba(246, 185, 59,1.0)",
+                    "rgba(5, 196, 107,1.0)",
+                    "rgba(60, 64, 198,1.0)",
+                    "rgba(24, 44, 97,1.0)",
+                    "rgba(131, 52, 113,1.0)",
+                  ],
+                }
+              ]
+            },
+            //차트를 표시하기 위한 옵션
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true //y축을 무조건 0부터 시작
+                }
+              },
+              plugins: {
+                legend: { display: false } // 범례 제거
+              },
+            }
+          });
+        }
+      });
+     
+    });
+  </script>
+</head>
+
+<body>
+  <div class="container w-600 mt-50 mb-50">
+    <div class="cell center">
+      <h1>차트다루기</h1>
+    </div>
+
+    <div class="cell center">
+      <h1>대륙별 국가 현황</h1>
+    </div>
+    <div class="cell">
+      <canvas class="custom-chart"></canvas>
+    </div>
+
+    <div class="cell center">
+      <h2>카테고리별 강좌수</h2>
+    </div>
+
+    <div class="cell">
+      <canvas class="custom-chart2"></canvas>
+    </div>
+  </div>
+</body>
+
+</html>

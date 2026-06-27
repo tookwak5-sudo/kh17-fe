@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <!-- favicon -->
+    <link rel="icon" href="../css/images/kh로고.jpg" type="image/jpeg">
+
+    <!-- CSS는 최대한 빠르게 로딩(Eager Loading)하여 사용자에게 디자인상의 변화가 느껴지지 않도록 노력-->
+    <link href ="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel ="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link href ="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.8/flatly/bootstrap.min.css" rel="stylesheet">
+    <style>
+           form { padding: 0 !important}
+    </style>
+
+     <!-- jQuery CDN -->
+    <script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  </head>
+  <body>
+        <div class="container my-5">
+            <!-- 제목 부분을 점보트론(jumbotron_이라고 부른다) -->
+             <div class="row">
+                <div class="col">
+                    <div class="p-4 bg-black text-light rounded">
+                        <h1>강좌 정보 등록</h1>
+                        <p>강좌등록을 하는 창</p>
+                    </div>
+                </div>
+             </div>
+
+             <!-- 실제로 구현할 내용들 -->
+             <form enctype="multipart/form-data" autocomplete="off" class="form-check">
+                <div class="row mt-4">
+                    <label class="col-sm-3 col-form-label">
+                        강좌명<i class="fa-solid fa-asterisk text-danger"></i>
+                    </label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" name="lectureTitle" placeholder="e.g., 정보처리기사">
+                        <div class="invalid-feedback">필수 항목입니다</div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <label class="col-sm-3 col-form-label">
+                        카테고리<i class="fa-solid fa-asterisk text-danger"></i>
+                    </label>
+                    <div class="col-sm-9">
+                        <select class="form-select" name="lectureCategory">
+                            <option value="">선택하세요</option>
+                            <option >이론</option>
+                            <option >실습</option>
+                            <option >시험</option>
+                        </select>
+                        <div class="invalid-feedback">필수 항목입니다</div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <label class="col-sm-3 col-form-label">
+                        강의시간<i class="fa-solid fa-asterisk text-danger"></i>
+                    </label>
+                    <div class="col-sm-9">
+                        <input type="text" inputmode="numeric" class="form-control" name="lectureDuration" value="0">
+                        <div class="valid-feedback">강의시간이 설정되었습니다</div>
+                        <div class="invalid-feedback">30시간 단위로 최대 300시간 이내에서 설정이 가능합니다</div>
+                    </div>
+                </div>
+
+                 <div class="row mt-4">
+                    <label class="col-sm-3 col-form-label">
+                        수강료<i class="fa-solid fa-asterisk text-danger"></i>
+                    </label>
+                    <div class="col-sm-9">
+                        <input type="text" inputmode="numeric" class="form-control" name="lecturePrice" value="0">
+                        <div class="valid-feedback">수강료가 설정되었습니다</div>
+                        <div class="invalid-feedback">수강료는 0 이상으로 설정해야 합니다</div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <label class="col-sm-3 col-form-label">
+                        강의형태<i class="fa-solid fa-asterisk text-danger"></i>
+                    </label>
+                    <div class="col-sm-9">
+                        <select class="form-select" name="lectureType">
+                            <option value="">선택하세요</option>
+                            <option>온라인</option>
+                            <option>오프라인</option>
+                            <option>혼합</option>
+                        </select>
+                        <div class="invalid-feedback">필수 선택항목입니다</div>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    
+                    <div class="offset-sm-3 col-sm-9">
+                        <input type="file" name="attach" accept=".png, .jpg" multiple
+                            class="form-control w-100 preview-input">
+                    </div>
+                </div>
+                    <div class="row mt-4 preview-area">
+
+                    </div>
+                    <div class="row mt-4">  
+                        <div class="col text-end">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>신규 강좌 개설하기</span>
+                            </button>
+                        </div>
+                    </div>
+             </form>
+        </div>
+
+    <!-- JS를 Lazy Loading 처리하여 화면을 조금이라도 빠르게 띄우도록 노력 (단, 기능은 다소 늦게 실행) -->
+    <script src ="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src ="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src ="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+     <script>
+        $(function(){
+            //상태 객체
+            var state = {
+                lectureTitleValid : false,
+                lectureCategoryValid : false,
+                lectureDurationValid : false,
+                lecturePriceValid : false,
+                lectureTypeValid : false,
+                ok : function() {
+                    return Object.values(this)//이 객체의 모든 이름에 대한 값을 반환해라
+                    .filter(v => typeof v == "boolean") // boolean값만 추출해서
+                    .every(v => v === true); //모두 true인지 확인해서 반환해라
+                }
+            };
+            //개별 입력창
+            $("[name=lectureTitle]").on("blur", function(){
+                var valid = $(this).val().length > 0;
+                $(this).removeClass("is-valid is-invalid").addClass(valid ? "is-valid" : "is-invalid");
+                state.lectureTitleValid = valid;
+            });
+
+            $("[name=lectureCategory]").on("input", function(){
+                var regex = /^(이론|실습|시험)$/;
+                var valid = regex.test($(this).val());
+                $(this).removeClass("is-valid is-invalid").addClass(valid ? "is-valid" : "is-invalid");
+                state.lectureCategoryValid = valid;
+            });
+
+            $("[name=lectureDuration]").on("blur", function(){
+                var duration = parseInt($(this).val());
+                var valid = duration <= 300 && duration % 30 == 0;
+                $(this).removeClass("is-valid is-invalid").addClass(valid ? "is-valid" : "is-invalid");
+                state.lectureDurationValid = valid;
+            });
+            $("[name=lecturePrice]").on("blur", function(){
+                var price = parseInt($(this).val());
+                var valid = price >= 0 && price <= 100000000;
+                $(this).removeClass("is-valid is-invalid").addClass(valid ? "is-valid" : "is-invalid");
+                state.lecturePriceValid = valid;
+            });
+            $("[name=lectureType]").on("input", function(){
+                var regex = /^(온라인|오프라인|혼합)$/;
+                var valid = regex.test($(this).val());
+                $(this).removeClass("is-valid is-invalid").addClass(valid ? "is-valid" : "is-invalid");
+                state.lectureTypeValid = valid;
+            });
+
+            //숫자 처리
+            $("[name=lectureDuration]").on("input", function(){
+                var originValue = $(this).val();
+                var replaceValue = originValue.replace(/[^0-9]/g, "");
+                $(this).val(parseInt(replaceValue || 0));
+            });
+
+            $("[name=lecturePrice]").on("input", function(){
+                var originValue = $(this).val();
+                var replaceValue = originValue.replace(/[^0-9]/g, "");
+                $(this).val(parseInt(replaceValue || 0));
+            });
+            
+            $(".form-check").on("submit", function(){
+                $(this).find("select[name]").trigger("input");
+                $("input[name], textarea[name]").trigger("blur");
+                return state.ok();
+            });
+
+            //파일처리
+            
+        });
+    </script>
+    <script type="text/javascript">
+        //이미지 미리보기 처리 (개수 무관)
+        $(function(){
+            $(".preview-input").on("input", function(){
+
+                //미리보기를 생성하기 전에 기전에 .preview-area에 있는 이미지를 제거
+                // - 있을지 없을지 모르며 있다면 URL.revokeObjectURL()을 써서 회수까지 해줘야함
+
+                //jquery에서 제공하는 반복함수 each를 사용  (for보다 편함)
+                $(".preview-area").find("img").each(function(){
+                    //this = 현재 순서의 이미지
+                    //이미지 주소 회수 + 이미지 태그 삭제 (or 영역 비우기)
+                    var address = $(this).attr("src"); //기존 src가져와서
+                    URL.revokeObjectURL(address); //자원 회수까지
+                    $(this).remove(); // 태그 삭제
+
+                });
+                $(".preview-area").empty(); //영역 비우기
+
+
+                if(this.files.length > 0){ //파일선택
+                    for(var i = 0; i < this.files.length; i++){ //이미지 개수만큼 이미지를 만들어서
+                        //이미지를 만들어서 .preview-area에 추가
+                        var img = $("<img>")
+                                    .addClass("image-shadow", "image-circle")
+                                    .attr("src", URL.createObjectURL(this.files[i]))
+                                    .prop("height", 100); 
+                        $(".preview-area").append(img);
+                        //.preview-area에 추가
+                    }
+                }
+            });
+        });
+    </script>
+
+  </body>
+</html>
