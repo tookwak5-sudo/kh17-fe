@@ -85,14 +85,14 @@
                 
                 $("[name=memberPassword]").removeClass("success fail")
                         .addClass(state.memberPasswordValid ? "success" : "fail");
-                //state.memberPasswordValid = valid;
+               
 
                 //[2] 비밀번호 확인검사
                 state.memberPasswordCheckValid = 
                             $("[name=memberPassword]").val().length > 0 &&
                                 $("[name=memberPassword]").val() == $(".password-check").val();
                 $(".password-check").removeClass("success fail").addClass(state.memberPasswordCheckValid ? "success" : "fail");
-               // state.memberPasswordCheckValid = valid;
+             
             });
             $("[name=memberEmail]").on("blur", function(){
                 var regex = /^([a-z][a-z0-9]{4,19})@([A-Za-z0-9\-\.]{1,})(\.[a-z]{2,3})$/;
@@ -232,7 +232,7 @@
                                 <label class="togglebox">
                                     <input type="checkbox">
                                     <i class="fa-solid fa-eye blue"></i>                                
-                                    <i class="fa-solid fa-eye-slash red"></i> 
+                                   `````````````````````````  <i class="fa-solid fa-eye-slash red"></i> 
                                 </label>
                             <input type="password" name="memberPassword" class="field w-100">
                             <div class="success-feedback">사용가능한 비밀번호 입니다</div>
