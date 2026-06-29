@@ -11,6 +11,9 @@
     <link href ="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel ="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <link href ="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.3.8/flatly/bootstrap.min.css" rel="stylesheet">
+
+    <!-- 국기 제작 CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icons/7.5.0/css/flag-icons.min.css">
     <style>
            /* div { box-shadow: 0 0 1px 0 gray; } */
             form { padding: 0 !important}
@@ -25,85 +28,88 @@
             <!-- 제목 부분을 점보트론(jumbotron_이라고 부른다) -->
              <div class="row">
                 <div class="col">
-                    <div class="p-4 bg-black text-light rounded">
+                    <!-- <div class="p-4 bg-black text-light rounded"> -->
+                    <div class="p-4">   
                         <h1>국가 목록</h1>
                     </div>
-                    
-            <!-- 실제로 구현할 내용들 -->
-            <form autocomplete="off">
-                <div class="row mt-4 d-flex">
-                    <div class="col-sm-3">
-                        <select name="column" class="form-select">
-                            <option value="country_name">국가명</option>
-                            <option value="country_region">대륙명</option>
-                            <option value="country_capital">수도명</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-9">
-                        <div class="input-group">
-                            <input type="text" name="keyword" required
-                                    class="form-control" placeholder="검색어 입력">
-                            <button type="submit" class="btn btn-success text-nowrap">
+                </div>
+                <form autocomplete="off">
+                <!-- 검색창 -->
+                <div class="row mt-4">
+                    <div class="col">
+                        <div class="d-flex">
+                        <!-- <div class="input-group"> -->
+                            <select name="column" class="form-select w-auto">
+                                <option value="country_name">국가명</option>
+                                <option value="country_region">대륙명</option>
+                                <option value="country_capital">수도명</option>
+                            </select>
+                            <input type="text" name="keyword" required class="form-control w-auto" placeholder="검색어 입력">
+                            <button type="submit" class="btn btn-success text-nowrap ms-2">
                                     <i class="fa-solid fa-magnifying-glass"></i>
-                                    <span class="d-none d-sm-inline">검색</span>
+                                    <span class="ms-2 d-none d-sm-inline">검색</span>
                             </button>
                         </div>
                     </div>
                 </div>
             </form>
-            <div class="row my-3 text-end">
-                <div class="col">
-                      [ 1-10 / 42 ]
-                </div>
-               
-            </div>
-            <!-- 데이터 테이블 -->
-
+            <!-- 표 -->
             <div class="row mt-4">
                 <div class="col">
                     <div class="text-nowrap table-responsive">
                         <table class="table table-striped table-hover">
                             <thead>
                                 <tr>
+                                    <th width="100">국기</th>
                                     <th>번호</th>
-                                    <th>대륙</th>
-                                    <th>이름</th>
+                                    <th>국가명</th>
                                     <th>수도</th>
                                     <th>인구</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
+                                    <td>
+                                        <!-- <img src="https://placehold.co/25x25"> -->
+                                        <span class="fi fi-kr"></span>
+                                    </td>
                                     <td>1</td>
-                                    <td>아시아</td>
                                     <td>대한민국</td>
                                     <td>서울</td>
-                                    <td class="right">55,000,000</td>
+                                    <td>55,000,000</td>
                                 </tr>
                                 <tr>
+                                    <td>
+                                        <span class="fi fi-cn"></span>
+                                    </td>
                                     <td>2</td>
-                                    <td>아시아</td>
                                     <td>중국</td>
                                     <td>베이징</td>
                                     <td class="right">145,000,000</td>
                                 </tr>
                                 <tr>
+                                    <td>
+                                        <span class="fi fi-jp"></span>
+                                    </td>
                                     <td>3</td>
-                                    <td>아시아</td>
                                     <td>일본</td>
                                     <td>도쿄</td>
                                     <td class="right">123,000,000</td>
                                 </tr>
                                 <tr>
+                                    <td>
+                                        <span class="fi fi-gb"></span>
+                                    </td>
                                     <td>4</td>
-                                    <td>유럽</td>
                                     <td>영국</td>
                                     <td>런던</td>
                                     <td class="right">67,000,000</td>
                                 </tr>
                                 <tr>
+                                    <td>
+                                        <span class="fi fi-fr"></span>
+                                    </td>
                                     <td>5</td>
-                                    <td>유럽</td>
                                     <td>프랑스</td>
                                     <td>파리</td>
                                     <td class="right">59,000,000</td>
@@ -118,7 +124,8 @@
                     <a href="#" class="btn btn-secondary">신규등록하기</a>
                 </div>
             </div>
-            <div class="row mt-2">
+            <!-- Pagination -->
+            <div class="row mt-4">
                 <div class="col">
                     <ul class="pagination justify-content-center">
                         <li class="page-item">
@@ -129,9 +136,7 @@
                         <li class="page-item active">
                             <a href="#" class="page-link">1</a>
                         </li>
-                        <li class="page-item">
-                            <a href="#" class="page-link">2</a>
-                        </li>
+                        <li class="page-item"><a href="#" class="page-link">2</a></li>
                         <li class="page-item"><a href="#" class="page-link">3</a></li>
                         <li class="page-item"><a href="#" class="page-link">4</a></li>
                         <li class="page-item"><a href="#" class="page-link">5</a></li>
