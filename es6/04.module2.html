@@ -1,0 +1,21 @@
+<!-- 전형적인 JS를 불러오는 방식 나는 저 파일을 ESM방식으로 불러오겠다-->
+<script src="./test3.js" type="module"></script> 
+<script src="./test4.js" type="module"></script> 
+<script type="module">
+ //모던 자바스크립트로의 변화
+    //1. 변수 생성 방식의 변화
+    //2. 람다(Lambda) 함수 등장 (=화살표 함수, Arrow function)
+    //3. 클래스(class) 등장(x 클래스 방식을 쓰면 너무 경직되서 js의 장점이 사라짐)
+    //4. 모듈(module) 등장
+    //5. 백틱 구문 등장
+    //6. 구조 분해 할당 등장
+    // ---------------------------------------------------
+    
+    // 4. 모듈(module) 등장 
+    // import로 어느 대상에서 어느 항목을 가져올지 결정하여 작성
+    import {a} from "./test3.js";
+    //import {b} from "./test4.js";
+
+    import {a as b} from "./test4.js"; //a를 b로 바꿔서 불러오겠다
+    console.log(a, b);           
+</script>
