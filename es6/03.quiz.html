@@ -1,0 +1,28 @@
+<script type="text/javascript">
+    
+    //(Q) data에 들어 있는 값들을 이용해서 다음 결과를 만들어 내세요
+    //1. 홀수만 필터링
+    //2. 1번에서 필터링된 결과 데이터를 각각 제곱
+    //3. 3번의 결과를 출력
+    //추가로 알아야 할 함수 : map
+
+    const data = [5, 3, 2, 7, 8, 1, 6];
+
+    //1. 홀수만 필터링
+    let result1 = [];
+    for(let i = 0; i < data.length; i++){
+        if(data[i] % 2 == 1) {
+            result1.push(data[i]);
+        }
+    }
+    for(let i = 0; i <result1.length; i++){
+        console.log("결과1 : " + result1[i]);
+    }
+
+    //2. 필터링된 결과를 각각 제곱
+    let result2 = result1.map(function(number){
+        return number * number;
+    });
+    //3. 2번의 결과를 출력
+    console.log("결과2 : " + result2);
+</script>
