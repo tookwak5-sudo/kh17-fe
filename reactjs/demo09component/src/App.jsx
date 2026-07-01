@@ -1,6 +1,10 @@
 import { useCallback, useState } from "react";
 import './App.css'
 import Jumbotron from "./components/jumbotron"//.jsx 생략
+import Exam01 from "./components/Exam01";
+import Exam02 from "./components/Exam02";
+import Exam02_1 from "./components/Exam02_1";
+import Exam03 from "./components/Exam03";
 
 function App() {
 
@@ -20,7 +24,6 @@ function App() {
   const changeMember = useCallback(e=>{
     // const name = e.target.name;
     // const value = e.target.value; 아래방식으로 한 개가 아닌 한번에 관리
-
     const {name, value} = e.target;
     //console.log(e.target);
     setMember({
@@ -33,32 +36,20 @@ function App() {
 
   return (
   <div className="container my-5">
-    {/* 내가 만든 점보트론을 불러와서 적용 */}
-    <Jumbotron title="객체 state 다루기" content="입력창 여러개를 하나의 state로 관리하는 법을 배웁니다"/>
+    
+    {/* <Exam01/>
 
-    {/* 아이디 입력화면 */}
-    <div className="row mt-4">
-      <label className="col-sm-3 col-form-lable">아이디</label>
-      <div className="col-sm-9">
-        <input type="text" name="memberId" className="form-control"
-            value={member.memberId} 
-            onChange={changeMember}/>
-          <div className="valid-feedback">멋진 아이디 입니다</div>
-          <div className="invalid-feedback">사용중이거나 사용할 수 없는 형식입니다</div>
-      </div>
-    </div>
+    <hr/>
 
-    {/* 닉네임 입력화면 */}
-    <div className="row mt-4">
-      <label className="col-sm-3 col-form-lable">닉네임</label>
-      <div className="col-sm-9">
-        <input type="text" name="memberNickname" className="form-control"
-              value={member.memberNickname}
-              onChange={changeMember}/>
-          <div className="valid-feedback">멋진 닉네임 입니다</div>
-          <div className="invalid-feedback">사용중이거나 사용할 수 없는 형식입니다</div>
-      </div>
-    </div>
+    <Exam02/>
+
+    <hr/> */}
+
+    {/* <Exam02_1/> */}
+
+    <hr/>
+
+    <Exam03/>
   </div>
   )
 }
