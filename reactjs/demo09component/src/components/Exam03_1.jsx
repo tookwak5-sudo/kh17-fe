@@ -1,65 +1,34 @@
 //import
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Jumbotron from "./jumbotron";
 
 //function
-function Exam03() {
+function Exam03_1() {
 
     //state - 역동적인 화면을 만들기 위한 핵심데이터
-    const [country, setCountry] = useState({
+    const [country, setCountry] = useState({ //입력 데이터를 관리하는 state
         countryRegion : "",
         countryName : "",
         countryCapital : "",
         countryPopulation : 0
     });
 
+    const [result, setResult] = useState({ //판정 결과를 관리하는 state
+        countryRegion : "",
+        countryName : "",
+        countryCapital : "",
+        countryPopulation : ""
+    });
+
     //memo - state를 이용해서 추가적으로 계산해내는 데이터
-    const countryRegionValid = useMemo(()=>{
-        const regex = /^(아시아|아프리카|[남북]아메리카|유럽|오세아니아)$/;
-        return regex.test(country.countryRegion);
-    }, [country.countryRegion]);
-
-    const countryNameValid = useMemo(()=>{
-        const regex = /^[가-힣]{1,10}$/;
-        return regex.test(country.countryName);
-    }, [country.countryName]);
-
-    const countryCapitalValid = useMemo(()=>{
-        return country.countryCapital.length > 0;
-    }, [country.countryCapital]);
-
-    const countryPopulationValid = useMemo(()=>{
-        return country.countryPopulation > 0;
-    }, [country.countryPopulation]);
-
     const valid = useMemo(()=>{
-        return countryRegionValid 
-                && countryNameValid 
-                && countryCapitalValid
-                && countryPopulationValid;
-    }, [
-        countryRegionValid, 
-        countryNameValid, 
-        countryCapitalValid, 
-        countryPopulationValid
-    ]);
+        if(result.countryRegion !== "is-valid") return false;
+        if(result.countryName !== "is-valid") return false;
+        if(result.countryCapital !== "is-valid") return false;
+        if(result.countryPopulation !== "is-valid") return false;
+        return true;
+    }, [result]);
 
-    //유효성 검사 결과를 저장
-    const countryRegionClass = useMemo(()=>{
-       if(country.countryRegion.length === 0) return ""; 
-       return countryRegionValid ? "is-valid" : "is-invalid";
-    }, [countryRegionValid, country.countryRegion])
-    const countryNameClass = useMemo(()=>{
-        if (country.countryName.length === 0) return "";
-        return country.countryName ? "is-valid" : "is-invalid";
-    }, [countryNameValid, country.countryName])
-    const countryCapitalCalss = useMemo(()=>{
-        if (country.countryCapital.length === 0) return "";
-        return country.countryCapital ? "is-valid" : "is-invalid";
-    }, [countryCapitalValid, country.countryCapital]);
-    const countryPopulationClass = useMemo(()=>{
-        return countryPopulationValid ? "is-valid" : "is-invalid";
-    }, [countryPopulationValid, country.countryPopulation]);
 
     //callback - 호출 가능한 함수 (연관항목을 적어 갱신 최소화)
     const changeStringValue = useCallback(e=>{
@@ -77,10 +46,58 @@ function Exam03() {
         const result =parseInt(replacement); // 숫자로 변환
         setCountry({
             ...country,
-            [name] : (result || 0)
+            [name] : (result || 0) //변수면 []
         },);
     }, [country]);  
 
+    //검사하여 결과를 갱신하는 함수들
+    const checkCountryRegion = useCallback(()=>{
+        const regex = /^(아시아|아프리카|[남북]아메리카|유럽|오세아니아)$/;
+        const valid = regex.test(country.countryRegion);
+        setResult({
+            ...result,
+            countryRegion : (valid ? "is-valid" : "is-invalid") // 변수가 아니라 상수이기 때문에 []x
+        });
+    }, [country.countryRegion, result]);
+    const checkCountryName = useCallback(()=>{
+        const regex = /^[가-힣]{1,10}$/;
+        const valid = regex.test(country.countryName);
+        setResult({
+            ...result,
+            countryName : valid ? "is-valid" : "is-invalid"
+        });
+    }, [country.countryName, result]);
+
+    const checkCountryCapital = useCallback(()=>{
+        const valid = country.countryCapital.length > 0;
+        setResult({
+            ...result,
+            countryCapital : valid ? "is-valid" : "is-invalid"
+        });
+    }, [country.countryCapital, result]);
+
+    const checkCountryPopulation = useCallback(()=>{
+        const valid = country.countryPopulation > 0;
+        setResult({
+            ...result,
+            countryPopulation : valid ? "is-valid" : "is-invalid"
+        });
+    }, [country.countryPopulation, result]);
+
+    //effect - 특정항목이 변경될 때마다 자동 실행되는 코드블럭 (낭비의 끝판왕)
+    //사용법 : useEffect(함수, [연관항목]);
+   
+    //country에서 countryRegion이 변경되자마자 checkCountryRegion 함수 실행하세요!
+    useEffect(()=>{
+        //처음에는 검사하지 마세요
+        if(country.countryRegion === "" && result.countryRegion === "") return;
+
+        //검사함수를 실행하세요
+        checkCountryRegion();
+    }, [country.countryRegion, result.countryRegion]);
+
+
+    //view
     return(
     <>  
         <Jumbotron title="국가 등록 화면" content="국가 정보 등록을 React에서 실습합니다."/>
@@ -92,9 +109,10 @@ function Exam03() {
                 대륙명<span className="text-danger">*</span>
             </label>
             <div className="col-sm-9">
-                <select type="text" name="countryRegion" className={`form-select ${countryRegionClass}`}
+                <select type="text" name="countryRegion" className={`form-select ${result.countryRegion}`}
                         value={country.countryRegion}
-                        onChange={changeStringValue} >
+                        onChange={changeStringValue}
+                        >
                         <option value="">선택하세요</option>
                         <option>아시아</option>
                         <option>아프리카</option>
@@ -113,9 +131,10 @@ function Exam03() {
                 국가명<span className="text-danger">*</span>
             </label>
             <div className="col-sm-9">
-                <input type="text" name="countryName" className={`form-control ${countryNameClass}`}
+                <input type="text" name="countryName" className={`form-control ${result.countryName}`}
                         value={country.countryName}
                         onChange={changeStringValue} 
+                        onBlur={checkCountryName}
                         />
                     <div className="valid-feedback">국가 이름이 설정되었습니다</div>
                     <div className="invalid-feedback">국가명은 한글로만 작성 가능합니다</div>
@@ -128,9 +147,10 @@ function Exam03() {
                 수도<span className="text-danger">*</span>
             </label>
             <div className="col-sm-9">
-                <input type="text" name="countryCapital" className={`form-control ${countryCapitalCalss}`}
+                <input type="text" name="countryCapital" className={`form-control ${result.countryCapital}`}
                         value={country.countryCapital}
-                        onChange={changeStringValue} 
+                        onChange={changeStringValue}
+                        onBlur={checkCountryCapital} 
                         />
                     <div className="valid-feedback">수도명이 설정되었습니다</div>
                     <div className="invalid-feedback">필수 입력 값입니다</div>
@@ -143,9 +163,10 @@ function Exam03() {
                 인구<span className="text-danger">*</span>
             </label>
             <div className="col-sm-9">
-                <input type="text" name="countryPopulation" className={`form-control ${countryPopulationClass}`}
+                <input type="text" name="countryPopulation" className={`form-control ${result.countryPopulation}`}
                         value={country.countryPopulation}
                         onChange={changeNumericValue} 
+                        onBlur={checkCountryPopulation}
                         />
                     <div className="valid-feedback">인구가 설정되었습니다</div>
                     <div className="invalid-feedback">인구는 0보다 커야합니다</div>
@@ -162,4 +183,4 @@ function Exam03() {
 }
 
 //export
-export default Exam03;
+export default Exam03_1;

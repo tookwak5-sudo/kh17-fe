@@ -31,9 +31,6 @@ function Exam01() {
         });
     }, [member]);
 
-    const allValid = useMemo({
-
-    });
 
     return (
         <>
