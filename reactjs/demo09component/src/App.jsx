@@ -6,6 +6,11 @@ import Exam02 from "./components/Exam02";
 import Exam02_1 from "./components/Exam02_1";
 import Exam03 from "./components/Exam03";
 import Exam03_1 from "./components/Exam03_1";
+import Exam04 from "./components/Exam04";
+import Exam05 from "./components/Exam05";
+
+import { ToastContainer, Bounce } from "react-toastify";
+
 
 function App() {
 
@@ -54,6 +59,26 @@ function App() {
 
     <hr/>
     <Exam03_1/>
+
+    <hr/>
+    <Exam04/>
+    <hr/>
+    <Exam05/>
+
+    {/* 토스티파이 문구 불러오기  */}
+    <ToastContainer
+      position="bottom-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick={false}
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="colored"
+      transition={Bounce}
+    />
   </div>
   )
 }
