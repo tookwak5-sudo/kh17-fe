@@ -103,7 +103,7 @@ function Exam04() {
     }, [lecture.lectureType, result])
     //- 데이터 전송(등록)
     const send = useCallback(() => {
-        // $.ajax({
+        // $.ajax({ 
         //     url:"http://localhost:8080/api/lecture/insert",
         //     method:"post",
         //     data: lecture,
@@ -112,11 +112,15 @@ function Exam04() {
         //     }
         // });
 
-        axios({
-            url: "http://localhost:8080/api/lecture/insert",
-            method: "post",
-            data: lecture,
-        })
+        //axios기본형
+        // axios({
+        //     url: "http://localhost:8080/api/lecture/insert",
+        //     method: "post",
+        //     data: lecture,
+        // })
+        
+        axios  //axios 축약형
+            .post("http://localhost:8080/api/lecture/insert", lecture)
             .then(response => {
                 //console.log("등록 완료!");
                 //window.alert("등록 완료!");
