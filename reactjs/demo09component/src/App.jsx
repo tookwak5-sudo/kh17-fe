@@ -11,6 +11,11 @@ import Exam05 from "./components/Exam05";
 
 import { ToastContainer, Bounce } from "react-toastify";
 import Exam06 from "./components/Exam06";
+import Exam07 from "./components/Exam07";
+import Exam07_1 from "./components/Exam07_1";
+import Exam08 from "./components/Exam08";
+import Exam09 from "./components/Exam09";
+import Exam10 from "./components/Exam10";
 
 
 function App() {
@@ -45,28 +50,30 @@ function App() {
   <div className="container my-5">
     
     <Exam01/>
-
     <hr/>
-
     <Exam02/>
-
     <hr/> 
-
     <Exam02_1/>
-
     <hr/>
-
     <Exam03/>
-
     <hr/>
     <Exam03_1/>
-
     <hr/>
     <Exam04/>
     <hr/>
     <Exam05/>
     <hr/>
     <Exam06/>
+    <hr/>
+    <Exam07/>
+    <hr/>
+    <Exam07_1/>
+    <hr/>
+    <Exam08/>
+    <hr/>
+    <Exam09/>
+    <hr/>
+    <Exam10/>
 
     {/* 토스티파이 문구 불러오기  */}
     <ToastContainer

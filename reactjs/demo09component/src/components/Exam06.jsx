@@ -18,7 +18,7 @@ function Exam06() {
     }, [numbers, more]);
     const deleteNumber = useCallback((index)=>{
         const choice = window.confirm("정말 지워?");
-        if(choice === false) return;
+        if(choice === false) return
         // setNumbers(numbers에서 index위치만 빼고 검색)
         setNumbers(numbers.filter((number,idx)=> idx !== index));
     }, [numbers])
