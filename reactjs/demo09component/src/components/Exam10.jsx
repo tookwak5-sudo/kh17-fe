@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import Jumbotron from "./jumbotron";
 import axios from "axios";
 import { FaChevronDown } from "react-icons/fa6";
+import { ClockLoader } from "react-spinners";
 
 function Exam10() {
     //state
@@ -20,6 +21,7 @@ function Exam10() {
     const loadMoreList = useCallback(()=>{
         const dataSize = countryList.length;
         const lastCountryNo = dataSize === 0 ? 0 : countryList[dataSize-1].countryNo;
+        setLoading(true);
 
         axios({
             url : "http://localhost:8080/api/country/listForReact",
@@ -35,6 +37,9 @@ function Exam10() {
             console.log(countryList, response.data.list);
             setCountryList([...countryList, ...response.data.list]);//이어쓰기
             setLast(response.data.last);
+        })
+        .finally(()=>{
+            setLoading(false);
         });
     }, [countryList, size]); //이전 last정보는 필요없기 때문에 연관항목에서는 필요없음
 
@@ -106,7 +111,7 @@ function Exam10() {
                 <p className="mt-2">불러오는중</p>
             </div>
         </div>
-        ) }
+        )}
     </>)
 }
 
