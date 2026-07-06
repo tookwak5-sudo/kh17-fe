@@ -50,7 +50,7 @@ export default function CountryList() {
     }, [countryList, size]); //이전 last정보는 필요없기 때문에 연관항목에서는 필요없음
 
     return (<>
-        <Jumbotron title="더보기 방식의 목록" />
+        <Jumbotron title="국가 목록" />
 
         <Row mt={4}>
             <Col xs={6}>

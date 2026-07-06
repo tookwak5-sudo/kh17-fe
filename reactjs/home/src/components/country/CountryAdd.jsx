@@ -25,15 +25,6 @@ export default function CountryAdd() {
     //페이지 이동 도구 (location 대신 사용)
     const navigate = useNavigate();
 
-    //memo - state를 이용해서 추가적으로 계산해내는 데이터
-    const valid = useMemo(()=>{
-        if(result.countryRegion !== "is-valid") return false;
-        if(result.countryName !== "is-valid") return false;
-        if(result.countryCapital !== "is-valid") return false;
-        if(result.countryPopulation !== "is-valid") return false;
-        return true;
-    }, [result]);
-
     //callback - 호출 가능한 함수 (연관항목을 적어 갱신 최소화)
     const changeStringValue = useCallback(e=>{
         const {name, value} = e.target;
@@ -88,18 +79,6 @@ export default function CountryAdd() {
         });
     }, [country.countryPopulation, result]);
 
-    //effect - 특정항목이 변경될 때마다 자동 실행되는 코드블럭 (낭비의 끝판왕)
-    //사용법 : useEffect(함수, [연관항목]);
-   
-    //country에서 countryRegion이 변경되자마자 checkCountryRegion 함수 실행하세요!
-    useEffect(()=>{
-        //처음에는 검사하지 마세요
-        if(country.countryRegion === "" && result.countryRegion === "") return;
-
-        //검사함수를 실행하세요
-        checkCountryRegion();
-    }, [country.countryRegion, result.countryRegion]);
-
     //데이터 전송 함수
     // const send = ()=> {}; 연관항목의 유무(useCallback사용시 연관 검색 호출 할 때만 출력되어)
     const send = useCallback(()=>{
@@ -124,6 +103,28 @@ export default function CountryAdd() {
         //.catch(err=>{})
         //.finally(()=>{})
     }, [country]);
+
+    //memo - state를 이용해서 추가적으로 계산해내는 데이터
+    const valid = useMemo(()=>{
+        if(result.countryRegion !== "is-valid") return false;
+        if(result.countryName !== "is-valid") return false;
+        if(result.countryCapital !== "is-valid") return false;
+        if(result.countryPopulation !== "is-valid") return false;
+        return true;
+    }, [result]);
+
+    //effect - 특정항목이 변경될 때마다 자동 실행되는 코드블럭 (낭비의 끝판왕)
+    //사용법 : useEffect(함수, [연관항목]);
+   
+    //country에서 countryRegion이 변경되자마자 checkCountryRegion 함수 실행하세요!
+    useEffect(()=>{
+        //처음에는 검사하지 마세요
+        if(country.countryRegion === "" && result.countryRegion === "") return;
+
+        //검사함수를 실행하세요
+        checkCountryRegion();
+    }, [country.countryRegion, result.countryRegion]);
+
     return (
     <>  
         <Jumbotron title="국가 등록 화면" content="국가 정보 등록을 React에서 실습합니다."/>
