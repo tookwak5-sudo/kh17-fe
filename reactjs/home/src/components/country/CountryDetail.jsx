@@ -2,8 +2,8 @@ import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
 import Jumbotron from "../../templates/Jumbotron";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { Button, Col, Row } from "react-bootstrap";
-import { FaList, FaPenToSquare, FaTrash } from "react-icons/fa6";
+import { Button, Col, Form, Row } from "react-bootstrap";
+import { FaCheck, FaList, FaPenToSquare, FaSquarePen, FaTrash, FaXmark } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 
@@ -34,6 +34,7 @@ export default function CountryDetail() {
     const loadData = useCallback(async ()=>{
         const response = await axios.get(`http://localhost:8080/api/country/${countryNo}`);
         setCountry(response.data);
+        setBackup(response.data);
     }, []);
 
     //country삭제
@@ -58,6 +59,35 @@ export default function CountryDetail() {
         navigate("/country/list");       
     }, [countryNo]);
 
+    // 수정을 구현하기 위해서 논리형 state와 백업용 state를 구현
+    const [backup, setBackup] = useState(null);
+    const [editMode, setEditMode] = useState({
+        countryName:false,
+        countryCapital:false,
+        countryRegion:false,
+        countryPopulation:false,
+    });
+
+    const changeStringValue = useCallback(e=>{
+        const {name, value} = e.target;
+        setCountry({ ...country, [name] : value })
+    }, [country])
+
+    //국가명만 변경하는 함수
+    const updateCountryName = useCallback(async ()=>{
+        const response = await axios.patch(
+            `http://localhost:8080/api/country/${countryNo}`, 
+            {countryName : country.countryName}
+        );
+
+        //백업을 갱신
+        setBackup({...backup, countryName:country.countryName});
+        //수정모드를 취소
+        setEditMode({...editMode, countryName:false});
+        //알림(옵션)
+        toast.success("국가명이 변경되었습니다.");
+    }, [country, backup, editMode]);
+
     return (<>
         <Jumbotron title="국가 상세" content={`${countryNo}번 국가의 상세 정보 화면입니다`}/>
         
@@ -70,7 +100,26 @@ export default function CountryDetail() {
                 국가명
             </Col>
             <Col sm={9}>
-                {country.countryName}
+                { editMode.countryName !== true ? (<>
+
+                    <span>{country.countryName}</span>
+                    <FaSquarePen className="text-warning ms-2"
+                        onClick={e=>{
+                            setEditMode({...editMode, countryName : true})
+                        }}/>
+
+                </>) : (<>
+                    <Form.Control type="text" className="w-auto d-inline-block"
+                       name="countryName" value={country.countryName}
+                       onChange={changeStringValue}/>
+                       <FaCheck className="text-success ms-2"
+                                onClick={updateCountryName}/>
+                       <FaXmark className="text-danger ms-2"
+                                onClick={e=>{
+                                    setCountry({...country, countryName: backup.countryName});
+                                    setEditMode({...editMode, countryName : false})
+                                }}/>
+                </>) }
             </Col>
         </Row>
         <Row className="mt-4 fs-3">
