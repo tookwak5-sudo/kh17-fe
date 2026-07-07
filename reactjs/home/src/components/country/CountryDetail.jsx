@@ -28,21 +28,19 @@ export default function CountryDetail() {
 
     //시작하자마자 1번 불러오게 하기(연관함수 비워두기)
     useEffect(()=>{
-        axios({
-            url:"http://localhost:8080/api/country/detail",
-            method:"get",
-            params: { countryNo : countryNo }
-        })
-        .then(response=>{
-            setCountry(response.data);
-        });
-    }, [])
+        loadData();
+    }, []);
+
+    const loadData = useCallback(async ()=>{
+        const response = await axios.get(`http://localhost:8080/api/country/${countryNo}`);
+        setCountry(response.data);
+    }, []);
 
     //country삭제
-    const deleteCountry = useCallback(()=>{
+    const deleteCountry = useCallback(async ()=>{
         // const choice =window.confirm("정말 삭제하시겠습니까?\n삭제후에는 복구가 불가능하빈다.");
         // if(choice === false) return;
-        Swal.fire({
+        const result = await Swal.fire({
             title: "정말 삭제하시겠습니까?",
             text:"삭제한 데이터는 복구하실 수 없습니다",
             icon: "warning",
@@ -51,21 +49,13 @@ export default function CountryDetail() {
             cancelButtonText: "취소",
             confirmButtonColor: "#d63031",
             cancelButtonColor: "#b2bec3"
-        })
-        .then(result=>{
-            if(result.isConfirmed) {
-                axios({
-                    url:"http://localhost:8080/api/country/delete",
-                    method:"get",
-                    params: { countryNo : countryNo }
-                })
-                .then(response=>{
-                    toast.error("국가 삭제가 완료되었습니다");
-                    navigate("/country/list");
-                });
-            }
         });
-        
+
+        if(result.isConfirmed === false) return;
+
+        const response = await axios.delete(`http://localhost:8080/api/country/${countryNo}`);
+        toast.error("국가 삭제가 완료되었습니다");
+        navigate("/country/list");       
     }, [countryNo]);
 
     return (<>

@@ -10,7 +10,7 @@ import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 
 export default function LectureList() {
-  //state
+    //state
     const [lectureList, setLectureList] = useState([]);
     const [last, setLast] = useState(false);
     const [size, setSize] = useState(10);
@@ -23,34 +23,55 @@ export default function LectureList() {
     }, []);
 
     //callback
-    const loadMoreList = useCallback(() => {
+    // const loadMoreList = useCallback(() => {
+    //     const dataSize = lectureList.length;
+    //     const lastLectureNo = dataSize === 0 ? 0 : lectureList[dataSize - 1].lectureNo;
+    //     setLoading(true);
+
+    //     axios({
+    //         url: "http://localhost:8080/api/lecture/listForReact",
+    //         method: "get",
+    //         params: {
+    //             lastLectureNo: lastLectureNo,
+    //             size: size
+    //         }
+    //     })
+    //         .then(response => {
+    //             setLectureList([...lectureList, ...response.data.list]);
+    //             setLast(response.data.last);
+    //         })
+    //         .finally(() => {
+    //             setLoading(false);
+    //         });
+    // }, [lectureList, size]);
+
+    const loadMoreList = useCallback(async () => {
         const dataSize = lectureList.length;
         const lastLectureNo = dataSize === 0 ? 0 : lectureList[dataSize - 1].lectureNo;
+        //이미 로딩중이면 차단
+        if(loading === true) return;
         setLoading(true);
 
-        axios({
-            url: "http://localhost:8080/api/lecture/listForReact",
-            method: "get",
+        const response = await axios.get("http://localhost:8080/api/lecture/listForReact",{
             params: {
                 lastLectureNo: lastLectureNo,
                 size: size
             }
-        })
-            .then(response => {
-                setLectureList([...lectureList, ...response.data.list]);
-                setLast(response.data.last);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
+        });
+        //덮어쓰기가 아니라 추가 가 필요
+        setLectureList([...lectureList, ...response.data.list]);
+        setLast(response.data.last);
+            
+        setLoading(false);
+            
     }, [lectureList, size]);
 
-     return (<>
-        <Jumbotron title="강좌 목록"/>
+    return (<>
+        <Jumbotron title="강좌 목록" />
 
         <Row mt={4}>
             <Col xs={6}>
-                <Form.Select value={size} onChange={e=>setSize(parseInt(e.target.value))}>
+                <Form.Select value={size} onChange={e => setSize(parseInt(e.target.value))}>
                     <option value="5">5개씩 보기</option>
                     <option value="10">10개씩 보기</option>
                     <option value="20">20개씩 보기</option>
@@ -59,8 +80,8 @@ export default function LectureList() {
             </Col>
             <Col xs={6} className="text-end">
                 <Button as={Link} to="/lecture/add" variant="success">
-                <FaPlus/>
-                <span className="ms-2">신규등록</span>
+                    <FaPlus />
+                    <span className="ms-2">신규등록</span>
                 </Button>
             </Col>
         </Row>
@@ -70,11 +91,11 @@ export default function LectureList() {
                 <Col md={6} lg={4} key={lecture.lectureNo}>
                     <Card className="mb-3">
                         <Card.Header className="text-truncate">{lecture.lectureCategory}</Card.Header>
-                        <Card.Body>                         
+                        <Card.Body>
                             <Card.Title>{lecture.lectureTitle}</Card.Title>
                             <Card.Subtitle className="text-muted">{lecture.lectureType}</Card.Subtitle>
                         </Card.Body>
-                        <Card.Body>  
+                        <Card.Body>
                             <Card.Text>강좌에 대한 설명들...</Card.Text>
                         </Card.Body>
                         <ListGroup variant="flush">

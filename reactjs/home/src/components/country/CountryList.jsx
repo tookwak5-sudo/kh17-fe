@@ -24,29 +24,27 @@ export default function CountryList() {
     }, []);
 
     //callback
-    const loadMoreList = useCallback(()=>{
+    const loadMoreList = useCallback(async ()=>{
+        if(loading === true) return;
+        setLoading(true);
+        
         const dataSize = countryList.length;
         const lastCountryNo = dataSize === 0 ? 0 : countryList[dataSize-1].countryNo;
-        setLoading(true);
 
-        axios({
-            url : "http://localhost:8080/api/country/listForReact",
-            method : "get",
-            params : {//GET 방식일 때
-                lastCountryNo : lastCountryNo,
-                size : size
-            }
-        })
-        .then(response=>{
-            //덮어쓰기가 아니라 추가(이어쓰기)가 필요
-            // setCountryList(response.data.list);//덮어쓰기
-            console.log(countryList, response.data.list);
-            setCountryList([...countryList, ...response.data.list]);//이어쓰기
-            setLast(response.data.last);
-        })
-        .finally(()=>{
-            setLoading(false);
-        });
+        //GET일경우
+        // const response = await axios.get(
+        //     `http://localhost:8080/api/country/lastCountryNo/${lastCountryNo}/size/${size}`
+        // );
+        
+        // post일경우
+        const response = await axios.post(
+            "http://localhost:8080/api/country/list-more",
+            { lastNo : lastCountryNo , size : size}
+        )    
+        setCountryList([...countryList, ...response.data.list]);//이어쓰기
+        setLast(response.data.last);
+        
+        setLoading(false);
     }, [countryList, size]); //이전 last정보는 필요없기 때문에 연관항목에서는 필요없음
 
     return (<>

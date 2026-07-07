@@ -9,6 +9,10 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 export default function LectureAdd() {
+ 
+    //페이지 이동 도구
+    const navigate = useNavigate();
+
     //state
     const [lecture, setLecture] = useState({
         lectureTitle: "",
@@ -24,9 +28,6 @@ export default function LectureAdd() {
         lecturePrice: "",
         lectureType: "",
     });
-
-    //페이지 이동 도구
-    const navigate = useNavigate();
 
     //Callback
     const ChangeStringValue = useCallback((e) => {
@@ -107,36 +108,52 @@ export default function LectureAdd() {
     }, [lecture.lectureType, result])
    
     //- 데이터 전송(등록)
-    const send = useCallback(() => {
-        axios  //axios 축약형
-            .post("http://localhost:8080/api/lecture/insert", lecture)
-            .then(response => {
-                Swal.fire({
-                    position: "center",
-                    icon: "success",
-                    title: "강좌 생성 완료",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+    // const send = useCallback(() => {
+    //     axios  //axios 축약형
+    //         .post("http://localhost:8080/api/lecture/insert", lecture)
+    //         .then(response => {
+    //             Swal.fire({
+    //                 position: "center",
+    //                 icon: "success",
+    //                 title: "강좌 생성 완료",
+    //                 showConfirmButton: false,
+    //                 timer: 1500
+    //             })
+    //             .then(result=>{
+    //                 //목록 또는 상세로 이동
+    //                 //navigate("/lecture/list");
+    //                 navigate(`/lecture/detail/${response.data.lectureNo}`);
+    //             });
 
-                //입력값 정리
-                setLecture({
-                    lectureTitle: "",
-                    lectureCategory: "",
-                    lectureDuration: "", //최초 숫자지만 미입력상태로 설정
-                    lecturePrice: "", //최초 숫자지만 미입력상태로 설정
-                    lectureType: ""
-                })
-                //검사결과 정리
-                setResult({
-                    lectureTitle: "",
-                    lectureCategory: "",
-                    lectureDuration: "",
-                    lecturePrice: "",
-                    lectureType: ""
-                })
-                navigate("/lecture/list");
-            });
+    //             //입력값 정리
+    //             setLecture({
+    //                 lectureTitle: "",
+    //                 lectureCategory: "",
+    //                 lectureDuration: "", //최초 숫자지만 미입력상태로 설정
+    //                 lecturePrice: "", //최초 숫자지만 미입력상태로 설정
+    //                 lectureType: ""
+    //             })
+    //             //검사결과 정리
+    //             setResult({
+    //                 lectureTitle: "",
+    //                 lectureCategory: "",
+    //                 lectureDuration: "",
+    //                 lecturePrice: "",
+    //                 lectureType: ""
+    //             })
+    //             navigate("/lecture/list");
+    //         });
+    // }, [lecture]);
+
+    const send = useCallback(async () => {
+        const response = await axios.post("http://localhost:8080/api/lecture/insert", lecture);
+        const result = await Swal.fire({
+            title: "강좌 생성 완료",
+            icon: "success",
+            confirmButtonText:"확인"
+        });
+        //navigate("/lecture/list");
+        navigate(`/lecture/detail/${response.data.lectureNo}`);
     }, [lecture]);
    
     //memo

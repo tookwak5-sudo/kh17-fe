@@ -8,6 +8,8 @@ import Home from "../components/Home";
 import NotFound from "../assets/NotFound";
 import LectureAdd from "../components/lecture/LectureAdd";
 import LectureDetail from "../components/lecture/LectureDetail";
+import BookDetail from "../components/book/BookDetail";
+import BookAdd from "../components/book/BookAdd";
 
 
 export default function Body() {
@@ -17,18 +19,19 @@ export default function Body() {
         <Route path="/" element={<Home/>}/>
         
         {/* 국가 */}
-        <Route path="/country/list" element={<CountryList/>}></Route>
-        <Route path="/country/add" element={<CountryAdd/>}></Route>
+        <Route path="/country/list" element={<CountryList/>}/>
+        <Route path="/country/add" element={<CountryAdd/>}/>
         {/* 제일 마지막에 적혀있는 값을 countryNo라는 이름으로 관리하겠다 */}
-        <Route path="/country/detail/:countryNo" element={<CountryDetail/>}></Route>
+        <Route path="/country/detail/:countryNo" element={<CountryDetail/>}/>
         
         {/* 강좌 */}
-        <Route path="/lecture/list" element={<LectureList/>}></Route>
-        <Route path="/lecture/add" element={<LectureAdd/>}></Route>
-        <Route path="/lecture/detail/:lectureNo" element={<LectureDetail/>}></Route>
+        <Route path="/lecture/list" element={<LectureList/>}/>
+        <Route path="/lecture/add" element={<LectureAdd/>}/>
+        <Route path="/lecture/detail/:lectureNo" element={<LectureDetail/>}/>
         {/* 도서 */}
-        <Route path="/book/list" element={<BookList/>}></Route>
-
+        <Route path="/book/list" element={<BookList/>}/>
+        <Route path="/book/add" element={<BookAdd/>}/>
+        <Route path="/book/detail/:bookId" element={<BookDetail/>}/>
         {/* fallback route */}
         <Route path="*" element={<NotFound/>}/>
     </Routes>
