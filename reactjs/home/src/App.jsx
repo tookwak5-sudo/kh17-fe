@@ -41,14 +41,14 @@ export default function App() {
       {/* react-toastify Container */}
       {/* 토스티파이 문구 불러오기  */}
       <ToastContainer
-        position="bottom-right"
-        autoClose={5000}
-        hideProgressBar={false}
+        position="bottom-left"
+        autoClose={1000}
+        hideProgressBar={true}
         newestOnTop={false}
-        closeOnClick={false}
+        closeOnClick={true}
         rtl={false}
-        pauseOnFocusLoss
-        draggable
+        // pauseOnFocusLoss
+        // draggable
         pauseOnHover
         theme="colored"
         transition={Bounce}
