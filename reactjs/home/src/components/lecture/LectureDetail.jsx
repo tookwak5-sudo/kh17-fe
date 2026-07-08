@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import Jumbotron from "../../templates/Jumbotron";
+import Jumbotron from "@templates/Jumbotron";
 import { Link, Navigate, useLoaderData, useNavigate, useParams } from "react-router-dom";
 import { useCallback, useEffect, useState } from "react";
 import Swal from "sweetalert2";

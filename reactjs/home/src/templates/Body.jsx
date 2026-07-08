@@ -1,16 +1,16 @@
 import { Route, Routes } from "react-router-dom";
-import CountryList from "../components/country/CountryList";
-import CountryAdd from "../components/country/CountryAdd";
-import CountryDetail from "../components/country/CountryDetail";
-import LectureList from "../components/lecture/LectureList";
-import BookList from "../components/book/BookList";
-import Home from "../components/Home";
-import NotFound from "../assets/NotFound";
-import LectureAdd from "../components/lecture/LectureAdd";
-import LectureDetail from "../components/lecture/LectureDetail";
-import BookDetail from "../components/book/BookDetail";
-import BookAdd from "../components/book/BookAdd";
-import CountryEdit from "../components/country/CountryEdit";
+import CountryList from "@components/country/CountryList";
+import CountryAdd from "@components/country/CountryAdd";
+import CountryDetail from "@components/country/CountryDetail";
+import LectureList from "@components/lecture/LectureList";
+import BookList from "@components/book/BookList";
+import Home from "@components/Home";
+import NotFound from "@error/NotFound";
+import LectureAdd from "@components/lecture/LectureAdd";
+import LectureDetail from "@components/lecture/LectureDetail";
+import BookDetail from "@components/book/BookDetail";
+import BookAdd from "@components/book/BookAdd";
+import CountryEdit from "@components/country/CountryEdit";
 
 
 export default function Body() {

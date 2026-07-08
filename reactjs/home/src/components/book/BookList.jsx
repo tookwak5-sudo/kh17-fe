@@ -3,7 +3,7 @@ import axios from "axios";
 import { FaChevronDown, FaPlus, FaTrash } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-import Jumbotron from "../../templates/Jumbotron";
+import Jumbotron from "@templates/Jumbotron";
 import Row from "react-bootstrap/esm/Row";
 import Col from "react-bootstrap/esm/Col";
 import Form from "react-bootstrap/Form";

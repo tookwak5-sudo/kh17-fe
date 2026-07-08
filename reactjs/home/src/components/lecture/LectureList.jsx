@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { FaPlus, FaTrash } from "react-icons/fa6";
 import Swal from "sweetalert2";
-import Jumbotron from "../../templates/Jumbotron";
+import Jumbotron from "@templates/Jumbotron";
 import { Button, Card, Col, ListGroup, Row } from "react-bootstrap";
 import { ClockLoader } from "react-spinners";
 import { FaChevronDown } from "react-icons/fa6";

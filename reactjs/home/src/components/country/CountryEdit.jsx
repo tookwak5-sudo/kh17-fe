@@ -1,7 +1,7 @@
 import axios from "axios";
 import {Row, Form, Col, Button} from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import Jumbotron from "../../templates/Jumbotron";
+import Jumbotron from "@templates/Jumbotron";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { FaAsterisk, FaList, FaSquarePen, FaXmark } from "react-icons/fa6";
 import { toast } from "react-toastify";

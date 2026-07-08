@@ -1,4 +1,4 @@
-import Jumbotron from "../../templates/Jumbotron";
+import Jumbotron from "@templates/Jumbotron";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { FaChevronDown, FaPlus } from "react-icons/fa6";

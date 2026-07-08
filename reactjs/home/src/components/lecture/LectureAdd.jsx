@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import Jumbotron from "../../templates/Jumbotron";
+import Jumbotron from "@templates/Jumbotron";
 import axios from "axios";
 import Swal from 'sweetalert2'
 import { Button, Col, Row } from "react-bootstrap";
