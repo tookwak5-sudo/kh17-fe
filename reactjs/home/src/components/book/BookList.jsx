@@ -23,42 +23,17 @@ export default function BookList() {
         loadMoreList();
     }, []);
 
-    //callback
-    // const loadMoreList = useCallback(()=>{
-    //     const dataSize = bookList.length;
-    //     const lastBookId = dataSize === 0 ? 0 : bookList[dataSize-1].bookId;
-    //     이미 로딩중이면 차단
-    //     if(loading === true) return;
-    //     setLoading(true);
-    
-    //     axios({
-    //         url: "http://localhost:8080/api/book/listForReact",
-    //         method: "get",
-    //         params : { //Get방식일 때는 params사용
-    //             lastBookId : lastBookId,
-    //             size : size
-    //         }
-    //     })
-    //         .then(response => {
-    //             console.log("last 값:", response.data.last);
-    //             setBookList([...bookList, ...response.data.list]); //이어쓰기
-    //             setLast(response.data.last);
-    //         })
-    //         .finally(()=> { setLoading(false); });
-    // }, [bookList, size]);
     const loadMoreList = useCallback(async ()=>{
-        const dataSize = bookList.length;
-        const lastBookId = dataSize === 0 ? 0 : bookList[dataSize-1].bookId;
         //이미 로딩중이면 차단
         if(loading === true) return;
         setLoading(true);
+        const dataSize = bookList.length;
+        const lastBookId = dataSize === 0 ? 2147483647  : bookList[dataSize-1].bookId;
 
-        const response = await axios.get("/api/book/listForReact",{
-            params : { //Get방식일 때는 params사용
-                lastBookId : lastBookId,
-                size : size
-            }
-        });
+        const response = await axios.post(
+            `/api/book/list-more`,
+            { lastNo : lastBookId, size : size}
+        )
         setBookList([...bookList, ...response.data.list]); //이어쓰기
         setLast(response.data.last);
 

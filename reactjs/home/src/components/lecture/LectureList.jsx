@@ -46,24 +46,20 @@ export default function LectureList() {
     // }, [lectureList, size]);
 
     const loadMoreList = useCallback(async () => {
-        const dataSize = lectureList.length;
-        const lastLectureNo = dataSize === 0 ? 0 : lectureList[dataSize - 1].lectureNo;
         //이미 로딩중이면 차단
         if(loading === true) return;
         setLoading(true);
 
-        const response = await axios.get("/api/lecture/listForReact",{
-            params: {
-                lastLectureNo: lastLectureNo,
-                size: size
-            }
-        });
+        const dataSize = lectureList.length;
+        const lastLectureNo = dataSize === 0 ? 2147483647 : lectureList[dataSize - 1].lectureNo;
+
+        const response = await axios.get(
+            `/api/lecture/lastLectureNo/${lastLectureNo}/size/${size}`
+        );
         //덮어쓰기가 아니라 추가 가 필요
         setLectureList([...lectureList, ...response.data.list]);
-        setLast(response.data.last);
-            
-        setLoading(false);
-            
+        setLast(response.data.last);         
+        setLoading(false);        
     }, [lectureList, size]);
 
     return (<>

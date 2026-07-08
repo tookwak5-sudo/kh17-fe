@@ -11,6 +11,8 @@ import LectureDetail from "@components/lecture/LectureDetail";
 import BookDetail from "@components/book/BookDetail";
 import BookAdd from "@components/book/BookAdd";
 import CountryEdit from "@components/country/CountryEdit";
+import LectureEdit from "../components/lecture/LectureEdit";
+import BookEdit from "../components/book/BookEdit";
 
 
 export default function Body() {
@@ -29,10 +31,12 @@ export default function Body() {
         <Route path="/lecture/list" element={<LectureList/>}/>
         <Route path="/lecture/add" element={<LectureAdd/>}/>
         <Route path="/lecture/detail/:lectureNo" element={<LectureDetail/>}/>
+        <Route path="/lecture/edit/:lectureNo" element={<LectureEdit/>}/>
         {/* 도서 */}
         <Route path="/book/list" element={<BookList/>}/>
         <Route path="/book/add" element={<BookAdd/>}/>
         <Route path="/book/detail/:bookId" element={<BookDetail/>}/>
+        <Route path="/book/edit/:bookId" element={<BookEdit/>}/>
         {/* fallback route */}
         <Route path="*" element={<NotFound/>}/>
     </Routes>

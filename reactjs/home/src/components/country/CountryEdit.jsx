@@ -127,7 +127,7 @@ export default function CountryEdit() {
     return (<>  
         <Jumbotron title="국가 정보 수정 화면"/>
 
-        {/* 국가정보 입력화면 */}
+        {/* 국가정보 수정 화면 */}
         {/* 대륙명 */}
         <Row className="mt-4">
             <Form.Label column sm={3}>
@@ -138,7 +138,6 @@ export default function CountryEdit() {
                 <Form.Select type="text" name="countryRegion" className={result.countryRegion}
                         value={country.countryRegion}
                          onChange={changeStringValue}>
-                        <option value="">선택하세요</option>
                         <option>아시아</option>
                         <option>아프리카</option>
                         <option>북아메리카</option>

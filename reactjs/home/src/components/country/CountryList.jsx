@@ -43,8 +43,7 @@ export default function CountryList() {
             { lastNo : lastCountryNo , size : size}
         )    
         setCountryList([...countryList, ...response.data.list]);//이어쓰기
-        setLast(response.data.last);
-        
+        setLast(response.data.last);      
         setLoading(false);
     }, [countryList, size]); //이전 last정보는 필요없기 때문에 연관항목에서는 필요없음
 

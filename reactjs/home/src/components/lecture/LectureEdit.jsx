@@ -1,19 +1,25 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
-import Jumbotron from "@templates/Jumbotron";
 import axios from "axios";
-import Swal from 'sweetalert2'
-import { Button, Col, Row } from "react-bootstrap";
-import { Form } from "react-bootstrap";
-import { FaAsterisk, FaPlus } from "react-icons/fa6";
+import { Button, Col, Form, Row } from "react-bootstrap";
+import { Link, Navigate, useLoaderData, useNavigate, useParams } from "react-router-dom";
+import Jumbotron from "@templates/Jumbotron";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { FaAsterisk, FaCheck, FaList, FaPenToSquare, FaSquare, FaSquarePen, FaTrash, FaXmark } from "react-icons/fa6";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
-export default function LectureAdd() {
- 
-    //페이지 이동 도구
+export default function LectureEdit() {
+    //파라미터 처리
+    const { lectureNo } = useParams();
+
+    //1. lectureNo가 비정상적인 경우 처리 내용
+    if(/^[0-9]+$/.test(lectureNo) === false) {
+        toast.error("입력이 올바르지 않습니다");
+        return <Navigate to="/lecture/list" replace/>
+    }
+
     const navigate = useNavigate();
 
-    //state
+    //2. lectureNo가 정상적인 경우 처리 내용
     const [lecture, setLecture] = useState({
         lectureTitle: "",
         lectureCategory: "",
@@ -21,6 +27,15 @@ export default function LectureAdd() {
         lecturePrice: "", //최초 숫자지만 미입력상태로 설정
         lectureType: "",
     });
+
+    useEffect(()=>{
+        loadData();
+    }, [])
+
+    const loadData = useCallback(async ()=>{
+        const response = await axios.get(`/api/lecture/${lectureNo}`);
+        setLecture(response.data);
+    }, []);
 
     const [result, setResult] = useState({
         lectureTitle: "",
@@ -65,8 +80,6 @@ export default function LectureAdd() {
     }, [lecture.lectureTitle, result]);
 
     const checkLectureCategory = useCallback(() => {
-        // const regex = /^(이론|실습|시험)$/;
-        // const valid = regex.test(lecture.lectureCategory);
         const valid = ['이론', '실습', '시험'].includes(lecture.lectureCategory);
         const clazz = valid ? "is-valid" : "is-invalid";
         setResult({
@@ -98,8 +111,6 @@ export default function LectureAdd() {
     }, [lecture.lecturePrice, result]);
 
     const checkLectureType = useCallback(() => {
-        // const regex = /^(온라인|오프라인|혼합)$/;
-        // const valid = regex.test(lecture.lectureType);
         const valid = ['온라인', '오프라인', '혼합'].includes(lecture.lectureType);
         const clazz = valid ? "is-valid" : "is-invalid";
         setResult({
@@ -107,53 +118,14 @@ export default function LectureAdd() {
             lectureType: clazz
         });
     }, [lecture.lectureType, result])
-   
-    //- 데이터 전송(등록)
-    // const send = useCallback(() => {
-    //     axios  //axios 축약형
-    //         .post("http://localhost:8080/api/lecture/insert", lecture)
-    //         .then(response => {
-    //             Swal.fire({
-    //                 position: "center",
-    //                 icon: "success",
-    //                 title: "강좌 생성 완료",
-    //                 showConfirmButton: false,
-    //                 timer: 1500
-    //             })
-    //             .then(result=>{
-    //                 //목록 또는 상세로 이동
-    //                 //navigate("/lecture/list");
-    //                 navigate(`/lecture/detail/${response.data.lectureNo}`);
-    //             });
-
-    //             //입력값 정리
-    //             setLecture({
-    //                 lectureTitle: "",
-    //                 lectureCategory: "",
-    //                 lectureDuration: "", //최초 숫자지만 미입력상태로 설정
-    //                 lecturePrice: "", //최초 숫자지만 미입력상태로 설정
-    //                 lectureType: ""
-    //             })
-    //             //검사결과 정리
-    //             setResult({
-    //                 lectureTitle: "",
-    //                 lectureCategory: "",
-    //                 lectureDuration: "",
-    //                 lecturePrice: "",
-    //                 lectureType: ""
-    //             })
-    //             navigate("/lecture/list");
-    //         });
-    // }, [lecture]);
 
     const send = useCallback(async () => {
-        const response = await axios.post("/api/lecture/", lecture);
+        const response = await axios.put(`/api/lecture/${lectureNo}`, lecture);
         const result = await Swal.fire({
-            title: "강좌 생성 완료",
+            title: "강좌 수정 완료",
             icon: "success",
             confirmButtonText:"확인"
         });
-        //navigate("/lecture/list");
         navigate(`/lecture/detail/${response.data.lectureNo}`);
     }, [lecture]);
    
@@ -179,12 +151,11 @@ export default function LectureAdd() {
         //검사함수 실행
         checkLectureType();
     }, [lecture.lectureType, result.lectureType])
-    
-    return (
-        <>
-            <Jumbotron title="강좌 등록 화면" content="React를 활용해서 강좌등록을 구현" />
 
-            {/* 강좌 등록 화면 */}
+    return( <>
+            <Jumbotron title="강좌 수정 화면"/>
+
+            {/* 강좌정보 수정 화면 */}
             {/* 강좌명 */}
             <Row className="mt-4">
                 <Form.Label column sm={3}>
@@ -280,11 +251,10 @@ export default function LectureAdd() {
                 <Col>
                     <Button type="button" className="w-100"
                         disabled={valid === false} onClick={send}>
-                        <FaPlus/>
-                        신규 등록하기
+                        <FaSquarePen/>
+                        수정하기
                     </Button>
                 </Col>
             </Row>
-        </>
-    )
+        </>)
 }

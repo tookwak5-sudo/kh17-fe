@@ -7,6 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function CountryAdd() {
+    //페이지 이동 도구 (location 대신 사용)
+    const navigate = useNavigate();
+
     //state - 역동적인 화면을 만들기 위한 핵심데이터
     const [country, setCountry] = useState({ //입력 데이터를 관리하는 state
         countryRegion : "",
@@ -22,9 +25,6 @@ export default function CountryAdd() {
         countryPopulation : ""
     });
 
-    //페이지 이동 도구 (location 대신 사용)
-    const navigate = useNavigate();
-
     //callback - 호출 가능한 함수 (연관항목을 적어 갱신 최소화)
     const changeStringValue = useCallback(e=>{
         const {name, value} = e.target;
@@ -33,7 +33,6 @@ export default function CountryAdd() {
             [name] : value // 입력값만 변경
         });
     }, [country]);
-
     const changeNumericValue = useCallback(e=>{
         const {name, value} = e.target;
         const regex = /[^0-9]+/g; //숫자가 아니면
