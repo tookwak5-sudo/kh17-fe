@@ -52,7 +52,7 @@ export default function LectureList() {
         if(loading === true) return;
         setLoading(true);
 
-        const response = await axios.get("http://localhost:8080/api/lecture/listForReact",{
+        const response = await axios.get("/api/lecture/listForReact",{
             params: {
                 lastLectureNo: lastLectureNo,
                 size: size

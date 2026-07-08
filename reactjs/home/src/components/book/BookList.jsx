@@ -53,7 +53,7 @@ export default function BookList() {
         if(loading === true) return;
         setLoading(true);
 
-        const response = await axios.get("http://localhost:8080/api/book/listForReact",{
+        const response = await axios.get("/api/book/listForReact",{
             params : { //Get방식일 때는 params사용
                 lastBookId : lastBookId,
                 size : size

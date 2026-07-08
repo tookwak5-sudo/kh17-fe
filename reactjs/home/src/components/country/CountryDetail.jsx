@@ -32,7 +32,7 @@ export default function CountryDetail() {
     }, []);
 
     const loadData = useCallback(async ()=>{
-        const response = await axios.get(`http://localhost:8080/api/country/${countryNo}`);
+        const response = await axios.get(`/api/country/${countryNo}`);
         setCountry(response.data);
         setBackup(response.data);
     }, []);
@@ -54,7 +54,7 @@ export default function CountryDetail() {
 
         if(result.isConfirmed === false) return;
 
-        const response = await axios.delete(`http://localhost:8080/api/country/${countryNo}`);
+        const response = await axios.delete(`/api/country/${countryNo}`);
         toast.error("국가 삭제가 완료되었습니다");
         navigate("/country/list");       
     }, [countryNo]);
@@ -87,7 +87,7 @@ export default function CountryDetail() {
     //국가명만 변경하는 함수
     const updateCountry = useCallback(async (field)=>{
         const response = await axios.patch(
-            `http://localhost:8080/api/country/${countryNo}`, 
+            `/api/country/${countryNo}`, 
             //{countryName : country.countryName}
             { [field] : country[field]}
         );
@@ -217,7 +217,8 @@ export default function CountryDetail() {
                     <FaTrash className="me-2"/>
                     <span>삭제하기</span>
                 </Button>
-                <Button className="ms-2" variant="warning">
+                <Button className="ms-2" variant="warning"
+                    as={Link} to={`/country/edit/${countryNo}`}>
                     <FaPenToSquare className="me-2"/>
                     <span>수정하기</span>
                 </Button>
