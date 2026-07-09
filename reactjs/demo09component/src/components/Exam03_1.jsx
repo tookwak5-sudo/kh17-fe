@@ -33,6 +33,7 @@ function Exam03_1() {
     //callback - 호출 가능한 함수 (연관항목을 적어 갱신 최소화)
     const changeStringValue = useCallback(e=>{
         const {name, value} = e.target;
+        console.log("이점타겟" + e.target);
         setCountry({
             ...country,// 나머지값은 유지
             [name] : value // 입력값만 변경

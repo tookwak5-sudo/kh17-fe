@@ -25,6 +25,7 @@ export default function Menu() {
             <Nav.Link as={Link} to="/country/list">국가정보</Nav.Link>
             <Nav.Link as={Link} to="/lecture/list">강좌정보</Nav.Link>
             <Nav.Link as={Link} to="/book/list">도서정보</Nav.Link>
+            <Nav.Link as={Link} to="/book/spa">도서정보Two</Nav.Link>
             {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">

@@ -13,6 +13,7 @@ import BookAdd from "@components/book/BookAdd";
 import CountryEdit from "@components/country/CountryEdit";
 import LectureEdit from "../components/lecture/LectureEdit";
 import BookEdit from "../components/book/BookEdit";
+import BookSpa from "../components/book/BookSpa";
 
 
 export default function Body() {
@@ -37,6 +38,7 @@ export default function Body() {
         <Route path="/book/add" element={<BookAdd/>}/>
         <Route path="/book/detail/:bookId" element={<BookDetail/>}/>
         <Route path="/book/edit/:bookId" element={<BookEdit/>}/>
+        <Route path="/book/spa" element={<BookSpa/>}/>
         {/* fallback route */}
         <Route path="*" element={<NotFound/>}/>
     </Routes>
