@@ -53,9 +53,15 @@ export default function LectureList() {
         const dataSize = lectureList.length;
         const lastLectureNo = dataSize === 0 ? 2147483647 : lectureList[dataSize - 1].lectureNo;
 
-        const response = await axios.get(
-            `/api/lecture/lastLectureNo/${lastLectureNo}/size/${size}`
-        );
+        //Get일경우
+        // const response = await axios.get(
+        //     `/api/lecture/lastLectureNo/${lastLectureNo}/size/${size}`
+        // );
+        const response = await axios.post(
+            //"http://localhost:8080/api/lecture/list-more",
+            `/api/lecture/list-more`,
+            { lastNo : lastLectureNo , size : size}
+        )
         //덮어쓰기가 아니라 추가 가 필요
         setLectureList([...lectureList, ...response.data.list]);
         setLast(response.data.last);         
