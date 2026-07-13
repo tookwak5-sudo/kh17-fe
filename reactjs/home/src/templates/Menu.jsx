@@ -32,8 +32,9 @@ export default function Menu() {
             <NavDropdown title="데이터베이스" id="basic-nav-dropdown">
                 <NavDropdown.Item  as={Link} to="/country/list">국가정보</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/country/search">국가명 검색</NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/country/complex">국가명복합 검색</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/country/complex">국가명 복합검색</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/lecture/list">강좌정보</NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/lecture/complex">강좌 복합검색</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/book/list">도서정보</NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/book/spa">도서SPA</NavDropdown.Item>
                 <NavDropdown.Divider />
