@@ -5,6 +5,9 @@ import CountryDetail from "@components/country/CountryDetail";
 import CountryEdit from "@components/country/CountryEdit";
 import CountryList from "@components/country/CountryList";
 import CountryAdd from "@components/country/CountryAdd";
+import CountrySearch from "../components/country/CountrySearch";
+import CountryComplexSearch from "@components/country/CountryComplexSearch";
+
 
 import LectureList from "@components/lecture/LectureList";
 import LectureAdd from "@components/lecture/LectureAdd";
@@ -18,7 +21,6 @@ import BookEdit from "../components/book/BookEdit";
 import BookSpa from "../components/book/BookSpa";
 
 import NotFound from "@error/NotFound";
-import CountrySearch from "../components/country/CountrySearch";
 
 export default function Body() {
 
@@ -33,6 +35,8 @@ export default function Body() {
         <Route path="/country/detail/:countryNo" element={<CountryDetail/>}/>
         <Route path="/country/edit/:countryNo" element={<CountryEdit/>}/>
         <Route path="/country/search" element={<CountrySearch/>}/>
+        <Route path="/country/complex" element={<CountryComplexSearch/>}/>
+        
         {/* 강좌 */}
         <Route path="/lecture/list" element={<LectureList/>}/>
         <Route path="/lecture/add" element={<LectureAdd/>}/>
