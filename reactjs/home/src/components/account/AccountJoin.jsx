@@ -1,11 +1,16 @@
 import Jumbotron from "@templates/Jumbotron";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { FaAsterisk, FaEye, FaEyeSlash, FaMagnifyingGlass, FaUserPlus, FaXmark } from "react-icons/fa6";
 import axios from "axios";
-
+import { useKakaoPostcodePopup } from "react-daum-postcode";
 
 export default function AccountJoin(){
+    //kakao post
+    const open = useKakaoPostcodePopup(
+        "//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
+    );
+
     //state
     const [account, setAccount] = useState({
         accountId: "",
@@ -132,22 +137,23 @@ export default function AccountJoin(){
     }, [account]);
 
     const checkAccountAddress = useCallback(()=>{
-    const empty = account.accountPost === "" && account.accountAddress1 === "" && account.accountAddress2 === "";
-    const fill = account.accountPost !== "" && account.accountAddress1 !== "" && account.accountAddress2 !== "";
-    const valid = empty || fill;
-    const clazz = valid ? "is-valid" : "is-invalid";
-    setResult(prev=>({
-        ...prev, 
-        accountPost : clazz,
-        accountAdderss1 : clazz,
-        accountAdderss2 : clazz
-    }));
+        const empty = account.accountPost === "" && account.accountAddress1 === "" && account.accountAddress2 === "";
+        const fill = account.accountPost !== "" && account.accountAddress1 !== "" && account.accountAddress2 !== "";
+        const valid = empty || fill;
+        const clazz = valid ? "is-valid" : "is-invalid";
+        setResult(prev=>({
+            ...prev, 
+            accountPost : clazz,
+            accountAddress1 : clazz,
+            accountAddress2 : clazz
+        }));
     }, [account]);
 
     const checkAccountMessage = useCallback(()=>{
         setResult(prev=>({...prev, accountMessage : "is-valid"}));
     }, [account]);
 
+    //memo
     const allValid = useMemo(()=>{
         if(result.accountId.clazz !== "is-valid") return false; //필수
         if(result.accountPassword !== "is-valid") return false; //필수
@@ -163,6 +169,54 @@ export default function AccountJoin(){
 
         return true;
     }, [result]);
+
+    //ref
+    // - 태그 참조용 동기방식의 데이터(많이 쓰면 쓸수록 느려짐)
+    // - 태그를 제어하는 리모컨으로 사용
+    // - 언제 어디서나 일정한 값을 가져야하는 데이터에 사용 (로딩중과 같은 상태 데이터)
+    // - 문법 : const 변수 = useRef(초기값);
+    const address2ref = useRef();
+
+    //우편번호 처리
+    const addressSearch = useCallback(()=>{
+        open({
+            onComplete : (data) =>{
+                // console.log(data)
+                //- userSelectedType : 선택한 주소의 유형 (R or J)
+                //- roadAddress : 도로명 주소(신주소)
+                //- jibunAddress : 지번 주소(구주소)
+                //- zonecode : 우편번호
+                const zonecode = data.zonecode;
+                const address = data.userSelectedType === "R" ? 
+                        data.roadAddress : data.jibunADdress;
+                
+                //주소 변경
+                setAccount(prev=>({
+                    ...prev,
+                    accountPost : zonecode,
+                    accountAddress1 : address,
+                    accountAddress2 : "",
+                }));
+
+                //상세 주소창에 포커스를 줄 수 있나?
+                //기존코드(태그 선택 후 명령을 사용)(가능) 리액트 개발자도구에 안나오기 때문에 꺼려함
+                // document.querySelector("[name=accountAddress2").focus();
+
+                //리액트는? ref의 current필드를 사용
+                address2ref.current.focus();
+            }
+        });
+    }, []);
+
+    //x버튼
+    const addressErase = useCallback((e)=>{
+        setAccount(prev=>({
+            ...prev, 
+            accountPost : "",
+            accountAddress1 : "",
+            accountAddress2 : "",
+        }))
+    }, []);
 
     //view
     return(<>
@@ -323,19 +377,27 @@ export default function AccountJoin(){
                 <span>주소</span>
             </Form.Label>
             <Col sm={9}>
-                <Form.Control type="text" name="accountPost"
-                    value={account.accountPost}
-                    onChange={changeStringValue}
-                    className={`${result.accountPost} w-auto d-inline-block`}
-                    placeholder="우편번호"/>
-                    <Button variant="success" className="ms-2">
-                        <FaMagnifyingGlass/>
-                        <span className="d-none d-md-inline-block">우편번호</span>
-                    </Button>
-                    <Button variant="danger" className="ms-2">
-                        <FaXmark/>
-                        <span className="d-none d-md-inline-block">작성내역 지우기</span>
-                    </Button>
+                <div className="d-flex">
+                    {/* 우편번호 입력창 */}
+                    <Form.Control type="text" name="accountPost"
+                        value={account.accountPost}
+                        readOnly onClick={addressSearch}
+                        className={`${result.accountPost} w-auto d-inline-block`}
+                        placeholder="우편번호"/>
+                        {/* 검색버튼 */}
+                        <Button variant="success" className="ms-2" onClick={addressSearch}>
+                            <FaMagnifyingGlass/>
+                            <span className="d-none d-md-inline-block">우편번호</span>
+                        </Button>
+                        {/* 지우기 버튼 */}
+                        {visible2 && (
+                             <Button variant="danger" className="ms-2" onClick={addressErase}>
+                            <FaXmark/>
+                            <span className="d-none d-md-inline-block">작성내역 지우기</span>
+                            </Button>
+                        )}
+                       
+                </div>
             </Col>
         </Row>
         <Row className="mt-2">
@@ -343,7 +405,7 @@ export default function AccountJoin(){
             <Col sm={{span: 9, offset: 3}}>
                 <Form.Control type="text" name="accountAddress1"
                     value={account.accountAddress1}
-                    onChange={changeStringValue}
+                    readOnly onClick={addressSearch}
                     className={result.accountAddress1}
                     placeholder="기본주소"/>
             </Col>
@@ -355,7 +417,9 @@ export default function AccountJoin(){
                     onChange={changeStringValue}
                     onBlur={checkAccountAddress}
                     className={result.accountAddress2}
-                    placeholder="상세주소"/>
+                    placeholder="상세주소"
+                    ref={address2ref}
+                    />
                 <div className="invalid-feedback">주소는 비우거나 모두 작성해야 합니다</div>
             </Col>
         </Row>
