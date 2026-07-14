@@ -1,8 +1,9 @@
 import Jumbotron from "@templates/Jumbotron";
 import { useCallback, useMemo, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
-import { FaAsterisk, FaMagnifyingGlass, FaUserPlus, FaXmark } from "react-icons/fa6";
+import { FaAsterisk, FaEye, FaEyeSlash, FaMagnifyingGlass, FaUserPlus, FaXmark } from "react-icons/fa6";
 import axios from "axios";
+
 
 export default function AccountJoin(){
     //state
@@ -25,7 +26,7 @@ export default function AccountJoin(){
         accountPassword: null,
         accountPassword2: null, //빼고 보내는 거 잊지말기
         accountEmail: null,
-        accountNickname: null,
+        accountNickname: { clazz : null , code : null},
         accountBirth: null,
         accountContact: null,
         accountPost: null,
@@ -33,7 +34,14 @@ export default function AccountJoin(){
         accountAddress2: null,
         accountMessage: null,
     });
-    
+     //비밀번호와 비밀번호 확인을 한번에 다루겠다
+    // const [visible, setVisible] = useState(false);
+    // 따로 다루겠다
+    const [visible, setVisible] = useState({
+        accountPassword : false,
+        accountPassword2 : false
+    });
+
     //callback
     //-입력
     const changeStringValue = useCallback(e=>{
@@ -88,11 +96,25 @@ export default function AccountJoin(){
         setResult(prev=>({...prev, accountEmail : clazz}));
     }, [account]);
 
-    const checkAccountNickname = useCallback(()=>{
+    const checkAccountNickname = useCallback(async ()=>{
         const regex = /^[가-힣A-Za-z0-9]{1,10}$/;
         const valid = regex.test(account.accountNickname);
-        const clazz = valid ? "is-valid" : "";
-        setResult(prev=>({...prev, accountNickname : clazz}));
+        if(valid === false) { //형식 위반
+            setResult(prev=>({
+                ...prev,
+                accountNickname : { clazz : "is-invalid", code : "format" }
+            }));
+            return;
+        }
+
+        //형식 통과 → 중복검사(response대신 data값을 직접 넣어줄 수도 있다)
+        const { data } = await axios.get(`/api/account/check-nickname/${account.accountNickname}`);
+        const clazz = data ? "is-valid" : "is-invalid";
+        const code = data ? null : "duplicate";
+        setResult(prev=>({
+            ...prev, 
+            accountNickname : { clazz : clazz , code : code }
+        }));
     }, [account]);
 
     const checkAccountBirth = useCallback(()=>{
@@ -130,7 +152,7 @@ export default function AccountJoin(){
         if(result.accountId.clazz !== "is-valid") return false; //필수
         if(result.accountPassword !== "is-valid") return false; //필수
         if(result.accountPassword2 !== "is-valid") return false; //필수
-        if(result.accountNickname !== "is-valid") return false; //필수
+        if(result.accountNickname.clazz !== "is-valid") return false; //필수
         if(result.accountEmail !== "is-valid") return false; //필수
         if(result.accountBirth === "is-invalid") return false; //선택
         if(result.accountContact === "is-invalid") return false; //선택
@@ -174,9 +196,20 @@ export default function AccountJoin(){
             <Form.Label column sm={3}>
                 <span>비밀번호</span>
                 <FaAsterisk className="text-danger"/>
+
+                { visible.accountPassword === true ? (
+                <FaEye className="text-danger ms-4" onClick={e=>{
+                    setVisible(prev=>({...prev, accountPassword:false}))
+                }}/>
+                ) : (
+                <FaEyeSlash className="text-secondary ms-4" onClick={e=>{
+                    setVisible(prev=>({...prev, accountPassword:true}))                    
+                }}/>
+                )}
             </Form.Label>
             <Col sm={9}>
-                <Form.Control type="password" inputMode="numeric" name="accountPassword"
+                <Form.Control 
+                    type={visible.accountPassword ? "text" : "password"} inputMode="numeric" name="accountPassword"
                     value={account.accountPassword}
                     onChange={changeStringValue}
                     onBlur={checkAccountPassword}
@@ -191,9 +224,19 @@ export default function AccountJoin(){
             <Form.Label column sm={3}>
                 <span>비밀번호확인</span>
                 <FaAsterisk className="text-danger"/>
+                 { visible.accountPassword2 === true ? (
+                <FaEye className="text-danger ms-4" onClick={e=>{
+                    setVisible(prev=>({...prev, accountPassword2:false}))
+                }}/>
+                ) : (
+                <FaEyeSlash className="text-secondary ms-4" onClick={e=>{
+                    setVisible(prev=>({...prev, accountPassword2:true}))                    
+                }}/>
+                )}
             </Form.Label>
             <Col sm={9}>
-                <Form.Control type="password" inputMode="numeric" name="accountPassword2"
+                <Form.Control 
+                type={visible.accountPassword2 ? "text" : "password" } inputMode="numeric" name="accountPassword2"
                     value={account.accountPassword2}
                     onChange={changeStringValue}
                     onBlur={checkAccountPassword}
@@ -231,10 +274,17 @@ export default function AccountJoin(){
                     value={account.accountNickname}
                     onChange={changeStringValue}
                     onBlur={checkAccountNickname}
-                    className={result.accountNickname}
-                    placeholder=""/>
+                    className={result.accountNickname.clazz}
+                    placeholder="한글, 영문, 숫자 10자 이내"/>
                 <div className="valid-feedback">사용가능한 닉네임입니다</div>
-                <div className="invalid-feedback">형식오류 or 이미 사용중인 닉네임입니다</div>
+                <div className="invalid-feedback">
+                    {result.accountNickname.code === "format" && (<>
+                       한글, 영문, 숫자 10글자 이내로 작성해야합니다.
+                    </>)}
+                    {result.accountNickname.code === "duplicate" && (<>
+                        이미 사용중인 닉네임입니다.
+                    </>) }
+                </div>
             </Col>
         </Row>
 
