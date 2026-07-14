@@ -287,7 +287,7 @@ export default function CountryComplexSearch() {
 
         {/* 검색 결과 표시 */}
         <hr/>
-        <Row mt={4}>
+        <Row className="mt-4">
             <Col>
                 <div className="text-nowrap table-responsive">
                     <Table responsive striped hover className="text-align">

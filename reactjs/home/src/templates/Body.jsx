@@ -21,6 +21,8 @@ import BookDetail from "@components/book/BookDetail";
 import BookEdit from "@components/book/BookEdit";
 import BookSpa from "@components/book/BookSpa";
 
+import AccountJoin from "@components/account/AccountJoin";
+
 import NotFound from "@error/NotFound";
 
 export default function Body() {
@@ -50,6 +52,10 @@ export default function Body() {
         <Route path="/book/detail/:bookId" element={<BookDetail/>}/>
         <Route path="/book/edit/:bookId" element={<BookEdit/>}/>
         <Route path="/book/spa" element={<BookSpa/>}/>
+
+        {/* 회원 관련 */}
+        <Route path="/account/join" element={<AccountJoin/>}/>
+
         {/* fallback route */}
         <Route path="*" element={<NotFound/>}/>
     </Routes>
