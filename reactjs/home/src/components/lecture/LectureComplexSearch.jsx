@@ -2,7 +2,7 @@ import Jumbotron from "@templates/Jumbotron"
 import axios from "axios";
 import { useCallback, useMemo, useState } from "react"
 import { Button, Card, Col, Form, ListGroup, Row } from "react-bootstrap"
-import { FaMagnifyingGlass } from "react-icons/fa6";
+import { FaChevronDown, FaMagnifyingGlass } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
 export default function LectureComplexSearch() {
@@ -44,15 +44,15 @@ export default function LectureComplexSearch() {
     }, [condition]);
     const lastLectureNo = useMemo(()=>{
         if(lectureList.length === 0) return null;
-        return lectureList[lectureList.length - 1];
+        return lectureList[lectureList.length - 1].lectureNo;
     }, [lectureList]);
     const loadMoreList = useCallback(async ()=> {
         const response = await axios.post(
             "/api/lecture/complexSearch",
             {...condition, lastLectureNo : lastLectureNo}
         );
-        setLectureList(prev=>[...prev, response.data.list]);
-    }, []);
+        setLectureList(prev=>[...prev, ...response.data.list]);
+    }, [condition, lastLectureNo]);
 
     //view
     return(<>
@@ -80,7 +80,7 @@ export default function LectureComplexSearch() {
         {/* 검색 결과 표시 */}
         <hr/>
          <Row className="mt-4">
-            {lectureList.map((lecture) => (
+            {lectureList.map((lecture) => (  
                 <Col md={6} lg={4} key={lecture.lectureNo}>
                     <Card className="mb-3">
                         <Card.Header className="text-truncate">{lecture.lectureCategory}</Card.Header>

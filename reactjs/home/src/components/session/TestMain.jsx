@@ -3,20 +3,22 @@ import { useCallback, useState } from "react";
 import { Button } from "react-bootstrap";
 import TestLeft from "./TestLeft";
 import TestRight from "./TestRight";
+import { countState } from "@src/utils/storage";
+import { useAtom } from "jotai";
 
 export default function TestMain() {
-    //state
-    const [count, setCount] = useState(0);
+    // component단위로 작동하는 react state
+    // const [count, setCount] = useState(0);
 
-    //callback
-    const plusOne = useCallback(()=>setCount(prev=>prev+1), []);
-    const plusTen = useCallback(()=>setCount(prev=>prev+10), []);
+    // jotai
+    const [count, setCount] = useAtom(countState); // storage에 만든 jotai state
+
     return (<>
         <Jumbotron title="통합 저장소(jotai)의 필요성"/>
 
         <h1>Count : {count}</h1>
 
-        <TestLeft plusOne={plusOne}/>
-        <TestRight plusTen={plusTen}/>
+        <TestLeft />
+        <TestRight />
     </>)
 }
