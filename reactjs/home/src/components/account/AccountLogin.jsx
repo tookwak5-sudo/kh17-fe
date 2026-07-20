@@ -7,8 +7,9 @@ import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { loginUserState } from "@utils/storage";
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
+import { loginActionState } from "../../utils/storage";
 
 export default function AccountLogin() {
     //state
@@ -17,7 +18,11 @@ export default function AccountLogin() {
         accountPassword : "",
     });
     //jotai state
-    const [loginUser, setLoginUser] = useAtom(loginUserState)
+    //const [loginUser, setLoginUser] = useAtom(loginUserState)
+
+    //쓰기 전용 atom
+    // const [_, loginAction] = useAtom(loginActionState);
+    const loginAction = useSetAtom(loginActionState);
 
     //navigate
     const navigate = useNavigate();
@@ -38,7 +43,8 @@ export default function AccountLogin() {
             const {data} = await axios.post("/service/auth/login", account);
             //로그인 성공 -> 데이터를 jotai storage에 저장하자
             // console.log(data);
-            setLoginUser(data); // jotai storage에 저장 완료
+            // setLoginUser(data); // jotai storage에 저장 완료
+            loginAction(data); //jotai setter atom 사용
             navigate("/");
         }
         catch(e) {

@@ -20,6 +20,7 @@ export default defineConfig({
       "@error": path("./src/error"),
       "@templates": path("./src/templates"),
       "@utils": path("./src/utils"),
+      "@guard" : path("./src/guard"),
       // 주의!!!! 여기 수정하면 무조건 VS를 껐다가 다시 시작해야함
     }
   }
