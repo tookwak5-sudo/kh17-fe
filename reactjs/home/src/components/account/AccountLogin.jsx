@@ -6,7 +6,7 @@ import { FaRightToBracket } from "react-icons/fa6";
 import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { loginState } from "@utils/storage";
+import { loginUserState } from "@utils/storage";
 import { useAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
 
@@ -17,7 +17,7 @@ export default function AccountLogin() {
         accountPassword : "",
     });
     //jotai state
-    const [login, setLogin] = useAtom(loginState)
+    const [loginUser, setLoginUser] = useAtom(loginUserState)
 
     //navigate
     const navigate = useNavigate();
@@ -38,7 +38,7 @@ export default function AccountLogin() {
             const {data} = await axios.post("/service/auth/login", account);
             //로그인 성공 -> 데이터를 jotai storage에 저장하자
             // console.log(data);
-            setLogin(data); // jotai storage에 저장 완료
+            setLoginUser(data); // jotai storage에 저장 완료
             navigate("/");
         }
         catch(e) {

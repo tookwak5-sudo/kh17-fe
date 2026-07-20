@@ -40,12 +40,13 @@ createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     {/* jotai 적용 범위 설정 */}
     <Provider>
-      <App />
 
       {/* 개발 모드일 때만 표시되도록 조건 설정 */}
       { import.meta.env.DEV && (
-      <DevTools position="bottom-right"/>
+        <DevTools position="bottom-right"/>
       )}
+      
+      <App />
     </Provider>
   </BrowserRouter>
   // </StrictMode>,
