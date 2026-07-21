@@ -25,9 +25,9 @@ export const countState = atom(0);
 // export const loginUserState = atomWithStorage("loginUserState", ""); //저장소 미지정 (localStorage 저장)
 
 //만약 객체 데이터를 저장하면서 localStorage, sessionStorage를 선택하고 싶다면 직렬화 도구를 직접 생성해야함
-const logaclStorageWrapper = createJSONStorage(()=>window.localStorage);
+const localStorageWrapper = createJSONStorage(()=>window.localStorage);
 const sessionStorageWrapper = createJSONStorage(()=>window.sessionStorage);
-export const loginUserState = atomWithStorage("loginUserState", null, logaclStorageWrapper);
+export const loginUserState = atomWithStorage("loginUserState", null, localStorageWrapper);
 // export const loginUserState = atomWithStorage("loginUserState", "", sessiontorageWrapper);
 
 // 파생 atom - 다른 atom을 이용해서 계산을 처리한 결과를 만들어내는 atom (=useMemo 훅)
