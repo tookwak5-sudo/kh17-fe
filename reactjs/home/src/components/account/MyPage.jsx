@@ -5,13 +5,13 @@
     import { loginActionState, loginUserState } from "@utils/storage";
     import axios from "axios";
     import { useResetAtom } from "jotai/utils";
-import { apiClient } from "@utils/reaxios";
+    import { apiClient } from "@utils/reaxios";
 
     export default function MyPage() {
         //jotai state에 저장된 내 정보를 가져와서 서버에 나머지 정보를 요청해야함
         //const [loginUser, setLoginuser] = useAtom(loginUserState);
         // conse loginUser = useAtomValue(loginUserState);
-        const { accountId, accountNickname, accoutLevel } = useAtomValue(loginUserState);
+        const { accountId, accountNickname, accountLevel } = useAtomValue(loginUserState);
         const [ account, setAccount] = useState(null);
         
         useEffect(()=>{
@@ -42,6 +42,10 @@ import { apiClient } from "@utils/reaxios";
                 <Col sm={9} className="text-secondary">{account?.accountId}</Col>
             </Row>
             <Row className="mt-4">
+            <Col sm={3} className="fw-bold text-info">닉네임</Col>
+            <Col sm={9} className="text-secondary">{account?.accountNickname}</Col>
+            </Row>
+            <Row className="mt-4">
                 <Col sm={3} className="fw-bold text-info">이메일</Col>
                 <Col sm={9} className="text-secondary">{account?.accountEmail}</Col>
             </Row>
@@ -55,10 +59,7 @@ import { apiClient } from "@utils/reaxios";
             </Row>
             <Row className="mt-4">
                 <Col sm={3} className="fw-bold text-info">주소</Col>
-                <Col sm={9} className="text-secondary">
-                    [{account?.accountPost}]
-                    {account?.accountAddress1}
-                    {account?.accountAddress2}
+                <Col sm={9} className="text-secondary">{unionAddress}
                 </Col>
             </Row>
             <Row className="mt-4">

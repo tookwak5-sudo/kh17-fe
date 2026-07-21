@@ -38,19 +38,20 @@ export default function Menu() {
           logoutAction(); //에러여부와 관계없이 화면상의 데이터는 삭제
         }
       },[]);
-      //토큰 갱신 요청을 보내는 연습용 함수
-      const refresh = useCallback(async ()=> {
-        try {
-          // const {data} = await axios.post("/service/auth/refresh");
-          const {data} = await authClient.post("/refresh");
-          //갱신이 된 경우 (200 ok)
-          loginAction(data);
-        }
-        catch(e) {
-          //갱신이 안된 경우 (401 unauthorized)
-          logoutAction();
-        }
-      }, []);
+      // //토큰 갱신 요청을 보내는 연습용 함수
+      // const refresh = useCallback(async ()=> {
+      //   try {
+      //     // const {data} = await axios.post("/service/auth/refresh");
+      //     const {data} = await authClient.post("/refresh");
+      //     //갱신이 된 경우 (200 ok)
+      //     loginAction(data);
+      //   }
+      //   catch(e) {
+      //     //갱신이 안된 경우 (401 unauthorized)
+      //     logoutAction();
+      //   }
+      // }, []);
+
     return(<>
         <Navbar expand="md" className="bg-body-tertiary sticky-top"
                     bg="dark" data-bs-theme="dark"> 
@@ -104,7 +105,7 @@ export default function Menu() {
             </>)}
 
             {/* 연습용 Refresh 버튼 (향후 삭제가 필요) */}
-             <Nav.Link onClick={refresh}>갱신(Refresh)</Nav.Link>
+            {/* <Nav.Link onClick={refresh}>갱신(Refresh)</Nav.Link> */}
           </Nav>
         </Navbar.Collapse>
       </Container>
