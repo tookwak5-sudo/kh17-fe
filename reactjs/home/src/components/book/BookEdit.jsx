@@ -6,6 +6,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import { FaAsterisk, FaPlus } from "react-icons/fa6";
 import { ClockLoader } from "react-spinners";
+import { apiClient } from "../../utils/reaxios";
 
 export default function BookEdit() {
     const { bookId } = useParams();
@@ -31,7 +32,7 @@ export default function BookEdit() {
     }, []);
 
     const loadData = useCallback(async () => {
-        const response = await axios.get(`/api/book/${bookId}`);
+        const response = await apiClient.get(`/book/${bookId}`);
         console.log(response.data);
         setBook(response.data);
     }, []);
@@ -144,7 +145,7 @@ export default function BookEdit() {
     }, [book.bookGenre, result]);
 
     const send = useCallback(async () => {
-        const response = await axios.post("/api/book/", book);
+        const response = await apiClient.post("/book/", book);
         toast.success("도서 등록이 완료되었습니다");
         navigate("/book/list");
     }, [book]);

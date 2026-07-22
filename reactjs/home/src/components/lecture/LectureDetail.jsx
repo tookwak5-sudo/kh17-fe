@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { FaCheck, FaList, FaPenToSquare, FaSquare, FaSquarePen, FaTrash, FaXmark } from "react-icons/fa6";
+import { apiClient } from "../../utils/reaxios";
 
 export default function LectureDetail() {
     //파라미터 처리
@@ -49,7 +50,7 @@ export default function LectureDetail() {
         //     method:"get"
         // });
         //주의사항 : 함수가 async함수여야함 (따라서 effect에서는 못씀)
-        const response = await axios.get(`/api/lecture/${lectureNo}`);
+        const response = await apiClient.get(`/lecture/${lectureNo}`);
         setLecture(response.data);
         setBackup(response.data);
     }, []);
@@ -68,7 +69,7 @@ export default function LectureDetail() {
        });
        if(result.isConfirmed === false) return;
 
-       const response = await axios.delete(`/api/lecture/${lectureNo}`);
+       const response = await apiClient.delete(`/lecture/${lectureNo}`);
        toast.error("강좌 삭제가 완료되었습니다.");
        navigate("/lecture/list");
     }, [lectureNo]);

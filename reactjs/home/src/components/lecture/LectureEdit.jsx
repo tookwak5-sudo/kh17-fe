@@ -6,6 +6,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { FaAsterisk, FaCheck, FaList, FaPenToSquare, FaSquare, FaSquarePen, FaTrash, FaXmark } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
+import { apiClient } from "../../utils/reaxios";
 
 export default function LectureEdit() {
     //파라미터 처리
@@ -33,7 +34,7 @@ export default function LectureEdit() {
     }, [])
 
     const loadData = useCallback(async ()=>{
-        const response = await axios.get(`/api/lecture/${lectureNo}`);
+        const response = await apiClient.get(`/lecture/${lectureNo}`);
         setLecture(response.data);
     }, []);
 
@@ -120,7 +121,7 @@ export default function LectureEdit() {
     }, [lecture.lectureType, result])
 
     const send = useCallback(async () => {
-        const response = await axios.put(`/api/lecture/${lectureNo}`, lecture);
+        const response = await apiClient.put(`/lecture/${lectureNo}`, lecture);
         const result = await Swal.fire({
             title: "강좌 수정 완료",
             icon: "success",

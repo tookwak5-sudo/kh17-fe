@@ -5,6 +5,7 @@ import Jumbotron from "@templates/Jumbotron";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { FaAsterisk, FaList, FaSquarePen, FaXmark } from "react-icons/fa6";
 import { toast } from "react-toastify";
+import { apiClient } from "../../utils/reaxios";
 
 export default function CountryEdit() {
     const { countryNo } = useParams();
@@ -29,7 +30,7 @@ export default function CountryEdit() {
     }, []);
 
     const loadData = useCallback(async () => {
-        const response = await axios.get(`/api/country/${countryNo}`);
+        const response = await apiClient.get(`/country/${countryNo}`);
         setCountry(response.data);
     }, []);
 
@@ -97,7 +98,7 @@ export default function CountryEdit() {
     //데이터 전송 함수
     // const send = ()=> {}; 연관항목의 유무(useCallback사용시 연관 검색 호출 할 때만 출력되어)
     const send = useCallback(async () => {
-        const response = await axios.put(`/api/country/${countryNo}`, country);
+        const response = await apiClient.put(`/country/${countryNo}`, country);
         toast.success("국가 정보 변경이 완료되었습니다");
         navigate(`/country/detail/${countryNo}`);
     }, [country]);

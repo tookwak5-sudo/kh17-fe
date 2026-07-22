@@ -4,6 +4,7 @@ import { useCallback, useMemo, useState } from "react"
 import { Button, Card, Col, Form, ListGroup, Row } from "react-bootstrap"
 import { FaChevronDown, FaMagnifyingGlass } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import { apiClient } from "@utils/reaxios";
 
 export default function LectureComplexSearch() {
     //state
@@ -38,7 +39,7 @@ export default function LectureComplexSearch() {
     }, []);
 
     const send = useCallback(async ()=> {
-        const response = await axios.post("/api/lecture/complexSearch", condition);
+        const response = await apiClient.post("/lecture/complexSearch", condition);
         setLectureList(response.data.list);
         setLast(response.data.last);
     }, [condition]);
@@ -47,8 +48,8 @@ export default function LectureComplexSearch() {
         return lectureList[lectureList.length - 1].lectureNo;
     }, [lectureList]);
     const loadMoreList = useCallback(async ()=> {
-        const response = await axios.post(
-            "/api/lecture/complexSearch",
+        const response = await apiClient.post(
+            "/lecture/complexSearch",
             {...condition, lastLectureNo : lastLectureNo}
         );
         setLectureList(prev=>[...prev, ...response.data.list]);

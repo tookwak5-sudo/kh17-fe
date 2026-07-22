@@ -10,6 +10,7 @@ import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
 import Button from "react-bootstrap/esm/Button";
 import { ClockLoader } from "react-spinners";
+import { apiClient } from "../../utils/reaxios";
 
 export default function BookList() {
     const [bookList, setBookList] = useState([]);
@@ -30,8 +31,8 @@ export default function BookList() {
         const dataSize = bookList.length;
         const lastBookId = dataSize === 0 ? 2147483647  : bookList[dataSize-1].bookId;
 
-        const response = await axios.post(
-            `/api/book/list-more`,
+        const response = await apiClient.post(
+            `/book/list-more`,
             { lastNo : lastBookId, size : size}
         )
         setBookList([...bookList, ...response.data.list]); //이어쓰기

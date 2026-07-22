@@ -8,6 +8,7 @@ import { ClockLoader } from "react-spinners";
 import { FaChevronDown } from "react-icons/fa6";
 import Form from "react-bootstrap/Form";
 import { Link } from "react-router-dom";
+import { apiClient } from "../../utils/reaxios";
 
 export default function LectureList() {
     //state
@@ -57,9 +58,9 @@ export default function LectureList() {
         // const response = await axios.get(
         //     `/api/lecture/lastLectureNo/${lastLectureNo}/size/${size}`
         // );
-        const response = await axios.post(
+        const response = await apiClient.post(
             //"http://localhost:8080/api/lecture/list-more",
-            `/api/lecture/list-more`,
+            `/lecture/list-more`,
             { lastNo : lastLectureNo , size : size}
         )
         //덮어쓰기가 아니라 추가 가 필요

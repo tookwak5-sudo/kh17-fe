@@ -6,6 +6,7 @@ import axios from "axios";
 import { useKakaoPostcodePopup } from "react-daum-postcode";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { apiClient, certClient } from "../../utils/reaxios";
 
 export default function AccountJoin(){
     //kakao post
@@ -84,7 +85,7 @@ export default function AccountJoin(){
             return;
         }
         //형식 통과
-        const response = await axios.get(`/api/account/check-id/${account.accountId}`);
+        const response = await apiClient.get(`/account/check-id/${account.accountId}`);
         const clazz = response.data === true ? "is-valid" : "is-invalid";
         const code = response.data === true ? null : "duplicate";
         setResult(prev=>({
@@ -120,7 +121,7 @@ export default function AccountJoin(){
             return;
         }
         //형식 통과 → 중복 검사
-        const { data } = await axios.get(`/api/account/check-email/${account.accountEmail}`);
+        const { data } = await apiClient.get(`/account/check-email/${account.accountEmail}`);
         const clazz = data ? "" : "is-invalid"; //형식과 중복검사를 통과하더라도 아직 인증번호가 남아있음
         const code = data ? null : "duplicate";
         setResult(prev=>({
@@ -141,7 +142,7 @@ export default function AccountJoin(){
         }
 
         //형식 통과 → 중복검사(response대신 data값을 직접 넣어줄 수도 있다)
-        const { data } = await axios.get(`/api/account/check-nickname/${account.accountNickname}`);
+        const { data } = await apiClient.get(`/account/check-nickname/${account.accountNickname}`);
         const clazz = data ? "is-valid" : "is-invalid";
         const code = data ? null : "duplicate";
         setResult(prev=>({
@@ -270,7 +271,7 @@ export default function AccountJoin(){
         setCertNumber("");
         try {
             setSending(true);
-            const response = await axios.post(
+            const response = await certClient.post(
             "/service/cert/send",
             {certEmail : account.accountEmail}
             );
@@ -297,7 +298,7 @@ export default function AccountJoin(){
 
     const checkCert = useCallback(async ()=>{
         //data는 CertCheckResponseVO의 valid값
-        const { data } = await axios.post(
+        const { data } = await certClient.post(
             "/service/cert/check",
             { certEmail : account.accountEmail, certNumber : certNumber}
         );
@@ -338,7 +339,7 @@ export default function AccountJoin(){
             // const copy = {...acount};
             // delete copy.acountPassword2; //아래 구조분해 할당 or 두줄 코드
             const { accountPassword2, ...copy } = account;
-            const response = await axios.post("/api/account/", copy);
+            const response = await apiClient.post("/account/", copy);
             //toast.success("회원가입이 완료되었습니다");
             navigate("/account/joinSuccess");
         }

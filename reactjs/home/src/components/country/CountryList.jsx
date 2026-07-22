@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table"
 import { Link } from "react-router-dom";
+import { apiClient } from "../../utils/reaxios";
 
 export default function CountryList() {
  //state
@@ -37,9 +38,9 @@ export default function CountryList() {
         // );
         
         // post일경우
-        const response = await axios.post(
+        const response = await apiClient.post(
             //"http://localhost:8080/api/country/list-more",
-            `/api/country/list-more`,
+            `/country/list-more`,
             { lastNo : lastCountryNo , size : size}
         )    
         setCountryList([...countryList, ...response.data.list]);//이어쓰기

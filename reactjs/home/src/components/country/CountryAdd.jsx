@@ -5,6 +5,7 @@ import { FaAsterisk } from "react-icons/fa6";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { apiClient } from "../../utils/reaxios";
 
 export default function CountryAdd() {
     //페이지 이동 도구 (location 대신 사용)
@@ -81,7 +82,7 @@ export default function CountryAdd() {
     //데이터 전송 함수
     // const send = ()=> {}; 연관항목의 유무(useCallback사용시 연관 검색 호출 할 때만 출력되어)
     const send = useCallback(async ()=>{
-        const response = await axios.post("/api/country/", country);
+        const response = await apiClient.post("/country/", country);
         toast.success("국가 등록이 완료되었습니다");
         navigate("/country/list");
     }, [country]);

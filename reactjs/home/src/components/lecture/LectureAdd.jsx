@@ -7,6 +7,7 @@ import { Form } from "react-bootstrap";
 import { FaAsterisk, FaPlus } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { apiClient } from "../../utils/reaxios";
 
 export default function LectureAdd() {
  
@@ -147,7 +148,7 @@ export default function LectureAdd() {
     // }, [lecture]);
 
     const send = useCallback(async () => {
-        const response = await axios.post("/api/lecture/", lecture);
+        const response = await apiClient.post("/lecture/", lecture);
         const result = await Swal.fire({
             title: "강좌 생성 완료",
             icon: "success",

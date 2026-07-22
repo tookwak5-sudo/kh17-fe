@@ -24,7 +24,7 @@ import BookSpa from "@components/book/BookSpa";
 import AccountJoin from "@components/account/AccountJoin";
 import AccountJoinSuccess from "@components/account/AccountJoinSuccess";
 import AccountJoinFail from "@components/account/AccountJoinFail";
-
+import AccountPasswordChange from "@components/account/AccountPasswordChange";
 
 
 import NotFound from "@error/NotFound";
@@ -67,6 +67,7 @@ export default function Body() {
         <Route path="/account/joinFail" element={<AccountJoinFail/>}/>
         <Route path="/account/login" element={<AccountLogin/>}/>
         <Route path="/account/mypage" element={<Private><MyPage/></Private>}/>
+        <Route path="/account/password" element={<AccountPasswordChange/>}/>
 
         {/* 세션테스트 */}
         <Route path="/session/test" element={<TestMain/>}/>

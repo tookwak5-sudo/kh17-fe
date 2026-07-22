@@ -6,6 +6,7 @@ import Jumbotron from "@templates/Jumbotron";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { FaCheck, FaList, FaPenToSquare, FaSquarePen, FaTrash, FaXmark } from "react-icons/fa6";
 import { toast } from "react-toastify";
+import { apiClient } from "../../utils/reaxios";
 
 export default function BookDetail() {
     const { bookId } = useParams();
@@ -23,7 +24,7 @@ export default function BookDetail() {
     }, []);
 
     const loadData = useCallback(async ()=>{
-        const response = await axios.get(`/api/book/${bookId}`);
+        const response = await apiClient.get(`/book/${bookId}`);
         setBook(response.data);
         setBackup(response.data);
     }, []);
@@ -41,7 +42,7 @@ export default function BookDetail() {
         });
         if(result.isConfirmed === false) return;
 
-        const response = await axios.delete(`/api/book/${bookId}`);
+        const response = await apiClient.delete(`/book/${bookId}`);
         toast.error("도서 삭제가 완료되었습니다");
         navigate("/book/list");
     }, [bookId]);
@@ -75,8 +76,8 @@ export default function BookDetail() {
 
     //도서정보 변경하는 함수
     const updateBook = useCallback(async (field)=>{
-        const response = await axios.patch(
-            `/api/book/${bookId}`, 
+        const response = await apiClient.patch(
+            `/book/${bookId}`, 
             { [field] : book[field]}
         );
 
