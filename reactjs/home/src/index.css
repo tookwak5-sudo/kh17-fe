@@ -1,7 +1,8 @@
 
 /* 반응형 폭(width) 스타일 */
 .w-md-25,
-.w-md-50
+.w-md-50,
+.w-md-auto
 {
     width: 100%;
 }
@@ -13,5 +14,8 @@
     }
     .w-md-50 {
         width: 50%;
+    }
+    .w-md-auto {
+        width: auto;
     }
 }

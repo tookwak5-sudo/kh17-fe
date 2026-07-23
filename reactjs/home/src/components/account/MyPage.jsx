@@ -1,11 +1,13 @@
     import Jumbotron from "@templates/Jumbotron";
     import { useAtom, useAtomValue, useSetAtom } from "jotai";
     import { useCallback, useEffect, useMemo, useState } from "react";
-    import { Col, Row } from "react-bootstrap";
+    import { Button, Col, Row } from "react-bootstrap";
     import { loginActionState, loginUserState } from "@utils/storage";
     import axios from "axios";
     import { useResetAtom } from "jotai/utils";
     import { apiClient } from "@utils/reaxios";
+import { FaLock, FaSquarePen } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
     export default function MyPage() {
         //jotai state에 저장된 내 정보를 가져와서 서버에 나머지 정보를 요청해야함
@@ -89,6 +91,24 @@
             <Row className="mt-4">
                 <Col sm={3} className="fw-bold text-info">메세지</Col>
                 <Col sm={9} className="text-secondary">{account?.accountMessage}</Col>
+            </Row>
+
+            {/* 각종 다른 기능으로 이동할 수 있는 링크들 */}
+            <Row className="mt-5">
+                <Col>
+                    <Button as={Link} to="/account/password" variant="danger">
+                        <FaLock className="mb-1"/>
+                        <span className="ms-2">비밀번호 변경</span>
+                    </Button>
+                </Col>
+            </Row>
+            <Row className="mt-5">
+                <Col>
+                    <Button as={Link} to="/account/change" variant="warning">
+                        <FaSquarePen className="mb-1"/>
+                        <span className="ms-2">개인정보 변경</span>
+                    </Button>
+                </Col>
             </Row>
         </>)
     }
