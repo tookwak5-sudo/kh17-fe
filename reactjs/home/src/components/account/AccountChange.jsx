@@ -1,12 +1,14 @@
 import Jumbotron from "@templates/Jumbotron"
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { use, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { FaAsterisk, FaCheck, FaEye, FaEyeSlash, FaMagnifyingGlass, FaPaperPlane, FaRotateRight, FaSpinner, FaSquarePen, FaUserPlus, FaXmark } from "react-icons/fa6";
 import { useKakaoPostcodePopup } from "react-daum-postcode";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { apiClient, certClient } from "../../utils/reaxios";
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import Swal from "sweetalert2";
 
 export default function AccountChange() {
     //kakao post
@@ -494,13 +496,24 @@ export default function AccountChange() {
                 <span>생년월일</span>
             </Form.Label>
             <Col sm={9}>
-                <Form.Control type="date" name="accountBirth"
+                <DatePicker name="accountBirth" 
+                        selected={account.accountBirth}
+                        onChange={(date)=>{
+                            //date가 우리가 원하는 형식이 아님
+                            setAccount(prev=>({...prev, accountBirth : date}))
+                        }}
+                        onBlur={checkAccountBirth}
+                        dataFormat={"yyyy-MM-dd"}
+                        customInput={<Form.Control/>}
+                        wrapperClassName={`w-100`}
+                        className={`result.accountBirth`}/>
+                {/* <Form.Control type="date" name="accountBirth"
                     value={account.accountBirth}
                     onChange={changeStringValue}
                     onBlur={checkAccountBirth}
                     className={result.accountBirth}
-                    placeholder=""/>
-                <div className="valid-feedback"></div>
+                    placeholder=""/> */}
+                <div className="invalid-feedback">날짜 형식이 올바르지 않습니다</div>
             </Col>
         </Row>
 
