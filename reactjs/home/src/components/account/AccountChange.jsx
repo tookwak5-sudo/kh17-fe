@@ -60,7 +60,7 @@ export default function AccountChange() {
         checkAccountContact(); //null일 수 있음
         checkAccountAddress(); //null일 수 있음
         checkAccountMessage(); //null일 수 있음
-    }, []);
+    }, [backup]);
 
     //callback
     const loadData = useCallback(async ()=>{
@@ -372,17 +372,26 @@ export default function AccountChange() {
     // 최종 가입
     const navigate = useNavigate();
     const sendData = useCallback(async ()=>{
-        try {
+        try { //정상적 수정시도
             const copy = {...account};
             const { data } = await apiClient.put("/account/", copy);
-            console.log(data);
-            // toast.success("회원가입이 완료되었습니다");
-            // navigate("/account/joinSuccess");
+            
+            if(data.status === true) { //js에서는 정확히 true일 경우 비교를 하고 싶다면 ===true를 써주는 것이 좋다
+                toast.success(data.message);
+                navigate("/account/mypage");
+            }
+            else {
+                toast.error(data.message);
+            }
         }
-        catch(e) {
-            console.error(e);
-            // toast.error("회원 가입 과정에서 오류가 발생했습니다");
-            // navigate("/account/joinFail");
+        catch(e) { //자격이 없어서 오류가 났을 때
+            //console.error(e);
+            await Swal.fire({
+                title: "서버 오류 발생",
+                test: "잠시 후 다시 시도해주세요",
+                icon: "warning",
+                confirmButtonText: "확인"
+            });
         }
     }, [account]);
 
