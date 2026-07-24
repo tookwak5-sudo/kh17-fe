@@ -9,7 +9,7 @@ import { isAdminState, isLoginState } from "../utils/storage";
 import NotAuthorized from "@error/NotAuthorized";
 import NeedPermission from "@error/NotNeedPermission";
 
-export default function Private({ children }) {
+export default function Private({ children }) { 
     
     //jotai에 저장된 값을 불러와서 자격을 검사한다
     //- isLoginState를 가져와서 회원인지 아닌지 검증
