@@ -102,7 +102,7 @@ export default function AdminUsers() {
         //return condition.accountLevels.length == levelList.length;
         return {
             accountLevels : condition.accountLevels.length === dataList.accountLevels.length,
-            fruits : condition.fruits.length === dataList.fruits.length
+          //  fruits : condition.fruits.length === dataList.fruits.length
         }
     }, [condition]);
 
