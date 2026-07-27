@@ -11,12 +11,14 @@ import { useAtom, useSetAtom } from "jotai";
 import { useNavigate } from "react-router-dom";
 import { loginActionState } from "@utils/storage";
 import { authClient } from "@utils/reaxios";
+import AccountBlock from "./AccountBlock";
 
 export default function AccountLogin() {
     //state
     const [account, setAccount] = useState({
         accountId : "",
         accountPassword : "",
+        needUpdate : "",
     });
     //jotai state
     //const [loginUser, setLoginUser] = useAtom(loginUserState)
@@ -44,12 +46,22 @@ export default function AccountLogin() {
             // const {data} = await axios.post("/service/auth/login", account);
             const {data} = await authClient.post("/login", account);
             //로그인 성공 -> 데이터를 jotai storage에 저장하자
-            // console.log(data);
+            console.log(data);
             // setLoginUser(data); // jotai storage에 저장 완료
             loginAction(data); //jotai setter atom 사용
+            //console.log(data.needUpdate);
+            if(data.needUpdate) { // 변경이 true면
+                navigate("/account/needUpdate");
+                return;
+            }
+            
             navigate("/");
         }
         catch(e) {
+            if(e.response?.status === 403){
+                navigate("/account/block");
+                return;
+            };
             //로그인 실패
             await Swal.fire("정보가 일치하지 않습니다");
         }

@@ -1,9 +1,11 @@
 import Jumbotron from "@templates/Jumbotron"
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { Button, Col, Form, Row, Table } from "react-bootstrap";
 import { FaChevronDown, FaEraser, FaMagnifyingGlass } from "react-icons/fa6";
 import { apiClient } from "@utils/reaxios";
 import { TbTilde } from "react-icons/tb";
+
+import useListCheckbox from "../../hooks/useListCheckbox";
 
 import { ko } from "date-fns/locale";
 import DatePicker from "react-datepicker";
@@ -11,6 +13,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
+import { Link } from "react-router-dom";
 dayjs.locale("ko");//한국어로 설정
 
 //등급을 미리 정의 (갱신의 여지가 없고 화면의 변화와 관계가 없으므로 바깥에 만듦) -> use사용불가능(component에서만 사용가능하기 때문에)
@@ -54,32 +57,33 @@ export default function AdminUsers() {
             [name] : replacement2
         }));
     }, []);
-    const changeListValue = useCallback(e=>{
-        const { name, value, checked } = e.target;
+    const changeListValue = useListCheckbox(setCondition);
+    // const changeListValue = useCallback(e=>{
+    //     const { name, value, checked } = e.target;
 
-        if(checked) { //체크되었다면
-            setCondition(prev=>({
-                ...prev,
-                // [name] : [ ...prev.accountLevels , value ] // 전개연산
-                // accountLevels : prev.accountLevels.concat(value) // concat사용
-                // [name] : [ ...prev["accountLevels"], value]
-                [name] : [ ...prev[name], value] 
-            }));
-        }
-        else {//체크 안되었다면
-            setCondition(prev=>({
-                ...prev,
-               // [name] : prev.accountLevels.filter(level => level != value)
-               [name] : prev[name].filter(level => level != value)
-            })); 
-        }
-        e=>setCondition(
-                        prev=>({
-                            ...prev, 
-                            accountLevels : [...prev.accountLevels, "브론즈"]
-                            })
-                        )
-    }, []);
+    //     if(checked) { //체크되었다면
+    //         setCondition(prev=>({
+    //             ...prev,
+    //             // [name] : [ ...prev.accountLevels , value ] // 전개연산
+    //             // accountLevels : prev.accountLevels.concat(value) // concat사용
+    //             // [name] : [ ...prev["accountLevels"], value]
+    //             [name] : [ ...prev[name], value] 
+    //         }));
+    //     }
+    //     else {//체크 안되었다면
+    //         setCondition(prev=>({
+    //             ...prev,
+    //            // [name] : prev.accountLevels.filter(level => level != value)
+    //            [name] : prev[name].filter(level => level != value)
+    //         })); 
+    //     }
+    //     e=>setCondition(
+    //                     prev=>({
+    //                         ...prev, 
+    //                         accountLevels : [...prev.accountLevels, "브론즈"]
+    //                         })
+    //                     )
+    // }, []);
     const changeListValueAll = useCallback(e=>{
         const {name, checked} = e.target;
         if(checked) { //전체선택 on
@@ -124,7 +128,7 @@ export default function AdminUsers() {
             //객체에 데이터를 추가할 때 이름을 적지 않으면 해당 변수명과 동일하게 생김
             ...condition, lastAccountId, size
        };
-       const { data } = await apiClient.post("/account/search", condition);
+       const { data } = await apiClient.post("/account/search", copy);
         setList(data.list);//덮어쓰기
         // setList(prev=>[...prev, ...data.list]);//이어쓰기
         setLast(data.last);
@@ -426,6 +430,7 @@ export default function AdminUsers() {
                     <FaMagnifyingGlass className="me-2"/>
                     <span>검색하기</span>
                 </Button>
+
             </Col>
         </Row>
 
@@ -445,7 +450,11 @@ export default function AdminUsers() {
                     <tbody>
                         {list.map(account=>(
                         <tr key={account.accountId}>
-                            <td>{account.accountId}</td>
+                            <td>
+                                <Link to={`/admin/detail/${account.accountId}`}>
+                                {account.accountId}
+                                </Link>
+                            </td>
                             <td>{account.accountNickname}</td>
                         </tr>
                         ))}
