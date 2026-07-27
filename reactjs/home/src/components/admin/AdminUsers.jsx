@@ -1,5 +1,5 @@
 import Jumbotron from "@templates/Jumbotron"
-import { useCallback, useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 import { Button, Col, Form, Row, Table } from "react-bootstrap";
 import { FaEraser, FaMagnifyingGlass } from "react-icons/fa6";
 import { apiClient } from "@utils/reaxios";
@@ -12,6 +12,15 @@ import "react-datepicker/dist/react-datepicker.css";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 dayjs.locale("ko");//한국어로 설정
+
+//등급을 미리 정의 (갱신의 여지가 없고 화면의 변화와 관계가 없으므로 바깥에 만듦) -> use사용불가능(component에서만 사용가능하기 때문에)
+// const levelList = ["브론즈", "실버", "골드", "플래티넘", "다이아"]; //만약 여기에 정의하기 싫다면, 프로젝트내 json파일을 만들어서 불러오는 방식으로 진행
+// const fruitList = ["사과", "딸기", "바나나"];
+// 각각 만들면 모듈화가 안되니 객체로 한번에 만들기
+const dataList = {
+    accountLevels : ["브론즈", "실버", "골드", "플래티넘", "다이아"],
+    // fruits : ["사과", "딸기", "바나나"]
+}
 
 export default function AdminUsers() {
     //state
@@ -26,7 +35,8 @@ export default function AdminUsers() {
         accountLoginBegin : "", accountLoginEnd : "",
         accountPointMin : "", accountPointMax : "",
         accountLevels : [],
-        accountBlock : ""
+        accountBlock : "",
+        fruits : []
     });
     const changeStringValue = useCallback(e=>{
         const { name, value } = e.target;
@@ -44,6 +54,57 @@ export default function AdminUsers() {
             [name] : replacement2
         }));
     }, []);
+    const changeListValue = useCallback(e=>{
+        const { name, value, checked } = e.target;
+
+        if(checked) { //체크되었다면
+            setCondition(prev=>({
+                ...prev,
+                // [name] : [ ...prev.accountLevels , value ] // 전개연산
+                // accountLevels : prev.accountLevels.concat(value) // concat사용
+                // [name] : [ ...prev["accountLevels"], value]
+                [name] : [ ...prev[name], value] 
+            }));
+        }
+        else {//체크 안되었다면
+            setCondition(prev=>({
+                ...prev,
+               // [name] : prev.accountLevels.filter(level => level != value)
+               [name] : prev[name].filter(level => level != value)
+            })); 
+        }
+        e=>setCondition(
+                        prev=>({
+                            ...prev, 
+                            accountLevels : [...prev.accountLevels, "브론즈"]
+                            })
+                        )
+    }, []);
+    const changeListValueAll = useCallback(e=>{
+        const {name, checked} = e.target;
+        if(checked) { //전체선택 on
+            setCondition(prev=>({
+                ...prev,
+                // [name] : ["브론즈", "실버", "골드", "플래티넘", "다이아"]
+                // [name] : levelList //절대안됨(얕은 복사, shallow copy)
+               // [name] : [...levelList] // 깊은 복사(deep copy)
+               [name] : [...dataList[name]]
+            }));
+        }
+        else { //전체선택 off
+            setCondition(prev=>({
+                ...prev,
+                [name] : []
+            }));
+        }
+    }, []);
+    const checkedAll = useMemo(()=>{
+        //return condition.accountLevels.length == levelList.length;
+        return {
+            accountLevels : condition.accountLevels.length === dataList.accountLevels.length,
+            fruits : condition.fruits.length === dataList.fruits.length
+        }
+    }, [condition]);
 
     const [list, setList] = useState([]);
     const [last, setLast] = useState(true);
@@ -280,6 +341,40 @@ export default function AdminUsers() {
                             onChange={e=>setCondition(prev=>({...prev, accountBlock:"N"}))}/>
             </Col>
         </Row>
+
+        <Row className="mt-2">
+            <Form.Label column sm={3}>등급</Form.Label>
+            <Col sm={9}>
+                <Form.Check type="checkbox" label="전체선택"
+                    name="accountLevels"
+                    onChange={changeListValueAll}
+                    checked={checkedAll.accountLevels}/>
+                <hr/>
+                {dataList.accountLevels.map((level, index)=>(
+                    <Form.Check type="checkbox" label={level} key={index}
+                    name="accountLevels" value={level}
+                    onChange={changeListValue}
+                    checked={condition.accountLevels.includes(level)}/>
+                ))}
+            </Col>
+        </Row>
+
+        {/* <Row className="mt-2">
+            <Form.Label column sm={3}>연습용</Form.Label>
+            <Col sm={9}>
+                <Form.Check type="checkbox" label="전체선택"
+                    name="fruits"
+                    onChange={changeListValueAll}
+                    checked={checkedAll.fruits}/>
+                <hr/>
+                {dataList.fruits.map((fruit, index)=>(
+                    <Form.Check type="checkbox" label={fruit} key={index}
+                    name="fruits" value={fruit}
+                    onChange={changeListValue}
+                    checked={condition.fruits.includes(fruit)}/>
+                ))}
+            </Col>
+        </Row> */}
 
         <Row className="mt-4 text-end">
             <Col>
