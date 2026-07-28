@@ -14,6 +14,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import { throttle } from "lodash-es";
+import { Link } from "react-router-dom";
 dayjs.locale("ko");//한국어로 설정
 
 //등급을 미리 정의 (갱신의 여지가 없고 화면의 변화와 관계가 없으므로 바깥에 만듦) -> use사용불가능(component에서만 사용가능하기 때문에)
@@ -526,7 +527,11 @@ export default function AdminUsersScroll() {
                     <tbody>
                         {list.map(account=>(
                         <tr key={account.accountId}>
-                            <td>{account.accountId}</td>
+                            <td>
+                                <Link to={`/admin/detail/${account.accountId}`}>
+                                    {account.accountId}
+                                </Link>
+                            </td>
                             <td>{account.accountNickname}</td>
                         </tr>
                         ))}

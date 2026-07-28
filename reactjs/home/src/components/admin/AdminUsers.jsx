@@ -452,7 +452,7 @@ export default function AdminUsers() {
                         <tr key={account.accountId}>
                             <td>
                                 <Link to={`/admin/detail/${account.accountId}`}>
-                                {account.accountId}
+                                    {account.accountId}
                                 </Link>
                             </td>
                             <td>{account.accountNickname}</td>

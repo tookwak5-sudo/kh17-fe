@@ -1,32 +1,36 @@
 import Jumbotron from "@templates/Jumbotron";
 import { useAtomValue } from "jotai";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Button, Col, Row } from "react-bootstrap";
+import { Button, Col, Placeholder, Row } from "react-bootstrap";
 import { FaLock, FaSquarePen } from "react-icons/fa6";
 import { Link, useParams } from "react-router-dom";
 import { apiClient } from "@utils/reaxios";
 import { loginUserState } from "@utils/storage";
 import { toast } from "react-toastify";
-import { authClient } from "../../utils/reaxios";
+import { authClient } from "@utils/reaxios";
 
-export default function AdminUsersDetail() {
+export default function AdminUserDetail() {
 
     //Route에 선언된 파라미터 정보 읽어오기
+    //react가 제공하는 공식툴 주소에 포함된 데이터(경로변수들 params든 상관없이)를 가져옴
+    //만약 state를 쓰고 싶다면 customHook을 만들어 줘야함
+    // 딱 한번만 최초 시점에 누구보다 빠르게 불러오는 처리 담당 (불변)
     const { accountId } = useParams();
 
-    // const { accountId, accountNickname, accountLevel } = useAtomValue(loginUserState);
+    //변경이 가능한 정보를 불러오기, 초기값을 넣어놓은 객체거나 null인 객체가 들어옴 현 상황에서는 null
     const [account, setAccount] = useState(null);
-
-    useEffect(() => {
+    useEffect(() => {//최초의 한번만 불러올 때 useEffect사용
         loadData();
-    }, []);
+    }, []); //연관함수에선 
+            //바깥변수(params.. 등 x)는 불러오지 않음
+            //memo, callback에서 쓰임
+            //가변인 변수들을 감지할 때 사용
 
-    const loadData = useCallback(async () => {
+    const loadData = useCallback(async () => {// 계속 감지하는 함수를 사용할 때 보통 useCallback을 사용
         const { data } = await apiClient.get(`/account/${accountId}`);
         setAccount(data);
     }, [accountId]);
 
-    //주소를 완성해서 반환하는 메모
     const unionAddress = useMemo(() => {
         if (account === null) return "";
         if (account.accountPost === null) return "";
@@ -52,12 +56,27 @@ export default function AdminUsersDetail() {
         toast.error("차단 상태가 변경되었습니다.");
     }, [account, accountId]);
 
+    //로딩중인 화면을 따로 보여줄 때
+    // if(account === null) {
+    //     return (<h1>로딩중인 화면</h1>)
+    // }
+
+    //placeholder를 사용할 때
+
     return (<>
-        <Jumbotron title="회원 상세 정보" />
+        <Jumbotron title={`${account?.accountNickname}님의 개인 정보`} />
 
         <Row className="mt-4">
             <Col sm={3} className="fw-bold text-info">아이디</Col>
-            <Col sm={9} className="text-secondary">{account?.accountId}</Col>
+            <Col sm={9} className="text-secondary">
+                {account === null ? (
+                    <Placeholder as="span" animation="glow">
+                    <Placeholder xs={2}/>
+                </Placeholder>
+                ) : (
+                <span>{account?.accountId}</span>
+                )}
+            </Col>
         </Row>
         <Row className="mt-4">
             <Col sm={3} className="fw-bold text-info">닉네임</Col>
