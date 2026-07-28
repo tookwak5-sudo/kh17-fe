@@ -8,6 +8,7 @@ import { apiClient } from "@utils/reaxios";
 import { loginUserState } from "@utils/storage";
 import { toast } from "react-toastify";
 import { authClient } from "@utils/reaxios";
+import LoadingText from "@templates/LoadingText";
 
 export default function AdminUserDetail() {
 
@@ -32,7 +33,7 @@ export default function AdminUserDetail() {
     }, [accountId]);
 
     const unionAddress = useMemo(() => {
-        if (account === null) return "";
+        if (account === null) return undefined;
         if (account.accountPost === null) return "";
         if (account.accountAddress1 === null) return "";
         if (account.accountAddress2 === null) return "";
@@ -69,63 +70,75 @@ export default function AdminUserDetail() {
         <Row className="mt-4">
             <Col sm={3} className="fw-bold text-info">아이디</Col>
             <Col sm={9} className="text-secondary">
-                {account === null ? (
-                    <Placeholder as="span" animation="glow">
-                    <Placeholder xs={2}/>
-                </Placeholder>
-                ) : (
-                <span>{account?.accountId}</span>
-                )}
+                <LoadingText value={account?.accountId} width={100}/>
             </Col>
         </Row>
         <Row className="mt-4">
             <Col sm={3} className="fw-bold text-info">닉네임</Col>
-            <Col sm={9} className="text-secondary">{account?.accountNickname}</Col>
+            <Col sm={9} className="text-secondary">
+                <LoadingText value={account?.accountNickname} width={120}/>
+            </Col>
         </Row>
         <Row className="mt-4">
             <Col sm={3} className="fw-bold text-info">이메일</Col>
-            <Col sm={9} className="text-secondary">{account?.accountEmail}</Col>
+            <Col sm={9} className="text-secondary">
+                <LoadingText value={account?.accountEmail} width={200}/>
+            </Col>
         </Row>
         <Row className="mt-4">
             <Col sm={3} className="fw-bold text-info">생년월일</Col>
-            <Col sm={9} className="text-secondary">{account?.accountBirth}</Col>
+            <Col sm={9} className="text-secondary">
+                <LoadingText value={account?.accountBirth} width={100}/>
+            </Col>
         </Row>
         <Row className="mt-4">
             <Col sm={3} className="fw-bold text-info">연락처</Col>
-            <Col sm={9} className="text-secondary">{account?.accountContact}</Col>
+            <Col sm={9} className="text-secondary">
+            <LoadingText value={account?.accountContact} width={120}/>
+            </Col>
         </Row>
         <Row className="mt-4">
             <Col sm={3} className="fw-bold text-info">주소</Col>
-            <Col sm={9} className="text-secondary">{unionAddress}
+            <Col sm={9} className="text-secondary">
+                <LoadingText value={unionAddress} width={"100%"}/>
             </Col>
         </Row>
         <Row className="mt-4">
             <Col sm={3} className="fw-bold text-info">등급</Col>
-            <Col sm={9} className="text-secondary">{account?.accountLevel}</Col>
+            <Col sm={9} className="text-secondary">
+                <LoadingText value={account?.accountLevel} width={100}/>
+            </Col>
         </Row>
         <Row className="mt-4">
             <Col sm={3} className="fw-bold text-info">포인트</Col>
-            <Col sm={9} className="text-secondary">{account?.accountPoint?.toLocaleString()}</Col>
+            <Col sm={9} className="text-secondary">
+            <LoadingText value={account?.accountPoint} width={50}/>
+            <span className="ms-2">point</span>
+            </Col>
         </Row>
         <Row className="mt-4">
             <Col sm={3} className="fw-bold text-info">가입일</Col>
-            <Col sm={9} className="text-secondary">{account?.accountJoin}</Col>
+            <Col sm={9} className="text-secondary">
+                 <LoadingText value={account?.accountJoin} width={240}/>
+            </Col>
         </Row>
         <Row className="mt-4">
             <Col sm={3} className="fw-bold text-info">최종로그인</Col>
-            <Col sm={9} className="text-secondary">{account?.accountLogin}</Col>
+            <Col sm={9} className="text-secondary">
+                <LoadingText value={account?.accountLogin} width={240}/>
+            </Col>
         </Row>
         <Row className="mt-4">
             <Col sm={3} className="fw-bold text-info">최종 변경일</Col>
-            <Col sm={9} className="text-secondary">{account?.accountChange}</Col>
-        </Row>
-        <Row className="mt-4">
-            <Col sm={3} className="fw-bold text-info">최종변경일</Col>
-            <Col sm={9} className="text-secondary">{account?.accountChange}</Col>
+            <Col sm={9} className="text-secondary">
+                <LoadingText value={account?.accountChange} width={240}/>
+            </Col>
         </Row>
         <Row className="mt-4">
             <Col sm={3} className="fw-bold text-info">메세지</Col>
-            <Col sm={9} className="text-secondary">{account?.accountMessage}</Col>
+            <Col sm={9} className="text-secondary">
+                <LoadingText value={account?.accountMessage} width="100%" line={3}/>
+            </Col>
         </Row>
         <Row className="mt-4">
             <Col sm={3} className="fw-bold text-info">차단</Col>
