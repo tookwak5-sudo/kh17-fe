@@ -2,7 +2,7 @@ import Jumbotron from "@templates/Jumbotron";
 import { useAtomValue } from "jotai";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button, Col, Placeholder, Row } from "react-bootstrap";
-import { FaLock, FaSquarePen, FaUnlock, FaUserLock } from "react-icons/fa6";
+import { FaLock, FaSpinner, FaSquarePen, FaUnlock, FaUserLock } from "react-icons/fa6";
 import { Link, useParams } from "react-router-dom";
 import { apiClient } from "@utils/reaxios";
 import { loginUserState } from "@utils/storage";
@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import { authClient } from "@utils/reaxios";
 import LoadingText from "@templates/LoadingText";
 import Swal from "sweetalert2";
+import { MdOutlinePassword } from "react-icons/md";
 
 export default function AdminUserDetail() {
 
@@ -65,6 +66,37 @@ export default function AdminUserDetail() {
             toast.success("회원 차단이 해제되었습니다");
         }
     }, [account]);
+
+    // 연속 클릭 방지 빈도 잦으면 ref 적으면 state state를 쓸 수 있으면 state 최대한 사용
+    // const sending = useRef(false); 
+    const [sending, setSending] = useState(false);
+
+    const createTempPassword = useCallback(async ()=>{
+        //확인창
+        const result = await Swal.fire({
+            title: `임시 비밀번호로 변경하시겠습니까?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "확인",
+            cancelButtonText: "취소",
+            confirmButtonColor: "#d63031",
+            cancelButtonColor: "#b2bec3"
+        });
+        if (result.isConfirmed === false) return;
+            
+        if(sending === true) return;
+        setSending(true);
+
+        try{
+            const { data } = await apiClient.post(`/admin/tempPassword/${accountId}`);
+            toast.success("임시 비밀번호가 발송되었습니다");
+        }
+        catch(e) {
+            toast.error("이메일 발송에 실패하였습니다");
+        }
+
+        setSending(false);
+    }, []);
 
     //로딩중인 화면을 따로 보여줄 때
     // if(account === null) {
@@ -156,6 +188,7 @@ export default function AdminUserDetail() {
             </Col>
         </Row>
 
+
         <Row className="mt-4">
             <Col sm={6}>
                 {/* 차단/해제 기능 버튼 : account.accountBlock 상태에 따라 달라짐 */}
@@ -167,7 +200,18 @@ export default function AdminUserDetail() {
                     <FaLock className="w-md-auto" />
                     <span className="ms-2">차단 설정하기</span>
                     </>)}
-                    
+                </Button>
+                
+                {/* 임시 비밀번호 발급 */}
+                <Button variant="warning" className="w-md-auto" onClick={createTempPassword}>
+                    {sending === false && (<>
+                        <MdOutlinePassword />
+                        <span className="ms-2">비밀번호 변경하기</span>
+                    </>)}
+                    {sending === true && (<>
+                        <FaSpinner className="ms-2"/>
+                        <span className="ms-2">변경메일 발송중 ...</span>
+                    </>)}
                 </Button>
             </Col>
         </Row>
