@@ -3,8 +3,9 @@ import { useCallback } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { FaCalendar, FaXmark } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
-import { apiClient } from "../../utils/reaxios";
-import { loginUserState } from "../../utils/storage";
+import { apiClient } from "@utils/reaxios";
+import { loginUserState } from "@utils/storage";
+import { useAtomValue } from "jotai";
 
 export default function AccountNeedUpdate() {
 
@@ -13,7 +14,7 @@ export default function AccountNeedUpdate() {
 
     const navigate = useNavigate();
 
-    //그 로그인 아이를 통해 신호를 보내고
+    //그 로그인 아이디를 통해 신호를 보내고
     const remindMeLater = useCallback(async ()=>{
         const { data } = await apiClient.patch(`/account/remindMeLater/${loginUser.accountId}`);
         navigate("/");
