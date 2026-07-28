@@ -123,12 +123,12 @@ export default function AdminUsers() {
     const sendSearch = useCallback(async e=>{
         e.preventDefault();//기본 form 전송 차단
       
-       // const { data } = await apiClient.post("/account/search", condition);
+       // const { data } = await apiClient.post("/admin/search", condition);
        const copy = {
             //객체에 데이터를 추가할 때 이름을 적지 않으면 해당 변수명과 동일하게 생김
             ...condition, lastAccountId, size
        };
-       const { data } = await apiClient.post("/account/search", copy);
+       const { data } = await apiClient.post("/admin/search", copy);
         setList(data.list);//덮어쓰기
         // setList(prev=>[...prev, ...data.list]);//이어쓰기
         setLast(data.last);
@@ -139,7 +139,7 @@ export default function AdminUsers() {
             //객체에 데이터를 추가할 때 이름을 적지 않으면 해당 변수명과 동일하게 생김
             ...condition, lastAccountId, size
        };
-       const { data } = await apiClient.post("/account/search", copy);
+       const { data } = await apiClient.post("/admin/search", copy);
         // setList(data.list);//덮어쓰기
         setList(prev=>[...prev, ...data.list]);//이어쓰기
         setLast(data.last);
