@@ -192,7 +192,9 @@ export default function AdminUserDetail() {
         <Row className="mt-4">
             <Col sm={6}>
                 {/* 차단/해제 기능 버튼 : account.accountBlock 상태에 따라 달라짐 */}
-                <Button type="button" variant="danger" onClick={block}>
+                <Button variant="danger"
+                        className="w-md-auto mb-2 mb-md-auto me-md-2" 
+                        onClick={block}>
                     {account?.accountBlock === "Y" ? (<>
                     <FaUnlock className="w-md-auto" />
                     <span className="ms-2">차단 해제하기</span>

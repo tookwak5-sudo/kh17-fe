@@ -28,20 +28,21 @@ import AccountPassword from "@components/account/AccountPassword";
 import AccountChange from "@components/account/AccountChange";
 import AccountLogin from "@components/account/AccountLogin";
 import AccountNeedUpdate from "@components/account/AccountNeedUpdate";
-import AccountBlock from "@components/account/AccountBlock";
-import MyPage from "@components/account/MyPage";
 
+import MyPage from "@components/account/MyPage";
 
 import AdminUsers from "@components/admin/AdminUsers";
 import AdminUsersScroll from "@components/admin/AdminUsersScroll";
 import AdminUserDetail from "@components/admin/AdminUserDetail";
 
 import NotFound from "@error/NotFound";
+
 import TestMain from "@components/session/TestMain";
 
 // Guard
 import Private from "@guard/Private";
 import Admin from "@guard/Admin";
+import AccountBlock from "@error/AccountBlock";
 
 export default function Body() {
 
@@ -76,7 +77,6 @@ export default function Body() {
         <Route path="/account/joinSuccess" element={<AccountJoinSuccess/>}/>
         <Route path="/account/joinFail" element={<AccountJoinFail/>}/>
         <Route path="/account/login" element={<AccountLogin/>}/>
-        <Route path="/account/block" element={<AccountBlock/>}/>
         {/* private -> 비회원을 방지하는 요소 */}
         <Route path="/account/mypage" element={<Private><MyPage/></Private>}/>
         <Route path="/account/password" element={<Private><AccountPassword/></Private>}/>
@@ -91,6 +91,8 @@ export default function Body() {
         {/* 세션테스트 */}
         <Route path="/session/test" element={<TestMain/>}/>
 
+        {/* error */}
+        <Route path="/account/block" element={<AccountBlock/>}/>
         {/* fallback route */}
         <Route path="*" element={<NotFound/>}/>
     </Routes>
