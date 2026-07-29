@@ -37,9 +37,23 @@ export default function AdminSaleAdd() {
 
         //파일 선택창은 비어있는 value밖에 줄 수 없어서 리엑트에서 모든 상황을 제어할 수 없다( hTML 확인)
         //태그를 직접 제어하는 방향으로 우회 처리한다 (ref 사용)
-            thumbnailRef.current.value = "";
+        thumbnailRef.current.value = "";
 
     }, [thumbnail]);
+
+    //상세이미지 관련 도구들
+    const [detailImages, setDetailImages] = useState([]);
+    const detailImagesRef = useRef();
+    const changeDetailImages = useCallback(e=>{
+        setDetailImages(e.target.files);
+    }, []);
+    const clearDetailImages = useCallback(e=>{
+        setDetailImages([]);
+    }, []);
+    useEffect(()=>{
+        if(detailImages.length > 0) return; //이미지 있으면 Pass!
+        detailImagesRef.current.vaule = "";
+    }, [detailImages]);
 
     //callback
     const changeStringValue = useCallback((e) => {
@@ -103,11 +117,30 @@ export default function AdminSaleAdd() {
                 [ JSON.stringify(copy) ], //JSON : 어떤 문자를 json문자열로 바꾸는 객체
                 { type : "application/json" }
             )); //데이터 추가
+
             form.append("thumbnail", thumbnail); // 썸네일 추가
+
+            // 같은 종류의 데이터가 여러개일 경우 같은 이름으로 계속 첨부 (배열 한번에 첨부하는게 아님) + Spring에서는 List로 추출
+            // → FileList는 상황에 따라 배열 전용명령이 없을 수 있으므로 정상적인 배열로 ㅕㄶ환하여 쓰십시요!
+            // → Arry.from(FileList)
+            // Array.from(detailImages)
+            [...detailImages].forEach(img=>{
+                form.append("detailImages", img);
+            })
 
             const { data } = await apiClient.post("/sale/", form);
 
             toast.success("상품 등록이 완료되었습니다");
+
+            //데이터 초기화
+            setSale({
+                saleName : "",
+                saleCategory : "",
+                saleOriginalPrice : "",
+                saleDiscountPrice : "",
+                saleContent : "",
+                saleStock : ""
+            });
 
             setSale({
                 saleName: "",
@@ -118,7 +151,7 @@ export default function AdminSaleAdd() {
                 saleStock: ""
             });
 
-    }, [sale, discount, thumbnail]);
+    }, [sale, discount, thumbnail, detailImages]);
 
     //할인을 해제하면 할인가를 삭제
     useEffect(() => {
@@ -237,6 +270,24 @@ export default function AdminSaleAdd() {
                 </div>
             </Col>
         </Row>
+        
+        {/* 상세이미지 */}
+        <Row className="mt-4">
+            <Form.Label column sm={3}>상세이미지</Form.Label>
+            <Col sm={9}>
+                <div className="d-flex">
+                <Form.Control type="file" accept="image/*" multiple 
+                    ref={detailImagesRef} 
+                    onInput={changeDetailImages}/>
+                    {detailImages.length > 0 && (
+                    <Button variant="danger" onClick={clearDetailImages} className="ms-2">
+                        <FaXmark/>
+                    </Button>
+                    )}
+                </div>
+            </Col>
+        </Row>
+
         <Row className="mt-2">
             <Col>
                     {/* fallback 이미지를 준비해놨다! */}
