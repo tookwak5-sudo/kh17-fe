@@ -77,18 +77,31 @@ export default function AdminSaleAdd() {
             //그런데 Form이 없네? 그럼 따로 만들어 주기 (FormData)
             //-<form>대신 FormData를 쓰고, <input> 대신 append를 이용해서 key=value를 추가
             //-copy를 FormData로 변환한 뒤 전송하면 파일도 이곳에 첨부가 가능하다
-            const form = new FormData();
-            form.append("saleName", copy.saleName);
-            form.append("saleCategory", copy.saleCategory);
-            form.append("saleOriginalPrice", copy.saleOriginalPrice);
-            if(discount){
-                form.append("saleDiscountPrice", copy.saleDiscountPrice);
-            }
-            form.append("saleStock", copy.saleStock);
-            form.append("saleContent", copy.saleContent);
             
-            //썸네일을 form에 추가 (데이터와 파일을 같은 레벨로 처리)
-            form.append("thumbnail", thumbnail);
+            //[1] 낱개 데이터와 파일을 같은 레벨로 담아서 전송 → Spring에서 @ModelAttribute로 이름을 맞춰서 수신
+            //[2] 덩어리 데이터 따로, 파일 따로 담아서 전송 → Spring에서 @RequestPart로 수신
+
+            //[1] 6+1개의 데이터
+            // const form = new FormData();
+            // form.append("saleName", copy.saleName);
+            // form.append("saleCategory", copy.saleCategory);
+            // form.append("saleOriginalPrice", copy.saleOriginalPrice);
+            // if(discount){
+            //     form.append("saleDiscountPrice", copy.saleDiscountPrice);
+            // }
+            // form.append("saleStock", copy.saleStock);
+            // form.append("saleContent", copy.saleContent);
+            
+            // //썸네일을 form에 추가 (데이터와 파일을 같은 레벨로 처리)
+            // form.append("thumbnail", thumbnail);
+
+            // [2] 2개의 파트 데이터를 전송
+            const form = new FormData();
+            form.append("sale", new Blob(
+                [ JSON.stringify(copy) ], //JSON : 어떤 문자를 json문자열로 바꾸는 객체
+                { type : "application/json" }
+            )); //데이터 추가
+            form.append("thumbnail", thumbnail); // 썸네일 추가
 
             const { data } = await apiClient.post("/sale/", form);
 
