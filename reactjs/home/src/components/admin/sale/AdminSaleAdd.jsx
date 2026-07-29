@@ -4,6 +4,8 @@ import { Button, Col, Form, Row } from "react-bootstrap";
 import { FaPlus, FaXmark } from "react-icons/fa6";
 import { toast } from "react-toastify";
 import { apiClient } from "@utils/reaxios";
+import Editor from "react-simple-wysiwyg";
+import NoImage from "@assets/images/no-image.png";
 
 export default function AdminSaleAdd() {
     //state
@@ -125,6 +127,27 @@ export default function AdminSaleAdd() {
         }
     }, [discount]);
 
+    //미리보기에 넣을 src 데이터
+    const [previewSrc, setPreviewSrc] = useState(null);
+    //썸네일이 변경되면 미리보기를 갱신 (createObjectURL + revokeObjectURL)
+    useEffect(()=>{
+        //이미지 생성
+        if(thumbnail === null) { //이미지가 없으면
+            setPreviewSrc(null); // 미리보기도 없음
+            return;
+        }
+
+        //이미지 주소를 생성
+        const previewUrl = URL.createObjectURL(thumbnail);
+        setPreviewSrc(previewUrl);
+        //클린업 함수
+        return ()=>{ //effect에서 정리할 게 있을 때, 클린업 함수를 사용
+            //생성된 미리보기 주소 제거
+            URL.revokeObjectURL(previewUrl);
+        };
+    }, [thumbnail]);
+
+
     //view
     return (<>
         <Jumbotron title="상품 등록" content="상품 등록을 위한 정보를 입력하세요" />
@@ -179,11 +202,25 @@ export default function AdminSaleAdd() {
         </Row>
 
         <Row className="mt-4">
-            <Form.Label column sm={3}>상세설명</Form.Label>
+            {/* 부트스트랩에서 제공해주는 방식 */}
             <Col sm={9}>
+            {/* <Form.Label column sm={3}>상세설명</Form.Label>
                 <Form.Control as="textarea" rows={6}
                     name="saleContent" value={sale.saleContent}
                     onChange={changeStringValue} placeholder="상품에 대한 설명 작성" />
+             */}
+
+            {/* editor를 사용한 방식 */}
+            <Editor name="saleContent" value={sale.saleContent} 
+                    onChange={changeStringValue}
+                    containerProps={
+                        { 
+                            style : {
+                            resize : "none", //or vertical
+                            minHeight : 250 
+                            } 
+                        } 
+                    }/>
             </Col>
         </Row>
 
@@ -200,8 +237,14 @@ export default function AdminSaleAdd() {
                 </div>
             </Col>
         </Row>
-
-        <Row className="mt-4">
+        <Row className="mt-2">
+            <Col>
+                    {/* fallback 이미지를 준비해놨다! */}
+                <img src={previewSrc ?? NoImage} width={100} height={100}/>
+                {/* <img src="/images/no-image.png" width={100} height={100}/>             */}
+            </Col>
+        </Row>
+        <Row className="mt-5">
             <Col>
                 <Button variant="success" size="lg" className="w-md-auto"
                     onClick={sendData}>
