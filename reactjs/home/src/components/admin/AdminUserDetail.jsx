@@ -7,7 +7,6 @@ import { Link, useParams } from "react-router-dom";
 import { apiClient } from "@utils/reaxios";
 import { loginUserState } from "@utils/storage";
 import { toast } from "react-toastify";
-import { authClient } from "@utils/reaxios";
 import LoadingText from "@templates/LoadingText";
 import Swal from "sweetalert2";
 import { MdOutlinePassword } from "react-icons/md";
