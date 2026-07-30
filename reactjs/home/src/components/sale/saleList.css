@@ -1,0 +1,35 @@
+/* 기준이 될 수 있는 컨테이너 지정 */
+.item-container {
+    /* 영역에 의해서 사이즈가 지정되게 하겠다 */
+    container-type: inline-size; 
+    container-name: item;
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.item-container > .item {
+    width: 100%;
+}
+/* 컨테이너별 크기지정 */
+
+/* bootstramp small breakPoint */
+@container item (min-width: 576px){
+    .item-container > .item {
+        width: 50%;
+    }   
+}
+
+/* bootstrap medium breakPoint */
+@container item (min-width: 768px){
+    .item-container > .item {
+        width: 33.3333%;
+    }   
+}
+
+/* bootstrap large breakPoint */
+@container item (min-width: 992px){
+    .item-container > .item {
+        width: 25%;
+    }   
+}

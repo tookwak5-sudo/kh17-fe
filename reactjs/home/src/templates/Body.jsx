@@ -39,6 +39,9 @@ import NotFound from "@error/NotFound";
 
 import AdminSaleAdd from "@components/admin/sale/AdminSaleAdd";
 
+import SaleList from "@components/sale/SaleList";
+import SaleDetail from "@components/sale/SaleDetail";
+
 import TestMain from "@components/session/TestMain";
 
 // Guard
@@ -85,6 +88,9 @@ export default function Body() {
         <Route path="/account/change" element={<Private><AccountChange/></Private>}/>
         <Route path="/account/needUpdate" element={<Private><AccountNeedUpdate/></Private>}/>
         
+        {/* 상품 */}
+        <Route path="/sale/list" element={<SaleList/>}/>
+        <Route path="/sale/detail/:saleNo" element={<SaleDetail/>}/>
         {/* 관리자 */}
         <Route path="/admin/users" element={<Admin><AdminUsers/></Admin>}/>
         <Route path="/admin/users2" element={<Admin><AdminUsersScroll/></Admin>}/>
