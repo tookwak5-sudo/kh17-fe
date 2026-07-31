@@ -52,7 +52,7 @@ export default function AdminSaleAdd() {
     }, []);
     useEffect(()=>{
         if(detailImages.length > 0) return; //이미지 있으면 Pass!
-        detailImagesRef.current.vaule = "";
+        detailImagesRef.current.value = "";
     }, [detailImages]);
 
     //callback
