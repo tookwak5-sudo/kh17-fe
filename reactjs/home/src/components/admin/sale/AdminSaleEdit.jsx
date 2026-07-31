@@ -31,7 +31,9 @@ export default function AdminSaleEdit() {
     const navigate = useNavigate();
 
     const loadData = useCallback(async () => {
-        const { data } = await apiClient.get(`/sale/${saleNo}`);
+        const { data } = await apiClient.get(`/sale/${saleNo}`, {
+            params: {_t:Date.now()}
+        });
         const { saleDto, thumbnail, details } = data;
         setSale(saleDto);
         setBeforeThumbnail(thumbnail);
@@ -44,7 +46,7 @@ export default function AdminSaleEdit() {
     }, []);
 
     //할인 여부 선택 체크박스
-    const [discount, setDiscount] = useState();
+    const [discount, setDiscount] = useState(false);
 
     //callback
     const changeStringValue = useCallback((e) => {
@@ -88,29 +90,6 @@ export default function AdminSaleEdit() {
             setSale(prev => ({ ...prev, saleDiscountPrice: "" }))
         }
     }, [discount]);
-
-    //수정 정보 전송 함수
-    const sendData = useCallback(async () => {
-        //- 할인 여부에 따른 데이터 제거 처리
-        const { saleDiscountPrice, ...copy } = sale;
-        if (discount) copy.saleDiscountPrice = saleDiscountPrice;
-
-        const form = new FormData();
-
-        //[1] 상품 기본 정보
-        form.append("sale", new Blob(
-            [JSON.stringify(copy)],
-            { type: "application/json" }
-        ));
-        //[2] 썸네일은 즉시 변경되게 구현된 상황(변경가능)
-        //[3] 상세이미지는 추가되는 항목들만 전송하여 저장처리
-        Array.from(detailImages).forEach(img=>{
-            form.append("detailImages", img);
-        });
-
-        const { data } = await apiClient.put(`/sale/${saleNo}`, form);
-        console.log(data);
-    }, [sale, discount]);
 
     //썸네일(대표이미지) 관련기능
     const [thumbnail, setThumbnail] = useState(null); //파일
@@ -159,18 +138,19 @@ export default function AdminSaleEdit() {
 
     //상세이미지 제거
     const deleteDetailImage = useCallback(async (attach) => {
-        //확인창
-        const result = await Swal.fire({
-            title: "정말 상품 상세 이미지를 삭제하시겠습니까?",
-            text: "삭제한 이미지는 다시 복구할 수 없습니다",
-            icon: "warning",
-            confirmButtonText: "삭제",
-            cancelButtonText: "취소",
-            confirmButtonColor: "#d63031",
-            cancelButtonColor: "#b2bec3",
-            showCancelButton: true
-        });
-        if (result.isConfirmed === false) return;
+        // //확인창
+        // const result = await Swal.fire({
+        //     title: "정말 상품 상세 이미지를 삭제하시겠습니까?",
+        //     text: "삭제한 이미지는 다시 복구할 수 없습니다",
+        //     icon: "warning",
+        //     confirmButtonText: "삭제",
+        //     cancelButtonText: "취소",
+        //     confirmButtonColor: "#d63031",
+        //     cancelButtonColor: "#b2bec3",
+        //     showCancelButton: true
+        // });
+        // if (result.isConfirmed === false) return;
+
         //apiClient를 이용한 삭제요청
         await apiClient.delete(`/sale/detailImage/sale/${saleNo}/attach/${attach.attachNo}`)
 
@@ -195,6 +175,32 @@ export default function AdminSaleEdit() {
             detailImagesRef.current.value = "";
         }
     }, [detailImages]);
+
+     //수정 정보 전송 함수
+    const sendData = useCallback(async () => {
+        //- 할인 여부에 따른 데이터 제거 처리
+        const { saleDiscountPrice, ...copy } = sale;
+        if (discount) copy.saleDiscountPrice = saleDiscountPrice;
+
+        const form = new FormData();
+
+        //[1] 상품 기본 정보
+        form.append("sale", new Blob(
+            [JSON.stringify(copy)],
+            { type: "application/json" }
+        ));
+        //[2] 썸네일은 즉시 변경되게 구현된 상황(변경가능)
+        //[3] 상세이미지는 추가되는 항목들만 전송하여 저장처리
+        Array.from(detailImages).forEach(img=>{
+            form.append("detailImages", img);
+        });
+
+        const { data } = await apiClient.put(`/sale/${saleNo}`, form);
+        toast.success("상품 정보 수정이 완료되었습니다");
+        //navigate(`/sale/detail/${saleNo}`); //상세로 이동
+        await loadData();//냅둘경우
+    }, [sale, discount, detailImages]);
+
 
     //sale은 절대로 null이면 안된다
     //→ sale이 null이면 기다려야 한다
