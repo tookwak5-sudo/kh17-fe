@@ -38,6 +38,7 @@ import AdminUserDetail from "@components/admin/AdminUserDetail";
 import NotFound from "@error/NotFound";
 
 import AdminSaleAdd from "@components/admin/sale/AdminSaleAdd";
+import AdminSaleEdit from "@components/admin/sale/AdminSaleEdit";
 
 import SaleList from "@components/sale/SaleList";
 import SaleDetail from "@components/sale/SaleDetail";
@@ -48,6 +49,7 @@ import TestMain from "@components/session/TestMain";
 import Private from "@guard/Private";
 import Admin from "@guard/Admin";
 import AccountBlock from "@error/AccountBlock";
+
 
 export default function Body() {
 
@@ -96,6 +98,7 @@ export default function Body() {
         <Route path="/admin/users2" element={<Admin><AdminUsersScroll/></Admin>}/>
         <Route path="/admin/detail/:accountId" element={<Admin><AdminUserDetail/></Admin>}/>
         <Route path="/admin/saleAdd" element={<Admin><AdminSaleAdd/></Admin>}/>
+        <Route path="/admin/saleEdit/:saleNo" element={<Admin><AdminSaleEdit/></Admin>}/>
         
         {/* 세션테스트 */}
         <Route path="/session/test" element={<TestMain/>}/>
