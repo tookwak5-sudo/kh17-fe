@@ -34,8 +34,8 @@ export default function SaleDetail() {
     //썸네일 주소 계산
     const thumbnailUrl = useMemo(()=>{
         if(thumbnail === null) return NoImage;
-        return `${import.meta.env.VITE_SERVER_URL}/api/attatch/${thumbnail.attachNo}`;
-    })
+        return `${import.meta.env.VITE_SERVER_URL}/api/attach/${thumbnail.attachNo}`;
+    },[thumbnail])
 
     //관리자 권한 확인
     const isAdmin = useAtomValue(isAdminState)
@@ -69,7 +69,7 @@ export default function SaleDetail() {
         <Row className="mt-5">
             {/* 썸네일 영역 */}
             <Col sm={6}>
-                <img src={NoImage} width={"100%"}/>
+                <img src={thumbnailUrl} width={"100%"}/>
             </Col>
             {/* 상품정보 영역 */}
             <Col sm={6}>
