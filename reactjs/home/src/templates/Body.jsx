@@ -56,6 +56,11 @@ import KakaopayBuySuccessVersion1 from "@components/pay/v1/KakaopayBuySuccessVer
 import KakaopayBuyCancelVersion1 from "@components/pay/v1/KakaopayBuyCancelVersion1";
 import KakaopayBuyFailVersion1 from "@components/pay/v1/KakaopayBuyFailVersion1";
 
+import KakaopayBuyVersion2 from "@components/pay/v2/KakaopayBuyVersion2";
+import KakaopayBuySuccessVersion2 from "@components/pay/v2/KakaopayBuySuccessVersion2";
+import KakaopayBuyCancelVersion2 from "@components/pay/v2/KakaopayBuyCancelVersion2";
+import KakaopayBuyFailVersion2 from "@components/pay/v2/KakaopayBuyFailVersion2";
+
 export default function Body() {
 
     return(
@@ -111,6 +116,13 @@ export default function Body() {
         {/* 결제 관련 */}
         <Route path="/pay/v1/buy" element={<KakaopayBuyVersion1/>}/>
         <Route path="/pay/v1/buy/success" element={<KakaopayBuySuccessVersion1/>}/>
+        <Route path="/pay/v1/buy/cancel" element={<KakaopayBuyCancelVersion1/>}/>
+        <Route path="/pay/v1/buy/fail" element={<KakaopayBuyFailVersion1/>}/>
+
+        <Route path="/pay/v2/buy" element={<Private><KakaopayBuyVersion2/></Private>}/>
+        <Route path="/pay/v2/buy/success" element={<Private><KakaopayBuySuccessVersion2/></Private>}/>
+        <Route path="/pay/v2/buy/cancel" element={<Private><KakaopayBuyCancelVersion2/></Private>}/>
+        <Route path="/pay/v2/buy/fail" element={<Private><KakaopayBuyFailVersion2/></Private>}/>
 
         {/* error */}
         <Route path="/account/block" element={<AccountBlock/>}/>
