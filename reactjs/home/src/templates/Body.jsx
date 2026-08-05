@@ -53,7 +53,8 @@ import AccountBlock from "@error/AccountBlock";
 // kakao
 import KakaopayBuyVersion1 from "@components/pay/v1/KakaopayBuyVersion1";
 import KakaopayBuySuccessVersion1 from "@components/pay/v1/KakaopayBuySuccessVersion1";
-
+import KakaopayBuyCancelVersion1 from "@components/pay/v1/KakaopayBuyCancelVersion1";
+import KakaopayBuyFailVersion1 from "@components/pay/v1/KakaopayBuyFailVersion1";
 
 export default function Body() {
 
