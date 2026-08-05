@@ -62,6 +62,15 @@ export default function SaleDetail() {
         navigate(`/pay/v2/buy?sale=${saleNo}:${quantity}`);
     }, [saleNo, quantity]);
 
+    const numbers = useCallback((e)=>{
+        const number =parseInt(e.target.value) || 1;
+        setQuantity(number);   
+    }, []);
+
+    const totalPrice = useMemo(()=>{
+
+    }, [sale, quantity]);
+
     //sale은 절대로 null이면 안된다
     //→ sale이 null이면 기다려야 한다
     if(sale === null) {
@@ -99,7 +108,7 @@ export default function SaleDetail() {
                     </b>
                 </div>
                 )}
-
+               
                 {/* 구매수량 선택 및 구매or장바구니 버튼 */}
                 <div className="mt-4">
                     현재 <b>{sale.saleStock.toLocaleString()}</b>개 남음
@@ -107,12 +116,12 @@ export default function SaleDetail() {
                 <div className="mt-2 d-flex">
                     <Form.Control type="number" className="d-inline-block"
                         style={{width:80}} value={quantity}
-                        onChange={e=>{
-                            const number =parseInt(e.target.value) || 1;
-                            setQuantity(number);
-                        }}/>
+                        onChange={numbers}/>
                         <Button variant="success" className="ms-2" onClick={purchase}>구매</Button>
                         <Button variant="secondary" className="ms-2">담기</Button>
+                </div>
+
+                 <div>
                 </div>
             </Col>
         </Row>
