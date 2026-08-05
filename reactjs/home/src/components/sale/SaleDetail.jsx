@@ -19,6 +19,8 @@ export default function SaleDetail() {
     const [sale, setSale] = useState(null);
     const [thumbnail, setThumbnail] = useState(null);
     const [detailImages, setDetailImages] = useState([]);
+    const [quantity, setQuantity] = useState(1);
+
     const navigate = useNavigate();
     const loadData = useCallback(async ()=>{
         const { data } = await apiClient.get(`/sale/${saleNo}`);
@@ -55,13 +57,16 @@ export default function SaleDetail() {
         navigate("sale/list");
     }, []);
 
+    //구매 확인 페이지로 주소를 잘 만들어서 전달
+    const purchase = useCallback(()=>{
+        navigate(`/pay/v2/buy?sale=${saleNo}:${quantity}`);
+    }, [saleNo, quantity]);
 
     //sale은 절대로 null이면 안된다
     //→ sale이 null이면 기다려야 한다
     if(sale === null) {
         return <h1>기다려</h1>
     }
-
    
     return (<>
         <Jumbotron title="상품 상세" />
@@ -101,8 +106,12 @@ export default function SaleDetail() {
                 </div>
                 <div className="mt-2 d-flex">
                     <Form.Control type="number" className="d-inline-block"
-                        style={{width:80}} value={1}/>
-                        <Button variant="success" className="ms-2">구매</Button>
+                        style={{width:80}} value={quantity}
+                        onChange={e=>{
+                            const number =parseInt(e.target.value) || 1;
+                            setQuantity(number);
+                        }}/>
+                        <Button variant="success" className="ms-2" onClick={purchase}>구매</Button>
                         <Button variant="secondary" className="ms-2">담기</Button>
                 </div>
             </Col>
