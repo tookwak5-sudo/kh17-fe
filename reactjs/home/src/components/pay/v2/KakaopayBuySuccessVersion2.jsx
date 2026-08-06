@@ -5,10 +5,10 @@ import { Link, useParams } from "react-router-dom";
 import { Badge, Button, Col, ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import { ClockLoader } from "react-spinners";
 import NoImage from "@assets/images/no-image.png";
+import { FaArrowRight } from "react-icons/fa6";
 
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
-import { FaArrowRight } from "react-icons/fa6";
 dayjs.locale("ko"); //한국어로 설정
 
 //경로변수인 purchaseNO를 받아서 서버에 재조회를 요청한 뒤 나오는 정보를 출력
@@ -23,15 +23,13 @@ export default function KakaopayBuySuccessVersion2() {
     }, []);
 
     const loadData = useCallback(async ()=>{
-        const { data } = await apiClient.get(`/purchase/${purchaseNo}`);
+        const { data } = await apiClient.get(`/purchase/simple/${purchaseNo}`);
         console.log(data); //purchase, sales 필드가 존재
         setPurchase(data.purchase);
         setSales(data.sales);
     }, []);
     
     const waiting = useMemo(()=>{
-        console.log("purchase =", purchase);
-        console.log("sales =", sales);
         if(purchase === null) return true;
         if(sales === null) return true;
 
@@ -91,7 +89,6 @@ export default function KakaopayBuySuccessVersion2() {
                     {sales.map(sale=>(
                     <ListGroupItem key={sale.saleNo} className="p-4">
                         <div className="d-flex">
-                            
                             <img src={
                                 sale.attachNo !==null ?
                                 `${import.meta.env.VITE_SERVER_URL}/api/attach/${sale.attachNo}`
@@ -120,7 +117,7 @@ export default function KakaopayBuySuccessVersion2() {
         <Row className="mt-5">
             <Col className="text-end">
                     <Button variant="success" size="lg"
-                        as={Link} to={`/pay/v2/detail/${purchase.purchaseNo}`}>
+                        as={Link} to={`/pay/v2/buy/detail/${purchase.purchaseNo}`}>
                         <span>결제 상세 내역 보러가기</span>
                         <FaArrowRight className="ms-2"/>
                     </Button>
