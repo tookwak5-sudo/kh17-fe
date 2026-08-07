@@ -1,18 +1,24 @@
 import Jumbotron from "@templates/Jumbotron";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Badge, Button, Card, Col, Form, Row } from "react-bootstrap";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { apiClient } from "@utils/reaxios";
-import { isAdminState } from "@utils/storage";
+import Row from "react-bootstrap/esm/Row";
+import Col from "react-bootstrap/esm/Col";
+import Form from "react-bootstrap/esm/Form";
+
 import NoImage from "@assets/images/no-image.png";
+import Badge from "react-bootstrap/esm/Badge";
+import Button from "react-bootstrap/esm/Button";
 import { purifyHtml } from "@utils/purify";
-import { FaSquarePen, FaTrash, FaXmark } from "react-icons/fa6";
 import { useAtomValue } from "jotai";
+import { isAdminState } from "@utils/storage";
+import { FaSquarePen, FaTrash } from "react-icons/fa6";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import { isLoginState } from "@utils/storage";
 
 export default function SaleDetail() {
-    //파라미터 처리
+    //parameter
     const { saleNo } = useParams();
 
     //state
@@ -21,7 +27,6 @@ export default function SaleDetail() {
     const [detailImages, setDetailImages] = useState([]);
     const [quantity, setQuantity] = useState(1);
 
-    const navigate = useNavigate();
     const loadData = useCallback(async ()=>{
         const { data } = await apiClient.get(`/sale/${saleNo}`);
         const { saleDto, thumbnail, details } = data;
@@ -37,49 +42,110 @@ export default function SaleDetail() {
     const thumbnailUrl = useMemo(()=>{
         if(thumbnail === null) return NoImage;
         return `${import.meta.env.VITE_SERVER_URL}/api/attach/${thumbnail.attachNo}`;
-    },[thumbnail])
+    }, [thumbnail]);
 
-    //관리자 권한 확인
-    const isAdmin = useAtomValue(isAdminState)
     
+    //관리자 권한 확인
+    const isAdmin = useAtomValue(isAdminState);
+    const navigate = useNavigate();
+
     const deleteByAdmin = useCallback(async ()=>{
+        //확인창
         const result = await Swal.fire({
-            title: "정말 상품 정보를 삭제하시겠습니까?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonText: "확인",
-            cancelButtonText:"취소"
+            title:`정말 상품 정보를 삭제하시겠습니까?`,
+            icon:"warning",
+            showCancelButton:true,
+            confirmButtonText:"확인",
+            cancelButtonText:"취소",
+            confirmButtonColor:"#d63031",
+            cancelButtonColor:"#b2bec3"
         });
         if(result.isConfirmed === false) return;//취소
-        //삭제요청
-        const { data } = await apiClient.delete(`sale/${saleNo}`);
+
+        //삭제 요청
+        const { data } = await apiClient.delete(`/sale/${saleNo}`);
+        //console.log(data);
+
         toast.success("상품 삭제 완료");
-        navigate("sale/list");
+        navigate("/sale/list");
     }, []);
 
+    const isLogin = useAtomValue(isLoginState);//로그인 상태
+
     //구매 확인 페이지로 주소를 잘 만들어서 전달
-    const purchase = useCallback(()=>{
+    const purchase = useCallback(async ()=>{
+        if(!isLogin) {
+            const result = await Swal.fire({
+                title:"로그인이 필요한 서비스입니다",
+                text:"확인을 누르시면 로그인 페이지로 이동합니다",
+                icon:"info",
+                showCancelButton:true,
+                confirmButtonText:"확인",
+                cancelButtonText:"취소",
+                confirmButtonColor:"#0984e3",
+                cancelButtonColor:"#b2bec3",
+            });
+    
+            if(result.isConfirmed) {//확인을 눌렀다면
+                navigate("/account/login");
+            }
+            return;
+        }
+
         navigate(`/pay/v2/buy?sale=${saleNo}:${quantity}`);
     }, [saleNo, quantity]);
 
-    const numbers = useCallback((e)=>{
-        const number =parseInt(e.target.value) || 1;
-        setQuantity(number);   
-    }, []);
+    //장바구니 담기
+    const addCart = useCallback(async ()=>{
+        if(!isLogin) {
+            const result = await Swal.fire({
+                title:"로그인이 필요한 서비스입니다",
+                text:"확인을 누르시면 로그인 페이지로 이동합니다",
+                icon:"info",
+                showCancelButton:true,
+                confirmButtonText:"확인",
+                cancelButtonText:"취소",
+                confirmButtonColor:"#0984e3",
+                cancelButtonColor:"#b2bec3",
+            });
+    
+            if(result.isConfirmed) {//확인을 눌렀다면
+                navigate("/account/login");
+            }
+            return;
+        }
 
-    const totalPrice = useMemo(()=>{
+        const { data } = await apiClient.post("/cart/", {
+            item : saleNo,//상품번호
+            qty : quantity//구매수량
+        });
+        console.log(data);
 
-    }, [sale, quantity]);
+        //장바구니에 담겼다는 알림 + 이동할것인지 확인
+        const result = await Swal.fire({
+            title:"상품이 장바구니에 담겼습니다",
+            icon:"success",
+            showCancelButton:true,
+            confirmButtonText:"장바구니로 이동",
+            cancelButtonText:"계속 쇼핑",
+            confirmButtonColor:"#00b894",
+            cancelButtonColor:"#dfe6e9"
+        });
+
+        if(result.isConfirmed) {//확인을 눌렀다면
+            navigate("/account/cart");
+        }
+    }, [quantity]);
 
     //sale은 절대로 null이면 안된다
     //→ sale이 null이면 기다려야 한다
     if(sale === null) {
-        return <h1>기다려</h1>
+        return <h1>로딩중...</h1>
     }
-   
-    return (<>
-        <Jumbotron title="상품 상세" />
 
+    return (<>
+        <Jumbotron title="상품 상세 정보" content="상품에 대한 상세정보입니다"/>
+        
         <Row className="mt-5">
             {/* 썸네일 영역 */}
             <Col sm={6}>
@@ -88,93 +154,93 @@ export default function SaleDetail() {
             {/* 상품정보 영역 */}
             <Col sm={6}>
                 <h4>{sale.saleName}</h4>
-                <div>
+                <div className="mb-4">
                     <Badge bg="info">{sale.saleCategory}</Badge>
                 </div>
-                {/* 할인 x */}
+                {/* 할인이 없는 경우 */}
                 { sale.saleOriginalPrice === sale.saleDiscountPrice && (
                 <div>
-                    <s className="text-info fs-4">{sale.saleOriginalPrice.toLocaleString()}원</s>
+                    <b className="text-info fs-4">{sale.saleOriginalPrice.toLocaleString()}원</b>
                 </div>
-                )}
-                {/* 할인 o */}
+                ) }
+                {/* 할인이 있는 경우 */}
                 { sale.saleOriginalPrice > sale.saleDiscountPrice && (
                 <div>
-                    <s className="text-muted">{sale.saleOriginalPrice.toLocaleString()}</s>
-                    <b className="text-danger">00%</b>
+                    <s className="text-muted">{sale.saleOriginalPrice.toLocaleString()}원</s>
+                    <b className="text-danger ms-2">00%</b>
                     <br/>
                     <b className="text-danger fs-4">
                         {sale.saleDiscountPrice.toLocaleString()}원
                     </b>
                 </div>
-                )}
-               
-                {/* 구매수량 선택 및 구매or장바구니 버튼 */}
+                ) }
+
+                {/* 구매수량 선택 및 구매or장바구니버튼 */}
                 <div className="mt-4">
                     현재 <b>{sale.saleStock.toLocaleString()}</b>개 남음
                 </div>
                 <div className="mt-2 d-flex">
-                    <Form.Control type="number" className="d-inline-block"
-                        style={{width:80}} value={quantity}
-                        onChange={numbers}/>
-                        <Button variant="success" className="ms-2" onClick={purchase}>구매</Button>
-                        <Button variant="secondary" className="ms-2">담기</Button>
-                </div>
-
-                 <div>
+                    {/* 수량 선택창과 구매버튼 */}
+                    <Form.Control type="number" className="d-inline-block" 
+                            style={{width:80}} value={quantity}
+                            onChange={e=>{
+                                const number = parseInt(e.target.value) || 1;
+                                setQuantity(number);
+                            }}/>
+                    <Button variant="success" className="ms-2" onClick={purchase}>구매</Button>
+                    <Button variant="secondary" className="ms-2" onClick={addCart}>담기</Button>
                 </div>
             </Col>
         </Row>
 
-        {/* 상세 이미지 */}
-        {detailImages.length > 0 && (
+        {/* 상세 이미지들 출력 */}
+        { detailImages.length > 0 && (
         <Row className="mt-5">
             <Col>
                 {detailImages.map(detail=>{
-                   const url = `${import.meta.env.VITE_SERVER_URL}/api/attach/${detail.attachNo}`;
-                   return(
+                    const url = `${import.meta.env.VITE_SERVER_URL}/api/attach/${detail.attachNo}`;
+                    return (
                         <img key={detail.attachNo} src={url} width={"100%"}/>
-                        // <img key={url} src={url} width={"100%"}/>//url써도 무방
                     )
                 })}
             </Col>
         </Row>
-        )}
+        ) } 
 
         {/* 추가 상세정보 출력 */}
         <Row className="mt-5">
             <Col>
                 {/* 
-                    모던 웹에서는 HTML 렌더링을 극도로 경계하며
+                    모던 웹에서는 HTML 렌더링을 극도로 경계하며 
                     이는 위험한 보안 문제가 발생할 수 있음 
-                    (XSS : cross site script 공격) 
-                    
+                    (XSS : cross site script 공격)
+
                     → 위험 요소를 제거하는 라이브러리(ex : dompurify)를 사용
                 */}
                 <div dangerouslySetInnerHTML={
-                   // {__html: sale.saleContent }
-                    {__html: purifyHtml(sale.saleContent) }
+                    // { __html: sale.saleContent }
+                    { __html: purifyHtml(sale.saleContent) }
                 }></div>
             </Col>
         </Row>
 
         {/* 
             관리자만 볼 수 있는 삭제버튼을 만들고 누르면 경고창 출력 후 
-            확인을 누르면 서버로 신호를 보내 삭제
+            확인을 누르면 서버로 신호를 보내 삭제 
             그 후 목록으로 이동
             서버의 주소 : /api/sale/{saleNo} [DELETE]
-         */}
 
+            * 백엔드도 관리자만 통과해야함
+        */}
         { isAdmin && (
         <Row className="mt-5">
             <Col className="text-end">
-            {/* 삭제 버튼 */}
-                <Button variant="danger" size="lg" className="w-md-auto"
-                        onClick={deleteByAdmin}>
+                {/* 삭제버튼 */}
+                <Button variant="danger" size="lg" onClick={deleteByAdmin}>
                     <FaTrash/>
                     <span className="ms-2">상품 정보 삭제</span>
                 </Button>
-                {/* 수정 링크 */}
+                {/* 수정링크 */}
                 <Button variant="warning" size="lg" as={Link} to={`/admin/saleEdit/${saleNo}`}
                             className="ms-2">
                     <FaSquarePen/>
@@ -182,6 +248,7 @@ export default function SaleDetail() {
                 </Button>
             </Col>
         </Row>
-        )}
+        ) }
+
     </>)
 }

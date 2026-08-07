@@ -28,6 +28,7 @@ import AccountPassword from "@components/account/AccountPassword";
 import AccountChange from "@components/account/AccountChange";
 import AccountLogin from "@components/account/AccountLogin";
 import AccountNeedUpdate from "@components/account/AccountNeedUpdate";
+import AccountCart from "@components/account/AccountCart";
 
 import MyPage from "@components/account/MyPage";
 
@@ -100,6 +101,7 @@ export default function Body() {
         <Route path="/account/password" element={<Private><AccountPassword/></Private>}/>
         <Route path="/account/change" element={<Private><AccountChange/></Private>}/>
         <Route path="/account/needUpdate" element={<Private><AccountNeedUpdate/></Private>}/>
+        <Route path="/account/cart" element={<Private><AccountCart/></Private>}/>
         
         {/* 상품 */}
         <Route path="/sale/list" element={<SaleList/>}/>
@@ -112,7 +114,7 @@ export default function Body() {
         <Route path="/admin/saleEdit/:saleNo" element={<Admin><AdminSaleEdit/></Admin>}/>
         
         {/* 세션테스트 */}
-        <Route path="/session/test" element={<TestMain/>}/>
+        {/* <Route path="/session/test" element={<TestMain/>}/> */}
 
         {/* 결제 관련 */}
         <Route path="/pay/v1/buy" element={<KakaopayBuyVersion1/>}/>
