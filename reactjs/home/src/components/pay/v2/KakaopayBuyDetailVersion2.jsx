@@ -57,13 +57,13 @@ export default function KakaopayBuyDetailVersion2() {
     const cancelAll = useCallback(async ()=>{
         try{
             const result = await Swal.fire({
-            title: "결제를 취소하시겠습니까?",
-            text : "취소한 결제는 다시 복구할 수 없습니다",
-            icon: "warning",
-            confirmButtonText: "네, 취소",
-            cancelButtonText: "아니오, 취소x",
-            showCancelButton: true,
-        });
+                title: "결제를 취소하시겠습니까?",
+                text : "취소한 결제는 다시 복구할 수 없습니다",
+                icon: "warning",
+                confirmButtonText: "네, 취소",
+                cancelButtonText: "아니오, 취소x",
+                showCancelButton: true,
+            });
             if (result.isConfirmed === false) return;//취소
             
             //취소 요청
@@ -72,6 +72,35 @@ export default function KakaopayBuyDetailVersion2() {
 
             //화면 갱신 처리
             await loadData(); //뒤에 작업이 있다면 순서대로 처리(await가 붙으면, aync 함수 내에서 다른 async 함수를 부를 때)
+        }
+        catch(e) {
+            toast.error("일시적인 오류입니다. \n 잠시 후 다시 시도해주세요.");
+        }
+    }, []);
+
+    //항목 취소
+    const cancelUnit = useCallback(async (detail)=>{
+        try{
+            //확인창
+            const result = await Swal.fire({
+                title: "결제를 취소하시겠습니까?",
+                text : "취소한 결제는 다시 복구할 수 없습니다",
+                icon: "warning",
+                confirmButtonText: "네, 취소",
+                cancelButtonText: "아니오, 취소x",
+                showCancelButton: true,
+            });
+            if (result.isConfirmed === false) return;//취소
+        
+            //서버요청
+            const { data } = await apiClient.delete(
+                `/purchase/cancelUnit/${detail.purchaseDetailNo}`
+             );
+
+            toast.success("결제가 취소되었습니다.");
+
+            //화면 갱신 처리
+            await loadData();
         }
         catch(e) {
             toast.error("일시적인 오류입니다. \n 잠시 후 다시 시도해주세요.");
@@ -191,7 +220,8 @@ export default function KakaopayBuyDetailVersion2() {
                                     withInPeriod
                                     && (
                                         <div className="ms-2 text-end">
-                                            <Button variant="danger" size="sm">
+                                            <Button variant="danger" size="sm"
+                                                onClick={e=>cancelUnit(detail)}>
                                                 <FaXmark />
                                                 <span className="ms-2">이 항목 취소하기</span>
                                             </Button>
