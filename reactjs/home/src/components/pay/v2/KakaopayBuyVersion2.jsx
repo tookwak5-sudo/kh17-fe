@@ -76,7 +76,7 @@ export default function KakaopayBuyVersion2() {
             { saleNumbers: params.map(sale => sale.saleNo) }
             //데이터 형태 : { "saleNumbers" : [1, 3, 5, ...]} → Class(VO)
         );
-        console.log("data", data);
+        //console.log("data", data);
 
         //최종Plan
         // - params에는 saleNo와 quantity가 존재

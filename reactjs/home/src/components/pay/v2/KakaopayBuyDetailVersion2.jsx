@@ -6,6 +6,9 @@ import { Badge, Button, Card, Col, ListGroup, ListGroupItem, Row } from "react-b
 import { ClockLoader } from "react-spinners";
 import NoImage from "@assets/images/no-image.png";
 import relativeTime from "dayjs/plugin/relativeTime";
+import Swal from 'sweetalert2';
+import { toast } from "react-toastify";
+
 dayjs.extend(relativeTime);
 
 import dayjs from "dayjs";
@@ -49,6 +52,31 @@ export default function KakaopayBuyDetailVersion2() {
         if (purchase === null) return false;
         return dayjs().diff(purchase.purchaseCtime, 'day', false) <= 7;
     }, [purchase]);
+
+    //전체 취소
+    const cancelAll = useCallback(async ()=>{
+        try{
+            const result = await Swal.fire({
+            title: "결제를 취소하시겠습니까?",
+            text : "취소한 결제는 다시 복구할 수 없습니다",
+            icon: "warning",
+            confirmButtonText: "네, 취소",
+            cancelButtonText: "아니오, 취소x",
+            showCancelButton: true,
+        });
+            if (result.isConfirmed === false) return;//취소
+            
+            //취소 요청
+            const { data } = await apiClient.delete(`/purchase/cancelAll/${purchaseNo}`);
+            toast.success("결제가 취소되었습니다.");
+
+            //화면 갱신 처리
+            await loadData(); //뒤에 작업이 있다면 순서대로 처리(await가 붙으면, aync 함수 내에서 다른 async 함수를 부를 때)
+        }
+        catch(e) {
+            toast.error("일시적인 오류입니다. \n 잠시 후 다시 시도해주세요.");
+        }
+    }, []);
 
     // 데이터 오기전
     if (purchase === null || details === null || payResponse === null) {
@@ -111,7 +139,7 @@ export default function KakaopayBuyDetailVersion2() {
         { withInPeriod && purchase.purchaseRemain > 0 && (
             <Row className="mt-4 text-end">
                 <Col>
-                    <Button variant="danger" size="lg">
+                    <Button variant="danger" size="lg" onClick={cancelAll}>
                         <FaXmark/>
                         <span className="ms-2">현재 구매내역 취소하기</span>
                     </Button>
