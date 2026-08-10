@@ -5,7 +5,7 @@ import { FaAsterisk } from "react-icons/fa6";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { apiClient } from "../../utils/reaxios";
+import { apiClient } from "@utils/reaxios";
 
 export default function CountryAdd() {
     //페이지 이동 도구 (location 대신 사용)
