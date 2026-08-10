@@ -3,9 +3,11 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { apiClient } from "@utils/reaxios";
 import { Button, Col, Form, ListGroup, ListGroupItem, Row } from "react-bootstrap";
 import NoImage from "@assets/images/no-image.png";
-import { FaArrowTrendDown, FaCartShopping } from "react-icons/fa6";
+import { FaArrowTrendDown, FaCartShopping, FaXmark } from "react-icons/fa6";
 import { throttle, debounce } from "lodash-es";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 export default function AccountCart() {
 
@@ -55,13 +57,13 @@ export default function AccountCart() {
 
     const sendChangeQty = useCallback(
         debounce( //성능저하를 위한 debounce를 500ms로 적용
-            async (item, qty)=>{
+            async (item, qty) => {
                 const { data } = await apiClient.patch(
-                    "/cart/", {no : item.no , qty : qty}
+                    "/cart/", { no: item.no, qty: qty }
                 );
                 console.log("데이터", data);
-        }, 500)
-    , []);
+            }, 500)
+        , []);
 
     // 항목 체크
     const changeItemSelected = useCallback((e, target) => {
@@ -124,12 +126,12 @@ export default function AccountCart() {
     //- 주소 생성이 필요 : `?sale=번호:수량&sale=번호:수량` 형태
     //체크된 카트리스트를 만들어서 하면 더 좋을수도??? 나중에 추가해보기
     const navigate = useNavigate();
-    const purchase = useCallback(()=>{
+    const purchase = useCallback(() => {
         //파라미터 생성 도구 만들기
         const params = new URLSearchParams();
         //체크된 모든 항목의 상품번호와 수량을 콜론(:)을 두고 합성해서 추가
-        cartList.forEach(item=>{
-            if(item.choice === true){
+        cartList.forEach(item => {
+            if (item.choice === true) {
                 const value = `${item.no}:${item.qty}`;
                 params.append("sale", value)
             }
@@ -137,6 +139,33 @@ export default function AccountCart() {
         navigate(`/pay/v2/buy?${params.toString()}`);
     }, [cartList]);
 
+    //장바구니 상품삭제
+    const deleteCart = useCallback(async (item) => {
+        try {
+            const result = await Swal.fire({
+                title: `장바구니에 담긴 상품을 삭제하시겠습니까?`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "확인",
+                cancelButtonText: "취소",
+                confirmButtonColor: "#d63031",
+                cancelButtonColor: "#b2bec3"
+            });
+            if (result.isConfirmed === false) return; //취소
+            //삭제 요청
+            await apiClient.delete(`/cart/${item.no}`); //넘어오는데이터가 따로 없음
+            setCartList(prev => prev.filter(
+                cartItem => cartItem.no !== item.no
+            ));
+            toast.success("장바구니에서 상품이 제거되었습니다");
+        }
+        catch (e) {
+            //오류 처리
+            toast.error("일시적인 오류가 발생하였습니다")
+            console.error(e);
+        }
+
+    }, []);
 
     return (<>
         <Jumbotron title="장바구니" content="상품 수량을 확인하고 구매를 진행해 주세요" />
@@ -190,6 +219,8 @@ export default function AccountCart() {
                                     />
                                     <span>개</span>
                                 </div>
+                                {/* 삭제 버튼 */}
+                                <FaXmark className="my-1" onClick={e => deleteCart(item)} />
                             </div>
                         </ListGroupItem>
                     ))}
@@ -211,7 +242,7 @@ export default function AccountCart() {
                             <span>{(totalAmountObject.original - totalAmountObject.discount)
                                 .toLocaleString()}원</span>
                         </div>
-                        <hr/>
+                        <hr />
                         <div className="d-flex justify-content-between">
                             <span>결제금액</span>
                             <span>{totalAmountObject.discount.toLocaleString()}원</span>
@@ -225,7 +256,7 @@ export default function AccountCart() {
             <Col>
                 <Button variant="success" size="lg" className="w-100"
                     onClick={purchase}>
-                    <FaCartShopping/>
+                    <FaCartShopping />
                     <span className="ms-2">구매하기</span>
                 </Button>
             </Col>
