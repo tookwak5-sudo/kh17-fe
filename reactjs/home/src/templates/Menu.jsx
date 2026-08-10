@@ -94,6 +94,7 @@ export default function Menu() {
             
             <NavDropdown title="웹소켓" id="basic-nav-dropdown">
                  <NavDropdown.Item as={Link} to="/websocket/v1">기본 웹소켓</NavDropdown.Item>
+                 <NavDropdown.Item as={Link} to="/websocket/v2">상향 웹소켓</NavDropdown.Item>
             </NavDropdown>
 
           </Nav>

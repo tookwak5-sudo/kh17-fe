@@ -32,7 +32,7 @@ export default function WebSocketV1BasicClient() {
     //연결 함수
     const connectToServer = useCallback(() => {
         //[1]연결(socket) 생성
-        const socket = new SockJS("http://localhost:8080/ws")
+        const socket = new SockJS("http://192.168.20.05:8080/ws")
 
         //[2]연결을 관리할 도구(client) 생성하여 반환
         // - client에 구독할 채널(/public/basic), 메세지 수/발신에 대한 코드를 콜백 함수 형태로 설정
@@ -45,7 +45,7 @@ export default function WebSocketV1BasicClient() {
             onConnect: () => { //연결되었을 때
                 //client.subscribe(채널명, 콜백함수);
                 client.subscribe("/public/basic", (message) => {
-                    console.log(message);
+                    // console.log(message);
                     const json = JSON.parse(message.body);
                     setHistory(prev=>[...prev, json]); //history에 메세지 누적시키기
                 });
