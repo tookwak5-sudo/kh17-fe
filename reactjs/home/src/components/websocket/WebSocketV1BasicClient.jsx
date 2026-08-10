@@ -1,5 +1,5 @@
 import Jumbotron from "@templates/Jumbotron";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import SockJS from "sockjs-client";
 import Client from "@stomp/stompjs";
 
@@ -10,7 +10,7 @@ export default function WebSocketV1BasicClient() {
 
     //WebSocket 연결은 들어오자마자 해야하며, 나갈 때 반드시 해제해야 한다
     //→ 연관항목이 없는 useEffect를 사용하고 Clean-Up 함수를 생성해야 한다
-    UseEffect(()=>{
+    useEffect(()=>{
         //최초 1회 실행해야할 작업
         const client = connectToServer();
         setClient(client);

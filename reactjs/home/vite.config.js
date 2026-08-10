@@ -23,5 +23,9 @@ export default defineConfig({
       "@guard" : path("./src/guard"),
       // 주의!!!! 여기 수정하면 무조건 VS를 껐다가 다시 시작해야함
     }
+  },
+  //라이브러리 구동에 필요한 값을 정의
+  define : {
+    global : "window",//global이라는 코드가 라이브러리에 있다면 window로 해석되도록 별칭 부여
   }
 })
