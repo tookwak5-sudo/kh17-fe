@@ -4,6 +4,10 @@ import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { FaPaperPlane } from "react-icons/fa6";
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
+dayjs.locale("ko"); //한국어로 설정
+
 export default function WebSocketV1BasicClient() {
 
     //WebSocket은 연결을 기반으로 하기 때문에 연결에 사용할 객체가 있어야 한다
@@ -41,7 +45,7 @@ export default function WebSocketV1BasicClient() {
             onConnect: () => { //연결되었을 때
                 //client.subscribe(채널명, 콜백함수);
                 client.subscribe("/public/basic", (message) => {
-                    // console.log(message);
+                    console.log(message);
                     const json = JSON.parse(message.body);
                     setHistory(prev=>[...prev, json]); //history에 메세지 누적시키기
                 });
@@ -68,7 +72,7 @@ export default function WebSocketV1BasicClient() {
         if(input.trim() === "") return;
 
         //메세지 전송을 위한 JSON 데이터 생성
-        const json = { content : input };
+        const json = { content : input }; //WebSocketV1RequestVO : String content
 
         //STOMP 규격에 맞는 메세지 생성
         const stompMessage = {
@@ -122,6 +126,8 @@ export default function WebSocketV1BasicClient() {
                     {history.map((message, index)=>(
                     <div key={index}>
                         {message.content}
+
+                        {dayjs(message.time).format("A h:mm")}
                     </div>
                     ))}
                 </div>
