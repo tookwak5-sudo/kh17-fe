@@ -10,6 +10,7 @@ import { FaCircleInfo, FaComment, FaPaperPlane } from "react-icons/fa6";
 import "./WebSocketV2AdvancedClient.css";
 import dayjs from "dayjs";
 import { LuMessageCircleMore } from "react-icons/lu";
+import { toast } from "react-toastify";
 
 export default function WebSocketV3MemberClient() {
 
@@ -50,6 +51,12 @@ export default function WebSocketV3MemberClient() {
                 client.subscribe(`/private/dm/${loginUser.accountId}`, (message) => {
                     const json = JSON.parse(message.body);
                     setHistory(prev => [...prev, json]);
+                });
+                //채널이 같음에도 구독을 분리한 이유는 혹시나 다른 경우가 생길 수 있기 때문에
+                client.subscribe(`/private/system${loginUser.accountId}`, (message) => {
+                    const json = JSON.parse(message.body);
+                    setHistory(prev=>[...prev, json]);
+                    toast.error(json.content);
                 });
             },
             //디버깅 설정(옵션)
@@ -250,6 +257,14 @@ export default function WebSocketV3MemberClient() {
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                )}
+
+                                {/* 시스템 메세지 */}
+                                {message.type === "system" && (
+                                <div className={`system-message text-${mesageLevel} bg-${message.level} border-${message.level}`}
+                                        style={{ "--bs-bg-opacity" : ".10"}}>
+                                    {message.content}
                                 </div>
                                 )}
                             </div>
