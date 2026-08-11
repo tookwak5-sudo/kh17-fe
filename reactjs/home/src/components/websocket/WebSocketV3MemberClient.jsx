@@ -4,8 +4,8 @@ import { useAtomValue } from "jotai";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import SockJS from "sockjs-client";
 import { loginUserState } from "@utils/storage";
-import { Badge, Button, Col, Form, Row } from "react-bootstrap";
-import { FaCircleInfo, FaComment, FaPaperPlane } from "react-icons/fa6";
+import { Badge, Button, Col, Form, ListGroup, ListGroupItem, Row } from "react-bootstrap";
+import { FaCircleInfo, FaComment, FaPaperPlane, FaUsers } from "react-icons/fa6";
 
 import "./WebSocketV2AdvancedClient.css";
 import dayjs from "dayjs";
@@ -18,6 +18,7 @@ export default function WebSocketV3MemberClient() {
     const loginUser = useAtomValue(loginUserState);
     const [history, setHistory] = useState([]); //메세지 이력
     const [input, setInput] = useState("");//사용자의 입력
+    const [users, setUsers] = useState([]); //접속한 사용자의 목록
 
     useEffect(() => {
         //최초 1회 실행해야할 작업
@@ -48,15 +49,29 @@ export default function WebSocketV3MemberClient() {
                     const json = JSON.parse(message.body);
                     setHistory(prev => [...prev, json]);
                 });
+                //채널이 같음에도 구독을 분리한 이유는 혹시나 다른 경우가 생길 수 있기 때문에
+                client.subscribe(`/public/system`, (message) => {
+                    const json = JSON.parse(message.body);
+                    setHistory(prev => [...prev, json]);
+                });
+                client.subscribe(`/public/users`, (message) => {
+                    //여기서의 메세지는 List<TokenParseResponseVO>이다. 즉, 배열이다.
+                    const jsonArray = JSON.parse(message.body);
+                    setUsers(jsonArray);
+                });
                 client.subscribe(`/private/dm/${loginUser.accountId}`, (message) => {
                     const json = JSON.parse(message.body);
                     setHistory(prev => [...prev, json]);
                 });
                 //채널이 같음에도 구독을 분리한 이유는 혹시나 다른 경우가 생길 수 있기 때문에
-                client.subscribe(`/private/system${loginUser.accountId}`, (message) => {
+                client.subscribe(`/private/system/${loginUser.accountId}`, (message) => {
                     const json = JSON.parse(message.body);
-                    setHistory(prev=>[...prev, json]);
-                    toast.error(json.content);
+                    setHistory(prev => [...prev, json]);
+                });
+                client.subscribe(`/private/users/${loginUser.accountId}`, (message) => {
+                    //여기서의 메세지는 List<TokenParseResponseVO>이다. 즉, 배열이다.
+                    const jsonArray = JSON.parse(message.body);
+                    setUsers(jsonArray);
                 });
             },
             //디버깅 설정(옵션)
@@ -117,7 +132,7 @@ export default function WebSocketV3MemberClient() {
 
         //작성자 아이디가 다르면(responseVO수정에 따른 변화)
         if (curr.senderId !== prev.senderId) return true; //작성자가 다르면 시간 표시
-        if(curr.type !== prev.type) return true; //메세지 유형이 다르면 시간 표시
+        if (curr.type !== prev.type) return true; //메세지 유형이 다르면 시간 표시
 
         const currTime = dayjs(curr.time);
         const prevTime = dayjs(prev.time);
@@ -130,7 +145,7 @@ export default function WebSocketV3MemberClient() {
         if (!next) return true; //null, undefined 제거
 
         if (curr.senderId !== next.senderId) return true; //작성자가 다르면 표시
-        if(curr.type !== next.type) return true; //메세지 유형이 다르면 시간 표시
+        if (curr.type !== next.type) return true; //메세지 유형이 다르면 시간 표시
         return false;
     }, []);
 
@@ -167,7 +182,13 @@ export default function WebSocketV3MemberClient() {
 
         {/* 메세지 출력 (+부트스트랩 디자인) */}
         <Row className="mt-5">
-            <Col>
+            <Col xs={12}>
+                <FaUsers className="me-2" />
+                <span>{users.length}명</span>
+            </Col>
+
+            {/* 메세지 이력 */}
+            <Col sm={10}>
                 <div className="message-wrapper" ref={messageWrapperRef}>
                     {history.map((message, index) => {
                         // 내 메세지인지 판정
@@ -214,63 +235,77 @@ export default function WebSocketV3MemberClient() {
                                 {/* DM 메세지 */}
                                 {message.type === "dm" && (
                                     <div className="message-inner dm">
-                                    {/* 프로필 출력 */}
-                                    {!my && (
-                                        <div className="profile-wrapper">
-                                            {(isDiffSender) && (
-                                                <img src="https://picsum.photos/100" />
-                                            )}
-                                        </div>
-                                    )}
-                                    {/* 컨텐츠(작성자), 내용, 시간 등 출력 */}
-                                    <div className="content-wrapper">
-                                        {isDiffSender && (
-                                            <div className="sender">
-                                                {/* 
+                                        {/* 프로필 출력 */}
+                                        {!my && (
+                                            <div className="profile-wrapper">
+                                                {(isDiffSender) && (
+                                                    <img src="https://picsum.photos/100" />
+                                                )}
+                                            </div>
+                                        )}
+                                        {/* 컨텐츠(작성자), 내용, 시간 등 출력 */}
+                                        <div className="content-wrapper">
+                                            {isDiffSender && (
+                                                <div className="sender">
+                                                    {/* 
                                                     DM은 
                                                     - 발신자에게는 수신자의 정보가
                                                     - 수신자에게는 발신자의 정보가
                                                     나와야함
                                                 */}
 
-                                                <LuMessageCircleMore className="me-2"/>
-                                                
-                                                { my ? (<>
-                                                    {`To.${message.receiverNickname}` }
-                                                    <Badge bg="primary" className="ms-2">
-                                                    {message.receiverLevel}
-                                                </Badge>
-                                                </>) : (<>{`From.${message.senderNickname}` }
-                                                <Badge bg="primary" className="ms-2">
-                                                    {message.senderLevel}
-                                                </Badge>
-                                                </>) }
-                                            </div>
-                                        )}
-                                        <div className="content">
-                                            <div className="body">{message.content}</div>
-                                            {/* 시간은 경우에 따라서 나오지 않을 수도 있다 */}
-                                            <div className="time">
-                                                { isDiffTime && (
-                                                    dayjs(message.time).format("a h:mm")
-                                                )}
+                                                    <LuMessageCircleMore className="me-2" />
+
+                                                    {my ? (<>
+                                                        {`To.${message.receiverNickname}`}
+                                                        <Badge bg="primary" className="ms-2">
+                                                            {message.receiverLevel}
+                                                        </Badge>
+                                                    </>) : (<>{`From.${message.senderNickname}`}
+                                                        <Badge bg="primary" className="ms-2">
+                                                            {message.senderLevel}
+                                                        </Badge>
+                                                    </>)}
+                                                </div>
+                                            )}
+                                            <div className="content">
+                                                <div className="body">{message.content}</div>
+                                                {/* 시간은 경우에 따라서 나오지 않을 수도 있다 */}
+                                                <div className="time">
+                                                    {isDiffTime && (
+                                                        dayjs(message.time).format("a h:mm")
+                                                    )}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                                 )}
 
                                 {/* 시스템 메세지 */}
                                 {message.type === "system" && (
-                                <div className={`system-message text-${mesageLevel} bg-${message.level} border-${message.level}`}
-                                        style={{ "--bs-bg-opacity" : ".10"}}>
-                                    {message.content}
-                                </div>
+                                    <div className={`system-message text-${message.level} bg-${message.level} border-${message.level}`}
+                                        style={{ "--bs-bg-opacity": ".10" }}>
+                                        {message.content}
+                                    </div>
                                 )}
                             </div>
                         );
                     })}
                 </div>
+            </Col>
+
+            {/* 사용자 목록 */}
+            <Col sm={2}>
+                <ListGroup>                  
+                    {users.map((user, index) => (
+                        <ListGroupItem  key={index} className={user.accountId === loginUser.accountId ? "activ" : ""}>
+                            <span>{user.accountId}</span>
+                            {(user.accountId === loginUser.accountId) && (
+                                <span className="ms-1 fw-bold">"(나)"</span>
+                            )}
+                        </ListGroupItem>
+                    ))}
+                </ListGroup>
             </Col>
         </Row>
 
