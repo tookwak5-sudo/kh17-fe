@@ -4,6 +4,10 @@
     flex-direction: column-reverse;
     font-size: 16px;
     background-color: #A1BFD9;
+
+    /* 높이 제한을 걸고 스크롤을 추가하고 싶다면 */
+    max-height : 500px;
+    overflow : auto;
 }
 .message-wrapper > .message-outer {
     padding: 0.5em;
@@ -25,6 +29,10 @@
 
 .message-wrapper > .message-outer > .message-inner > .profile-wrapper > .img {
     width: 100%;
+}
+
+.message-wrapper > .message-outer > .message-inner > .content-wrapper {
+    flex-grow: 1;
 }
 
 .message-wrapper > .message-outer > .message-inner > .content-wrapper > .sender {
@@ -74,4 +82,10 @@
 .message-wrapper > .message-outer.my > .message-inner > .content-wrapper > .content > .time {
     margin-left: 0px;
     margin-right: 0.5em;
+}
+
+/* DM인 경우 작성자를 강조하도록 표시 */
+.message-wrapper > .message-outer > .message-inner.dm > .content-wrapper > .sender {
+    font-weight: bold;
+    font-style: italic;
 }
