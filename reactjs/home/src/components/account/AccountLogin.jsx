@@ -78,9 +78,11 @@ export default function AccountLogin() {
             }
             else if(e.status === 404) {
                 await Swal.fire("정보가 일치하지 않습니다");
+                return;
             }
             else {//500
-                await Swal.fire("일시적인 서버 오류입니다. \n잠시 후 실행해주세요")
+                await Swal.fire("일시적인 서버 오류입니다. \n잠시 후 실행해주세요");
+                return;
             }
             //로그인 실패
             await Swal.fire("정보가 일치하지 않습니다");

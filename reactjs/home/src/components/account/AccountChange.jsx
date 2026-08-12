@@ -577,7 +577,7 @@ export default function AccountChange() {
                         <Button variant="danger" className="ms-2" onClick={clearAddress}
                                 style={
                                     {//부드럽게 변하려면 중간상태가 존재해야함
-                                        opacity : isAddressWritten === true ? 100 : 0,
+                                        1 : isAddressWritten === true ? 100 : 0,
                                         transition : "opacity 0.1s ease-out",
                                         cursor : isAddressWritten ? "pointer" : "default",
                                     }
