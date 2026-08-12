@@ -112,7 +112,10 @@ export default function WebSocketV4RoomList() {
                                 <Button variant="danger" className="me-2"
                                     onClick={e=>deleteRoom(room)}>삭제</Button>
                                 )}
-                            <Button variant="success">참여</Button>
+                            {/* 로그인한 유저만 보임 */}
+                            <Button variant="success" disabled={!isLogin}>
+                                참여
+                            </Button>
                             </div>
                         </div>
                     </div>
