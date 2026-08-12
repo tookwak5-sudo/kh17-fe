@@ -1,27 +1,61 @@
-import { Client } from "@stomp/stompjs";
 import Jumbotron from "@templates/Jumbotron";
-import { useAtomValue } from "jotai";
+import { useNavigate, useParams } from "react-router-dom";
+import { apiClient } from "@utils/reaxios";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import SockJS from "sockjs-client";
-import { loginUserState } from "@utils/storage";
+import Swal from "sweetalert2";
 import { Badge, Button, Col, Form, ListGroup, ListGroupItem, Row } from "react-bootstrap";
-import { FaCircleInfo, FaComment, FaPaperPlane, FaUsers } from "react-icons/fa6";
-
-import "./WebSocketV2AdvancedClient.css";
+import { useAtomValue } from "jotai";
+import { loginUserState } from "../../utils/storage";
+import SockJS from "sockjs-client";
+import { Client } from "@stomp/stompjs";
+import { FaPaperPlane, FaUsers } from "react-icons/fa6";
 import dayjs from "dayjs";
-import { LuMessageCircleMore } from "react-icons/lu";
-import { toast } from "react-toastify";
 
-export default function WebSocketV3MemberClient() {
+export default function WebSocketV4RoomClient() {
+    //방번호 읽기
+    const { roomNo } = useParams();
+    const navigate = useNavigate();
+    //방정보 불러오기
+    const [room, setRoom] = useState(null);
 
-    const [client, setClient] = useState(null); //서버와의 연결정보를 가진 객체(들어오자 마자)
+    const loadRoom = useCallback(async () => {
+        try {
+            const { data } = await apiClient.get(`/room/${roomNo}`);
+            setRoom(data.room);
+            setUsers(data.users);
+        }
+        catch (e) {
+            if (e.status === 403) {
+                await Swal.fire("당신은 방의 참여자가 아닙니다");
+                navigate("/websocket/v4"); //목록으로 이동
+            }
+            else if (e.status === 404) {
+                await Swal.fire("존재하지 않는 방입니다");
+                navigate("/websocket/v4"); //목록으로 이동
+            }
+            else {//500
+                await Swal.fire("일시적인 서버 오류입니다. \n잠시 후 실행해주세요");
+                navigate("/websocket/v4"); //목록으로 이동
+            }
+        }
+    }, []);
+    useEffect(() => {
+        loadRoom();
+    }, []);
+
+    //웹소켓 관련
     const loginUser = useAtomValue(loginUserState);
+    const [client, setClient] = useState(null);
     const [history, setHistory] = useState([]); //메세지 이력
     const [input, setInput] = useState("");//사용자의 입력
     const inputRef = useRef(); //입력창 제어용 리모컨
     const [users, setUsers] = useState([]); //접속한 사용자의 목록
 
+    //연결 및 해제
     useEffect(() => {
+        //room이 null일 때 최초 1회 실행 되는 것을 막기
+        if (room === null) return; //방 정보가 존재하지 않으면 연결을 하지마라! (기존과 차이점)
+
         //최초 1회 실행해야할 작업
         const client = connectToServer();
         setClient(client);
@@ -31,7 +65,7 @@ export default function WebSocketV3MemberClient() {
             disconnectFromServer(client);
             setClient(null);
         };
-    }, []);
+    }, [room]); //room을 불러와서 문제가 없을 때만 세팅함으로 room이 변하면 실행되도록 설정 
 
     //연결 함수
     const connectToServer = useCallback(() => {
@@ -46,30 +80,26 @@ export default function WebSocketV3MemberClient() {
             //웹소켓의 상황별 Callback 지정(구독지정)
             onConnect: () => { //연결되었을 때
                 //채널 구독 및 수신작업 안내
-                client.subscribe("/public/chat", (message) => {
+                client.subscribe(`/public/${roomNo}/chat`, (message) => {
                     const json = JSON.parse(message.body);
                     setHistory(prev => [...prev, json]);
                 });
                 //채널이 같음에도 구독을 분리한 이유는 혹시나 다른 경우가 생길 수 있기 때문에
-                client.subscribe(`/public/system`, (message) => {
+                client.subscribe(`/public/${roomNo}/system`, (message) => {
                     const json = JSON.parse(message.body);
                     setHistory(prev => [...prev, json]);
                 });
-                client.subscribe(`/public/users`, (message) => {
+                client.subscribe(`/public/${roomNo}/users`, (message) => {
                     //여기서의 메세지는 List<TokenParseResponseVO>이다. 즉, 배열이다.
                     const jsonArray = JSON.parse(message.body);
                     setUsers(jsonArray);
                 });
-                client.subscribe(`/private/dm/${loginUser.accountId}`, (message) => {
-                    const json = JSON.parse(message.body);
-                    setHistory(prev => [...prev, json]);
-                });
                 //채널이 같음에도 구독을 분리한 이유는 혹시나 다른 경우가 생길 수 있기 때문에
-                client.subscribe(`/private/system/${loginUser.accountId}`, (message) => {
+                client.subscribe(`/private/${roomNo}/system/${loginUser.accountId}`, (message) => {
                     const json = JSON.parse(message.body);
                     setHistory(prev => [...prev, json]);
                 });
-                client.subscribe(`/private/users/${loginUser.accountId}`, (message) => {
+                client.subscribe(`/private/${roomNo}/users/${loginUser.accountId}`, (message) => {
                     //여기서의 메세지는 List<TokenParseResponseVO>이다. 즉, 배열이다.
                     const jsonArray = JSON.parse(message.body);
                     setUsers(jsonArray);
@@ -92,6 +122,7 @@ export default function WebSocketV3MemberClient() {
         }
     }, []);
 
+    //연결 상태 확인
     //client가 연결중인지 확인하는 메모
     const isConnect = useMemo(() => {
         if (client === null) return false; //client가 없는 경우
@@ -99,6 +130,7 @@ export default function WebSocketV3MemberClient() {
         return true;
     }, [client]);
 
+    //메세지 전송
     //메세지 전송 함수
     const sendMessage = useCallback(() => {
         //보낼 수 있는 상태인지를 검증
@@ -110,7 +142,7 @@ export default function WebSocketV3MemberClient() {
 
         //STOMP 규격에 맞는 메세지 생성
         const stompMessage = {
-            destination: "/app/chat", //서버로 보낼 목적지
+            destination: `/app/${roomNo}/chat`, //서버로 보낼 목적지
             body: JSON.stringify(json), //전송할 내용 (직렬화된 JSON)
 
         };
@@ -122,8 +154,9 @@ export default function WebSocketV3MemberClient() {
     //(+추가) 스크롤을 끝으로 갱신기키는 처리 (반대도 가능) , * reverse인 상황
     const messageWrapperRef = useRef();
     useEffect(() => {
-        // messageWrapperRef.current.scrollTop = 0;// 처음으로 (하단) 보내는 코드
-        messageWrapperRef.current.scrollTop = -messageWrapperRef.current.scrollHeight;
+        if(messageWrapperRef.current){ //messageWrapperRef가 있으면 실행해라 (시점 때문에 해줘야함) 
+            messageWrapperRef.current.scrollTop = -messageWrapperRef.current.scrollHeight;
+        }
     }, [history]);
 
     //시간을 표시해야 되는 상황인지 판정하는 함수
@@ -141,6 +174,7 @@ export default function WebSocketV3MemberClient() {
         return isSameTime === false; //작성시간이 다르면 시간 표시
     }, []);
 
+    //작성자와 프로필을 표시해야 하는 상황인지 판정하는 함수
     const checkSenderVisible = useCallback((curr, next) => {
         if (!curr) return true; //null, undefined 제거
         if (!next) return true; //null, undefined 제거
@@ -150,13 +184,26 @@ export default function WebSocketV3MemberClient() {
         return false;
     }, []);
 
-    return (<>
-        <Jumbotron title="WebSocket Version3" content="인증된 사용자간의 웹소켓 통신 구현" />
+    //화면
+    if (room === null) {
+        return (<h1>로딩중...</h1>)
+    }
 
-        <Row>
-            <Col>
-                현재 아이디 {loginUser.accountId}
-            </Col>
+    return (<>
+        <Jumbotron title="그룹 채팅 예제" content={`현재 입장하신 방은 ${roomNo}번방 입니다`} />
+
+        {/* 방 정보 출력 */}
+        <Row className="mt-5">
+            <Col sm={3} className="text-info fw-bold">방 제목</Col>
+            <Col sm={9}>{room.roomName}</Col>
+        </Row>
+        <Row className="mt-5">
+            <Col sm={3} className="text-info fw-bold">방장</Col>
+            <Col sm={9}>{room.roomOwner ?? "없음"}</Col>
+        </Row>
+        <Row className="mt-5">
+            <Col sm={3} className="text-info fw-bold">인원</Col>
+            <Col sm={9}>{users.length} / {room.roomLimit ?? "제한 없음"}</Col>
         </Row>
 
         <Row className="mt-5">
@@ -317,6 +364,5 @@ export default function WebSocketV3MemberClient() {
                 </ListGroup>
             </Col>
         </Row>
-
-    </>);
+    </>)
 }

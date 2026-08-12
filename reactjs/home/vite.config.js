@@ -6,15 +6,15 @@ import react from '@vitejs/plugin-react'
 //- nodejs에 있는 파일 시스템과 별칭을 연결해서 설정으로 작성해두어야 한다
 //- (ex) 내가 만약 `@src` 라고 하면  `src` 폴더를 말하는거롤 생각하라!
 //- (ex) 내가 만약 `@components` 라고 하면  `src/components` 폴더를 말하는거롤 생각하라!
-import { fileURLToPath, URL} from "node:url";
-const path = (value)=>fileURLToPath(new URL(value, import.meta.url));
+import { fileURLToPath, URL } from "node:url";
+const path = (value) => fileURLToPath(new URL(value, import.meta.url));
 
 // https://vite.dev/config/
 export default defineConfig({
   //외부 접속 허용 설정
   server: {
     host: "0.0.0.0",
-    port: 5173
+    port: 5173,
   },
   plugins: [react()],
   resolve: {
@@ -25,12 +25,12 @@ export default defineConfig({
       "@error": path("./src/error"),
       "@templates": path("./src/templates"),
       "@utils": path("./src/utils"),
-      "@guard" : path("./src/guard"),
+      "@guard": path("./src/guard"),
       // 주의!!!! 여기 수정하면 무조건 VS를 껐다가 다시 시작해야함
     }
   },
   //라이브러리 구동에 필요한 값을 정의
-  define : {
-    global : "window",//global이라는 코드가 라이브러리에 있다면 window로 해석되도록 별칭 부여
+  define: {
+    global: "window",//global이라는 코드가 라이브러리에 있다면 window로 해석되도록 별칭 부여
   }
 })
