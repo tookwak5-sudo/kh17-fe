@@ -67,6 +67,8 @@ import KakaopayBuyDetailVersion2 from "@components/pay/v2/KakaopayBuyDetailVersi
 import WebSocketV1BasicClient from "@components/websocket/WebSocketV1BasicClient";
 import WebSocketV2AdvancedClient from "@components/websocket/WebSocketV2AdvancedClient";
 import WebSocketV3MemberClient from "@components/websocket/WebSocketV3MemberClient";
+import WebSocketV4RoomList from "@components/websocket/WebSocketV4RoomList";
+import WebSocketV4RoomClient from "@components/websocket/WebSocketV4RoomClient";
 
 export default function Body() {
 
@@ -137,6 +139,8 @@ export default function Body() {
         <Route path="/websocket/v1" element={<WebSocketV1BasicClient/>}/>
         <Route path="/websocket/v2" element={<WebSocketV2AdvancedClient/>}/>
         <Route path="/websocket/v3" element={<Private><WebSocketV3MemberClient/></Private>}/>
+        <Route path="/websocket/v4" element={<WebSocketV4RoomList/>}/>
+        <Route path="/websocket/v4/:roomNo" element={<Private><WebSocketV4RoomClient/></Private>}/>
 
         {/* error */}
         <Route path="/account/block" element={<AccountBlock/>}/>
