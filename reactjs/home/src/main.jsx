@@ -32,7 +32,7 @@ import { Provider } from "jotai";
 
 createRoot(document.getElementById('root')).render(
   // <StrictMode>
-  <BrowserRouter>
+  <BrowserRouter basename="/views">
     {/* jotai 적용 범위 설정 */}
     <Provider>
 
